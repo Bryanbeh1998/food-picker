@@ -176,6 +176,19 @@
       padding: 16px;
     }
 
+    input[type="text"] {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid #d0e8dc;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+      color: #1a1a1a;
+      background: white;
+    }
+
+    input[type="text"]:focus { outline: none; border-color: #2d6a4f; }
+
     .list-item {
       display: flex;
       justify-content: space-between;
@@ -263,6 +276,55 @@
       </div>
     </div>
     <div id="restaurantList" style="margin-top:14px;"></div>
+  </div>
+
+  <div class="card" id="addCard">
+    <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" id="addToggle">
+      <h2 style="font-size:1rem; color:#2d6a4f; font-weight:700;">➕ Add a Place</h2>
+      <span id="addChevron" style="font-size:0.85rem; color:#2d6a4f;">▼</span>
+    </div>
+    <div id="addForm" style="display:none; margin-top:18px;">
+      <div class="filters" style="margin-bottom:14px;">
+        <div style="grid-column:1/-1;">
+          <label>Name *</label>
+          <input id="addName" type="text" placeholder="e.g. Jumbo Seafood" />
+        </div>
+        <div>
+          <label>Type</label>
+          <select id="addType">
+            <option value="">— Select —</option>
+            <option>Restaurant</option>
+            <option>Hawker</option>
+            <option>Eatery</option>
+            <option>Café</option>
+          </select>
+        </div>
+        <div>
+          <label>Cuisine</label>
+          <input id="addCuisine" type="text" placeholder="e.g. Chinese" />
+        </div>
+        <div>
+          <label>Price Range</label>
+          <select id="addPrice">
+            <option value="">— Select —</option>
+            <option>$</option>
+            <option>$$</option>
+            <option>$$$</option>
+            <option>$$$$</option>
+          </select>
+        </div>
+        <div>
+          <label>Location</label>
+          <input id="addLocation" type="text" placeholder="e.g. Clarke Quay" />
+        </div>
+        <div style="grid-column:1/-1;">
+          <label>Notes</label>
+          <input id="addNotes" type="text" placeholder="Any extra info" />
+        </div>
+      </div>
+      <button class="pick-btn" id="addSubmit">Add to List</button>
+      <p id="addStatus" style="text-align:center; font-size:0.85rem; margin-top:10px; min-height:1.2em;"></p>
+    </div>
   </div>
 
   <div class="result-card" id="resultCard">
@@ -543,6 +605,64 @@
 
     pickBtn.addEventListener('click', pick);
     rerollBtn.addEventListener('click', pick);
+
+    // ── Add a Place ──────────────────────────────────────────────
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyB52MkOU3s1IBN_PvBIGtAVxgsobpOKMz2TWiSBrI2gi_sQxYNOq0Q0yox2DU-U4On/exec';
+
+    document.getElementById('addToggle').addEventListener('click', () => {
+      const form = document.getElementById('addForm');
+      const chevron = document.getElementById('addChevron');
+      const open = form.style.display !== 'none';
+      form.style.display = open ? 'none' : 'block';
+      chevron.textContent = open ? '▼' : '▲';
+    });
+
+    document.getElementById('addSubmit').addEventListener('click', async () => {
+      const name = document.getElementById('addName').value.trim();
+      if (!name) {
+        document.getElementById('addStatus').textContent = '⚠️ Name is required.';
+        document.getElementById('addStatus').style.color = '#c0392b';
+        return;
+      }
+
+      const entry = {
+        Name: name,
+        Type: document.getElementById('addType').value,
+        Cuisine: document.getElementById('addCuisine').value.trim(),
+        'Price Range': document.getElementById('addPrice').value,
+        Location: document.getElementById('addLocation').value.trim(),
+        Notes: document.getElementById('addNotes').value.trim()
+      };
+
+      const btn = document.getElementById('addSubmit');
+      const status = document.getElementById('addStatus');
+      btn.disabled = true;
+      btn.textContent = 'Adding...';
+      status.textContent = '';
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(entry)
+        });
+
+        status.textContent = `✅ "${name}" added! Refresh the page to see it.`;
+        status.style.color = '#2d6a4f';
+
+        // Clear form
+        ['addName', 'addCuisine', 'addLocation', 'addNotes'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('addType').value = '';
+        document.getElementById('addPrice').value = '';
+      } catch (err) {
+        status.textContent = '❌ Failed to add. Check your connection.';
+        status.style.color = '#c0392b';
+      }
+
+      btn.disabled = false;
+      btn.textContent = 'Add to List';
+    });
   </script>
 </body>
 </html>
