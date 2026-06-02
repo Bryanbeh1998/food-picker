@@ -216,6 +216,23 @@
 
     .list-detail { margin-top: 10px; }
 
+    .outlet-list { margin-bottom: 8px; }
+    .outlet-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #888;
+      margin-bottom: 4px;
+    }
+    .outlet-item {
+      font-size: 0.85rem;
+      color: #2d6a4f;
+      padding: 4px 10px;
+      border-left: 2px solid #b7dfc9;
+      margin-bottom: 3px;
+    }
+
     .detail-controls {
       display: flex;
       justify-content: space-between;
@@ -460,6 +477,8 @@
     body.dark .count-hint { color: #9bb5a8; }
     body.dark .modal-close { color: #9bb5a8; }
     body.dark h1, body.dark h2 { color: #7fc4a3; }
+    body.dark .outlet-item { color: #7fc4a3; border-left-color: #3a5446; }
+    body.dark .list-note { color: #9fd9bc; background: rgba(127,196,163,0.08); }
   </style>
 </head>
 <body>
@@ -857,12 +876,19 @@
         name.appendChild(dot);
       }
 
+      const outlets = splitLocations(r['Location']);
+
       const meta = document.createElement('div');
       meta.className = 'list-item-meta';
-      if (r['Location']) {
+      if (outlets.length === 1) {
         const b = document.createElement('span');
         b.className = 'list-badge';
-        b.textContent = `📍 ${r['Location']}`;
+        b.textContent = `📍 ${outlets[0]}`;
+        meta.appendChild(b);
+      } else if (outlets.length > 1) {
+        const b = document.createElement('span');
+        b.className = 'list-badge';
+        b.textContent = `📍 ${outlets.length} outlets`;
         meta.appendChild(b);
       }
 
@@ -874,6 +900,15 @@
       const detail = document.createElement('div');
       detail.className = 'list-detail';
       detail.style.display = 'none';
+
+      // List individual outlets only when there's more than one
+      if (outlets.length > 1) {
+        const outletBox = document.createElement('div');
+        outletBox.className = 'outlet-list';
+        outletBox.innerHTML = '<div class="outlet-title">Outlets</div>' +
+          outlets.map(o => `<div class="outlet-item">📍 ${o}</div>`).join('');
+        detail.appendChild(outletBox);
+      }
 
       if (r['Notes']) {
         const note = document.createElement('div');
