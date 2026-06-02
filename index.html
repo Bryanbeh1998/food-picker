@@ -368,9 +368,83 @@
       font-weight: 500;
       white-space: nowrap;
     }
+
+    /* ── Been here / visited ── */
+    .been-btn {
+      background: none;
+      border: 1.5px solid #d0a0a0;
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-size: 0.75rem;
+      color: #b5651d;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .been-btn:hover { background: #fdf0e6; }
+    .been-btn.active { background: #e8a87c; border-color: #e8a87c; color: white; }
+
+    .list-item.visited { opacity: 0.5; }
+    .visited-badge {
+      background: #f5e0d0;
+      color: #b5651d;
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* ── Dark mode toggle ── */
+    .theme-toggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      background: white;
+      border: 1.5px solid #d0e8dc;
+      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      z-index: 50;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.15s;
+    }
+    .theme-toggle:active { transform: scale(0.92); }
+
+    /* ── Dark mode ── */
+    body.dark {
+      background: #14201b;
+      color: #e8f0ec;
+    }
+    body.dark .subtitle { color: #9bb5a8; }
+    body.dark .card,
+    body.dark .modal { background: #1d2c25; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+    body.dark .theme-toggle { background: #1d2c25; border-color: #3a5446; }
+    body.dark label { color: #b8ccc1; }
+    body.dark select,
+    body.dark input[type="text"] {
+      background: #14201b;
+      color: #e8f0ec;
+      border-color: #3a5446;
+    }
+    body.dark .list-item-name,
+    body.dark .group-item-name,
+    body.dark .manual-step strong { color: #e8f0ec; }
+    body.dark .manual-step p { color: #9bb5a8; }
+    body.dark .list-item { border-bottom-color: #2a3d33; }
+    body.dark .list-item-open { background: #243a30; }
+    body.dark .group-item { background: #243a30; }
+    body.dark .list-badge { background: #243a30; color: #7fc4a3; }
+    body.dark .count-hint { color: #9bb5a8; }
+    body.dark .modal-close { color: #9bb5a8; }
+    body.dark h1, body.dark h2 { color: #7fc4a3; }
   </style>
 </head>
 <body>
+
+  <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">🌙</button>
 
   <h1>🍽️ Where to Eat?</h1>
   <p class="subtitle">Filter and get a random pick</p>
@@ -384,9 +458,10 @@
       <div class="manual-section">
         <div class="manual-step"><span class="manual-num">1</span><div><strong>Pick a Place</strong><p>Use the filters at the top to narrow down by Type, Cuisine, Price Range, or Location. Then hit <strong>🎲 Pick a Place</strong> to get a random suggestion from your filtered list.</p></div></div>
         <div class="manual-step"><span class="manual-num">2</span><div><strong>Group Mode</strong><p>Deciding with friends? Hit <strong>👥 Group Mode</strong> to get multiple options at once. Use the dropdown to choose how many (3, 4, or 5). Hit <strong>New Options</strong> to reshuffle.</p></div></div>
-        <div class="manual-step"><span class="manual-num">3</span><div><strong>Browse the List</strong><p>Tap <strong>All Matches</strong> to see every restaurant that fits your current filters, sorted A–Z. A <span style="display:inline-block;width:7px;height:7px;background:#2d6a4f;border-radius:50%;vertical-align:middle;"></span> green dot means there's a note — tap the restaurant to reveal it.</p></div></div>
-        <div class="manual-step"><span class="manual-num">4</span><div><strong>Add a Place</strong><p>Tap <strong>➕ Add a Place</strong> to submit a new restaurant. Fill in the details and hit <strong>Add to List</strong> — it goes straight into the database. Refresh the page to see it appear.</p></div></div>
-        <div class="manual-step" style="margin-bottom:0;"><span class="manual-num">5</span><div><strong>Updating the List</strong><p>Your restaurant list lives in Google Sheets. You can add, edit, or delete rows there anytime. Just refresh the app and the changes will load automatically.</p></div></div>
+        <div class="manual-step"><span class="manual-num">3</span><div><strong>Browse the List</strong><p>Tap <strong>All Matches</strong> to see every restaurant that fits your current filters, grouped by cuisine. A <span style="display:inline-block;width:7px;height:7px;background:#2d6a4f;border-radius:50%;vertical-align:middle;"></span> green dot means there's a note — tap the restaurant to reveal it.</p></div></div>
+        <div class="manual-step"><span class="manual-num">4</span><div><strong>Been Here Recently</strong><p>Tap the <strong>✓</strong> button on a result or list item to mark it as visited. It'll be hidden from random picks for 7 days, so you don't get the same suggestion twice. Tap again to unmark.</p></div></div>
+        <div class="manual-step"><span class="manual-num">5</span><div><strong>Add or Edit a Place</strong><p>Tap <strong>➕ Add a Place</strong> to add a new restaurant, or the <strong>✏️</strong> button on any list item to edit or delete it. Changes save straight to the database — refresh to see them.</p></div></div>
+        <div class="manual-step" style="margin-bottom:0;"><span class="manual-num">6</span><div><strong>Dark Mode</strong><p>Tap the <strong>🌙 / ☀️</strong> button in the top-right corner to switch between light and dark themes. Your choice is remembered.</p></div></div>
       </div>
     </div>
   </div>
@@ -486,7 +561,10 @@
     <div class="result-name" id="resultName"></div>
     <div class="result-meta" id="resultMeta"></div>
     <div class="result-notes" id="resultNotes"></div>
-    <button class="reroll-btn" id="rerollBtn">🔄 Pick Again</button>
+    <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+      <button class="reroll-btn" id="rerollBtn">🔄 Pick Again</button>
+      <button class="reroll-btn" id="beenHereBtn">✓ Been Here</button>
+    </div>
   </div>
 
   <div class="card" id="groupCard" style="display:none;">
@@ -551,6 +629,7 @@
         </div>
       </div>
       <button class="pick-btn" id="editSubmit">Save Changes</button>
+      <button id="editDelete" style="width:100%; margin-top:10px; padding:12px; background:none; border:1.5px solid #d9534f; color:#d9534f; border-radius:10px; font-size:0.95rem; font-weight:600; cursor:pointer; font-family:inherit;">🗑️ Delete this Place</button>
       <p id="editStatus" style="text-align:center; font-size:0.85rem; margin-top:10px; min-height:1.2em;"></p>
     </div>
   </div>
@@ -757,8 +836,17 @@
         name.appendChild(dot);
       }
 
+      const visited = isRecentlyVisited(r['Name']);
+      if (visited) row.classList.add('visited');
+
       const meta = document.createElement('div');
       meta.className = 'list-item-meta';
+      if (visited) {
+        const vb = document.createElement('span');
+        vb.className = 'visited-badge';
+        vb.textContent = '✓ Visited';
+        meta.appendChild(vb);
+      }
       [['Price Range', '💰'], ['Location', '📍']].forEach(([k, icon]) => {
         if (r[k]) {
           const b = document.createElement('span');
@@ -770,6 +858,18 @@
 
       top.appendChild(name);
       top.appendChild(meta);
+
+      const beenBtn = document.createElement('button');
+      beenBtn.className = 'been-btn' + (visited ? ' active' : '');
+      beenBtn.textContent = '✓';
+      beenBtn.title = visited ? 'Visited recently — tap to unmark' : 'Mark as visited';
+      beenBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        toggleVisited(r['Name']);
+        updateCount();
+      });
+      top.appendChild(beenBtn);
+
       const editBtn = document.createElement('button');
       editBtn.className = 'edit-btn';
       editBtn.textContent = '✏️';
@@ -830,10 +930,21 @@
       document.getElementById(id).addEventListener('change', updateCount);
     });
 
+    let lastPicked = null;
+
     function pick() {
-      const filtered = getFiltered();
+      let filtered = getFiltered();
       if (!filtered.length) return;
+
+      // Exclude recently visited; fall back to full list if all are visited
+      const available = filtered.filter(r => !isRecentlyVisited(r['Name']));
+      if (available.length) filtered = available;
+
       const place = filtered[Math.floor(Math.random() * filtered.length)];
+      lastPicked = place['Name'];
+
+      const beenBtn = document.getElementById('beenHereBtn');
+      beenBtn.textContent = '✓ Been Here';
 
       document.getElementById('resultName').textContent = place['Name'] || '?';
 
@@ -858,10 +969,21 @@
     pickBtn.addEventListener('click', pick);
     rerollBtn.addEventListener('click', pick);
 
+    document.getElementById('beenHereBtn').addEventListener('click', () => {
+      if (!lastPicked) return;
+      toggleVisited(lastPicked);
+      const btn = document.getElementById('beenHereBtn');
+      btn.textContent = isRecentlyVisited(lastPicked) ? '✓ Marked! (hidden 7 days)' : '✓ Been Here';
+      updateCount();
+    });
+
     // ── Group Mode ───────────────────────────────────────────────
     function pickGroup() {
-      const filtered = getFiltered();
+      let filtered = getFiltered();
       if (!filtered.length) return;
+
+      const available = filtered.filter(r => !isRecentlyVisited(r['Name']));
+      if (available.length) filtered = available;
 
       const n = parseInt(document.getElementById('groupCount').value);
       const shuffled = [...filtered].sort(() => Math.random() - 0.5);
@@ -972,6 +1094,71 @@
 
       btn.disabled = false;
       btn.textContent = 'Save Changes';
+    });
+
+    // ── Delete a Place ───────────────────────────────────────────
+    document.getElementById('editDelete').addEventListener('click', async () => {
+      if (!confirm(`Delete "${editingOriginalName}"? This cannot be undone.`)) return;
+
+      const btn = document.getElementById('editDelete');
+      const status = document.getElementById('editStatus');
+      btn.disabled = true;
+      btn.textContent = 'Deleting...';
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'delete', Name: editingOriginalName })
+        });
+        // Remove locally so the list updates immediately
+        allRows = allRows.filter(r => r['Name'] !== editingOriginalName);
+        status.textContent = '✅ Deleted!';
+        status.style.color = '#2d6a4f';
+        setTimeout(() => { closeEditModal(); populateFilters(); updateCount(); }, 700);
+      } catch (err) {
+        status.textContent = '❌ Failed to delete. Check your connection.';
+        status.style.color = '#c0392b';
+      }
+
+      btn.disabled = false;
+      btn.textContent = '🗑️ Delete this Place';
+    });
+
+    // ── Been Here Recently (7-day exclusion) ─────────────────────
+    const VISITED_DAYS = 7;
+
+    function getVisited() {
+      try { return JSON.parse(localStorage.getItem('foodpicker_visited') || '{}'); }
+      catch { return {}; }
+    }
+
+    function isRecentlyVisited(name) {
+      const v = getVisited()[name];
+      if (!v) return false;
+      return (Date.now() - v) < VISITED_DAYS * 86400000;
+    }
+
+    function toggleVisited(name) {
+      const v = getVisited();
+      if (isRecentlyVisited(name)) delete v[name];
+      else v[name] = Date.now();
+      localStorage.setItem('foodpicker_visited', JSON.stringify(v));
+    }
+
+    // ── Dark Mode ────────────────────────────────────────────────
+    const themeToggle = document.getElementById('themeToggle');
+
+    function applyTheme(dark) {
+      document.body.classList.toggle('dark', dark);
+      themeToggle.textContent = dark ? '☀️' : '🌙';
+      localStorage.setItem('foodpicker_theme', dark ? 'dark' : 'light');
+    }
+
+    applyTheme(localStorage.getItem('foodpicker_theme') === 'dark');
+    themeToggle.addEventListener('click', () => {
+      applyTheme(!document.body.classList.contains('dark'));
     });
 
     // ── Add a Place ──────────────────────────────────────────────
