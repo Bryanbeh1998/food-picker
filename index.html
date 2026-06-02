@@ -382,18 +382,30 @@
       transition: background 0.15s;
     }
     .been-btn:hover { background: #fdf0e6; }
-    .been-btn.active { background: #e8a87c; border-color: #e8a87c; color: white; }
 
-    .list-item.visited { opacity: 0.5; }
-    .visited-badge {
-      background: #f5e0d0;
-      color: #b5651d;
-      border-radius: 20px;
-      padding: 3px 10px;
-      font-size: 0.7rem;
+    .visit-stepper {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .visit-stepper .been-btn {
+      width: 24px;
+      padding: 2px 0;
+      text-align: center;
+      font-weight: 700;
+    }
+    .visit-count {
+      font-size: 0.75rem;
       font-weight: 600;
+      color: #888;
+      min-width: 34px;
+      text-align: center;
       white-space: nowrap;
     }
+    .visit-count.active { color: #b5651d; }
+
+    .list-item.visited { opacity: 0.7; }
 
     /* ── Dark mode toggle ── */
     .theme-toggle {
@@ -459,7 +471,7 @@
         <div class="manual-step"><span class="manual-num">1</span><div><strong>Pick a Place</strong><p>Use the filters at the top to narrow down by Type, Cuisine, Price Range, or Location. Then hit <strong>🎲 Pick a Place</strong> to get a random suggestion from your filtered list.</p></div></div>
         <div class="manual-step"><span class="manual-num">2</span><div><strong>Group Mode</strong><p>Deciding with friends? Hit <strong>👥 Group Mode</strong> to get multiple options at once. Use the dropdown to choose how many (3, 4, or 5). Hit <strong>New Options</strong> to reshuffle.</p></div></div>
         <div class="manual-step"><span class="manual-num">3</span><div><strong>Browse the List</strong><p>Tap <strong>All Matches</strong> to see every restaurant that fits your current filters, grouped by cuisine. A <span style="display:inline-block;width:7px;height:7px;background:#2d6a4f;border-radius:50%;vertical-align:middle;"></span> green dot means there's a note — tap the restaurant to reveal it.</p></div></div>
-        <div class="manual-step"><span class="manual-num">4</span><div><strong>Been Here Recently</strong><p>Tap the <strong>✓</strong> button on a result or list item to mark it as visited. It'll be hidden from random picks for 7 days, so you don't get the same suggestion twice. Tap again to unmark.</p></div></div>
+        <div class="manual-step"><span class="manual-num">4</span><div><strong>Visit Counter</strong><p>Each list item has a <strong>🍽️ counter</strong> with <strong>+</strong> / <strong>−</strong> buttons, and results have a <strong>✓ Been Here</strong> button. The more times you've visited a place, the less often it gets suggested — but it's never fully excluded, so you can still go back to favourites.</p></div></div>
         <div class="manual-step"><span class="manual-num">5</span><div><strong>Add or Edit a Place</strong><p>Tap <strong>➕ Add a Place</strong> to add a new restaurant, or the <strong>✏️</strong> button on any list item to edit or delete it. Changes save straight to the database — refresh to see them.</p></div></div>
         <div class="manual-step" style="margin-bottom:0;"><span class="manual-num">6</span><div><strong>Dark Mode</strong><p>Tap the <strong>🌙 / ☀️</strong> button in the top-right corner to switch between light and dark themes. Your choice is remembered.</p></div></div>
       </div>
@@ -836,17 +848,11 @@
         name.appendChild(dot);
       }
 
-      const visited = isRecentlyVisited(r['Name']);
-      if (visited) row.classList.add('visited');
+      const count = visitCount(r['Name']);
+      if (count > 0) row.classList.add('visited');
 
       const meta = document.createElement('div');
       meta.className = 'list-item-meta';
-      if (visited) {
-        const vb = document.createElement('span');
-        vb.className = 'visited-badge';
-        vb.textContent = '✓ Visited';
-        meta.appendChild(vb);
-      }
       [['Price Range', '💰'], ['Location', '📍']].forEach(([k, icon]) => {
         if (r[k]) {
           const b = document.createElement('span');
@@ -859,16 +865,32 @@
       top.appendChild(name);
       top.appendChild(meta);
 
-      const beenBtn = document.createElement('button');
-      beenBtn.className = 'been-btn' + (visited ? ' active' : '');
-      beenBtn.textContent = '✓';
-      beenBtn.title = visited ? 'Visited recently — tap to unmark' : 'Mark as visited';
-      beenBtn.addEventListener('click', e => {
-        e.stopPropagation();
-        toggleVisited(r['Name']);
-        updateCount();
-      });
-      top.appendChild(beenBtn);
+      // Visit counter stepper: [−] 🍽️ n [+]
+      const stepper = document.createElement('div');
+      stepper.className = 'visit-stepper';
+
+      const minus = document.createElement('button');
+      minus.className = 'been-btn';
+      minus.textContent = '−';
+      minus.title = 'Remove a visit';
+      minus.style.visibility = count > 0 ? 'visible' : 'hidden';
+      minus.addEventListener('click', e => { e.stopPropagation(); changeVisit(r['Name'], -1); updateCount(); });
+
+      const countLabel = document.createElement('span');
+      countLabel.className = 'visit-count' + (count > 0 ? ' active' : '');
+      countLabel.textContent = `🍽️ ${count}`;
+      countLabel.title = 'Times visited';
+
+      const plus = document.createElement('button');
+      plus.className = 'been-btn';
+      plus.textContent = '+';
+      plus.title = 'Add a visit';
+      plus.addEventListener('click', e => { e.stopPropagation(); changeVisit(r['Name'], 1); updateCount(); });
+
+      stepper.appendChild(minus);
+      stepper.appendChild(countLabel);
+      stepper.appendChild(plus);
+      top.appendChild(stepper);
 
       const editBtn = document.createElement('button');
       editBtn.className = 'edit-btn';
@@ -933,18 +955,13 @@
     let lastPicked = null;
 
     function pick() {
-      let filtered = getFiltered();
+      const filtered = getFiltered();
       if (!filtered.length) return;
 
-      // Exclude recently visited; fall back to full list if all are visited
-      const available = filtered.filter(r => !isRecentlyVisited(r['Name']));
-      if (available.length) filtered = available;
-
-      const place = filtered[Math.floor(Math.random() * filtered.length)];
+      const place = weightedPick(filtered);
       lastPicked = place['Name'];
 
-      const beenBtn = document.getElementById('beenHereBtn');
-      beenBtn.textContent = '✓ Been Here';
+      updateBeenBtnLabel();
 
       document.getElementById('resultName').textContent = place['Name'] || '?';
 
@@ -969,25 +986,25 @@
     pickBtn.addEventListener('click', pick);
     rerollBtn.addEventListener('click', pick);
 
+    function updateBeenBtnLabel() {
+      const n = lastPicked ? visitCount(lastPicked) : 0;
+      document.getElementById('beenHereBtn').textContent = n > 0 ? `✓ Visited ${n}×` : '✓ Been Here';
+    }
+
     document.getElementById('beenHereBtn').addEventListener('click', () => {
       if (!lastPicked) return;
-      toggleVisited(lastPicked);
-      const btn = document.getElementById('beenHereBtn');
-      btn.textContent = isRecentlyVisited(lastPicked) ? '✓ Marked! (hidden 7 days)' : '✓ Been Here';
+      changeVisit(lastPicked, 1);
+      updateBeenBtnLabel();
       updateCount();
     });
 
     // ── Group Mode ───────────────────────────────────────────────
     function pickGroup() {
-      let filtered = getFiltered();
+      const filtered = getFiltered();
       if (!filtered.length) return;
 
-      const available = filtered.filter(r => !isRecentlyVisited(r['Name']));
-      if (available.length) filtered = available;
-
       const n = parseInt(document.getElementById('groupCount').value);
-      const shuffled = [...filtered].sort(() => Math.random() - 0.5);
-      const picks = shuffled.slice(0, Math.min(n, shuffled.length));
+      const picks = weightedSample(filtered, Math.min(n, filtered.length));
 
       const groupList = document.getElementById('groupList');
       groupList.innerHTML = '';
@@ -1126,25 +1143,48 @@
       btn.textContent = '🗑️ Delete this Place';
     });
 
-    // ── Been Here Recently (7-day exclusion) ─────────────────────
-    const VISITED_DAYS = 7;
-
-    function getVisited() {
-      try { return JSON.parse(localStorage.getItem('foodpicker_visited') || '{}'); }
+    // ── Visit Counter (weighted suggestions) ─────────────────────
+    // Each visit makes a place less likely to be picked, but never impossible.
+    // Weight = 1 / (visits + 1):  0 visits → 1.0,  1 → 0.5,  2 → 0.33, ...
+    function getVisits() {
+      try { return JSON.parse(localStorage.getItem('foodpicker_visits') || '{}'); }
       catch { return {}; }
     }
 
-    function isRecentlyVisited(name) {
-      const v = getVisited()[name];
-      if (!v) return false;
-      return (Date.now() - v) < VISITED_DAYS * 86400000;
+    function visitCount(name) {
+      return getVisits()[name] || 0;
     }
 
-    function toggleVisited(name) {
-      const v = getVisited();
-      if (isRecentlyVisited(name)) delete v[name];
-      else v[name] = Date.now();
-      localStorage.setItem('foodpicker_visited', JSON.stringify(v));
+    function changeVisit(name, delta) {
+      const v = getVisits();
+      const next = Math.max(0, (v[name] || 0) + delta);
+      if (next === 0) delete v[name]; else v[name] = next;
+      localStorage.setItem('foodpicker_visits', JSON.stringify(v));
+    }
+
+    function weightOf(name) {
+      return 1 / (visitCount(name) + 1);
+    }
+
+    // Weighted random single pick
+    function weightedPick(list) {
+      const weights = list.map(r => weightOf(r['Name']));
+      const total = weights.reduce((a, b) => a + b, 0);
+      let rnd = Math.random() * total;
+      for (let i = 0; i < list.length; i++) {
+        rnd -= weights[i];
+        if (rnd <= 0) return list[i];
+      }
+      return list[list.length - 1];
+    }
+
+    // Weighted sample without replacement (Efraimidis-Spirakis)
+    function weightedSample(list, n) {
+      return [...list]
+        .map(r => ({ r, key: Math.pow(Math.random(), 1 / weightOf(r['Name'])) }))
+        .sort((a, b) => b.key - a.key)
+        .slice(0, n)
+        .map(x => x.r);
     }
 
     // ── Dark Mode ────────────────────────────────────────────────
