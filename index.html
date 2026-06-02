@@ -40,6 +40,41 @@
       margin-bottom: 24px;
     }
 
+    .tab-bar {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 24px;
+      background: #e4f0ea;
+      border-radius: 12px;
+      padding: 5px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 11px;
+      border: none;
+      background: none;
+      border-radius: 9px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      font-family: inherit;
+      color: #5a7a6c;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .tab-btn.active {
+      background: white;
+      color: #2d6a4f;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    body.dark .tab-bar { background: #1d2c25; }
+    body.dark .tab-btn { color: #9bb5a8; }
+    body.dark .tab-btn.active { background: #2d6a4f; color: white; }
+
     .upload-area {
       border: 2px dashed #b7dfc9;
       border-radius: 12px;
@@ -436,17 +471,6 @@
 
     .list-item.visited { opacity: 0.7; }
 
-    .want-badge {
-      background: #fff3d6;
-      color: #b8860b;
-      border-radius: 20px;
-      padding: 3px 10px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-    body.dark .want-badge { background: #3d3622; color: #e8c66b; }
-
     /* ── Dark mode toggle ── */
     .theme-toggle {
       position: fixed;
@@ -503,6 +527,11 @@
   <h1>🍽️ Where to Eat?</h1>
   <p class="subtitle">Filter and get a random pick</p>
 
+  <div class="tab-bar" id="tabBar">
+    <button class="tab-btn active" data-tab="tried">🍽️ Where to Eat</button>
+    <button class="tab-btn" data-tab="wish">⭐ Want to Try</button>
+  </div>
+
   <div class="card" id="manualCard" style="max-width:600px; width:100%;">
     <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" id="manualToggle">
       <h2 style="font-size:1rem; color:#2d6a4f; font-weight:700;">📖 How to Use</h2>
@@ -515,7 +544,7 @@
         <div class="manual-step"><span class="manual-num">3</span><div><strong>Browse the List</strong><p>Tap <strong>All Matches</strong> to see every restaurant that fits your current filters, grouped by cuisine. A <span style="display:inline-block;width:7px;height:7px;background:#2d6a4f;border-radius:50%;vertical-align:middle;"></span> green dot means there's a note — tap the restaurant to reveal it.</p></div></div>
         <div class="manual-step"><span class="manual-num">4</span><div><strong>Visit Counter</strong><p>Each list item has a <strong>🍽️ counter</strong> with <strong>+</strong> / <strong>−</strong> buttons, and results have a <strong>✓ Been Here</strong> button. The more times you've visited a place, the less often it gets suggested — but it's never fully excluded, so you can still go back to favourites.</p></div></div>
         <div class="manual-step"><span class="manual-num">5</span><div><strong>Add or Edit a Place</strong><p>Tap <strong>➕ Add a Place</strong> to add a new restaurant, or the <strong>✏️</strong> button on any list item to edit or delete it. Changes save straight to the database — refresh to see them.</p></div></div>
-        <div class="manual-step"><span class="manual-num">6</span><div><strong>Want to Try</strong><p>Mark places you haven't been to yet by setting their <strong>Status</strong> to "Want to Try" (in the Add/Edit form). Use the <strong>Status</strong> filter to show only your wishlist — they're tagged <span class="want-badge">⭐ Want to try</span> in the list.</p></div></div>
+        <div class="manual-step"><span class="manual-num">6</span><div><strong>Two Tabs</strong><p>Switch between <strong>🍽️ Where to Eat</strong> (places you go to) and <strong>⭐ Want to Try</strong> (your bucket list) using the tabs up top. Each has its own list and picker. When you finally visit a wishlist place, pick it and hit <strong>🍽️ Mark as Tried</strong> to move it over to your main list automatically.</p></div></div>
         <div class="manual-step" style="margin-bottom:0;"><span class="manual-num">7</span><div><strong>Dark Mode</strong><p>Tap the <strong>🌙 / ☀️</strong> button in the top-right corner to switch between light and dark themes. Your choice is remembered.</p></div></div>
       </div>
     </div>
@@ -539,14 +568,6 @@
         <label>Location</label>
         <select id="filterLocation"><option value="">Any</option></select>
       </div>
-      <div style="grid-column:1/-1;">
-        <label>Status</label>
-        <select id="filterStatus">
-          <option value="">Any</option>
-          <option value="tried">Tried</option>
-          <option value="want">⭐ Want to Try</option>
-        </select>
-      </div>
     </div>
     <div style="display:flex; gap:10px;">
       <button class="pick-btn" id="pickBtn">🎲 Pick a Place</button>
@@ -557,7 +578,7 @@
 
   <div class="card" id="addCard">
     <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" id="addToggle">
-      <h2 style="font-size:1rem; color:#2d6a4f; font-weight:700;">➕ Add a Place</h2>
+      <h2 id="addTitle" style="font-size:1rem; color:#2d6a4f; font-weight:700;">➕ Add a Place</h2>
       <span id="addChevron" style="font-size:0.85rem; color:#2d6a4f;">▼</span>
     </div>
     <div id="addForm" style="display:none; margin-top:18px;">
@@ -594,13 +615,6 @@
           <label>Location</label>
           <input id="addLocation" type="text" placeholder="e.g. Clarke Quay" />
         </div>
-        <div>
-          <label>Status</label>
-          <select id="addStatusField">
-            <option value="">Tried</option>
-            <option value="Want to Try">Want to Try</option>
-          </select>
-        </div>
         <div style="grid-column:1/-1;">
           <label>Notes</label>
           <input id="addNotes" type="text" placeholder="Any extra info" />
@@ -630,6 +644,7 @@
     <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
       <button class="reroll-btn" id="rerollBtn">🔄 Pick Again</button>
       <button class="reroll-btn" id="beenHereBtn">✓ Been Here</button>
+      <button class="reroll-btn" id="markTriedBtn" style="display:none;">🍽️ Mark as Tried</button>
       <a class="reroll-btn" id="mapsBtn" href="#" target="_blank" rel="noopener" style="text-decoration:none; display:inline-block;">📍 Open in Maps</a>
     </div>
   </div>
@@ -690,13 +705,6 @@
           <label>Location</label>
           <input id="editLocation" type="text" />
         </div>
-        <div>
-          <label>Status</label>
-          <select id="editStatusField">
-            <option value="">Tried</option>
-            <option value="Want to Try">Want to Try</option>
-          </select>
-        </div>
         <div style="grid-column:1/-1;">
           <label>Notes</label>
           <input id="editNotes" type="text" />
@@ -710,10 +718,19 @@
 
   <script>
     // ============================================================
-    // GOOGLE SHEETS DATA SOURCE
-    // To update your restaurant list, just edit your Google Sheet.
+    // GOOGLE SHEETS DATA SOURCES
+    // Two tabs in the same spreadsheet, each published as CSV.
     // ============================================================
-    const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQL1lE_VlPGQS9CDcR-wZREWpSD2MW1Jtk8jYW8dBVW5BnHecTE-Y0TEG-zI7MCKorwJGAe0JL-nZfG/pub?gid=0&single=true&output=csv';
+    const TRIED_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQL1lE_VlPGQS9CDcR-wZREWpSD2MW1Jtk8jYW8dBVW5BnHecTE-Y0TEG-zI7MCKorwJGAe0JL-nZfG/pub?gid=0&single=true&output=csv';
+    const WISH_CSV_URL  = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQL1lE_VlPGQS9CDcR-wZREWpSD2MW1Jtk8jYW8dBVW5BnHecTE-Y0TEG-zI7MCKorwJGAe0JL-nZfG/pub?gid=1180892767&single=true&output=csv';
+
+    // The tab names in your spreadsheet (used when writing back via Apps Script)
+    const WISH_SHEET_NAME = 'Wishlist';
+
+    let activeTab = 'tried';   // 'tried' or 'wish'
+    let triedRows = [];
+    let wishRows = [];
+    function activeSheetName() { return activeTab === 'wish' ? WISH_SHEET_NAME : ''; }
 
     function parseCSV(text) {
       const lines = text.trim().split('\n');
@@ -734,81 +751,7 @@
       }).filter(r => r[headers[0]]);
     }
 
-    // placeholder so the rest of the code references allRows
-    let allRows = [
-      {"Name": "Wang Dae Bak Korean BBQ", "Type": "Restaurant", "Cuisine": "Korean", "Price Range": "$$$", "Location": "Cross street", "Notes": "KBBQ"},
-      {"Name": "Oriental Chinese Restaurant", "Type": "Restaurant", "Cuisine": "Chinese", "Price Range": "$$", "Location": "Chinatown", "Notes": "China skewers"},
-      {"Name": "Gu Zao Ren", "Type": "Restaurant", "Cuisine": "Chinese", "Price Range": "$$", "Location": "Bugis", "Notes": "Authentic Fujian cuisine"},
-      {"Name": "Lavo", "Type": "Restaurant", "Cuisine": "Italian", "Price Range": "$$$$", "Location": "Marina Bay", "Notes": "Rooftop views, good pasta"},
-      {"Name": "PS. Cafe", "Type": "Restaurant", "Cuisine": "Western", "Price Range": "$$$", "Location": "Dempsey", "Notes": "Cozy brunch spot"},
-      {"Name": "Tim Ho Wan", "Type": "Restaurant", "Cuisine": "Dim Sum", "Price Range": "$", "Location": "Toa Payoh", "Notes": "Michelin-starred dim sum"},
-      {"Name": "Paradise Dynasty", "Type": "Restaurant", "Cuisine": "Chinese", "Price Range": "$$", "Location": "Ion Orchard", "Notes": "Colorful xiao long bao"},
-      {"Name": "Ramen Keisuke", "Type": "Restaurant", "Cuisine": "Japanese", "Price Range": "$", "Location": "Tanjong Pagar", "Notes": "Rich tonkotsu broth"},
-      {"Name": "Boon Tong Kee", "Type": "Restaurant", "Cuisine": "Chinese", "Price Range": "$$", "Location": "Balestier", "Notes": "Classic Hainanese chicken rice"},
-      {"Name": "Huevos", "Type": "Restaurant", "Cuisine": "Mexican", "Price Range": "$$$", "Location": "N bridge road", "Notes": ""},
-      {"Name": "Siam Square Mookata", "Type": "Restaurant", "Cuisine": "Thai", "Price Range": "$$", "Location": "Golden Mile", "Notes": ""},
-      {"Name": "Ah Lim's Mee Pok", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$", "Location": "Simpang Bedok", "Notes": ""},
-      {"Name": "Soi 19", "Type": "Eatery", "Cuisine": "Thai", "Price Range": "$", "Location": "Kovan", "Notes": "Thai wantan mee"},
-      {"Name": "Bored Tacos", "Type": "Restaurant", "Cuisine": "Mexican", "Price Range": "$$", "Location": "Kovan", "Notes": "Under AF Kovan"},
-      {"Name": "Chef Wai", "Type": "Eatery", "Cuisine": "Chinese", "Price Range": "$$", "Location": "New Tech Park", "Notes": ""},
-      {"Name": "Mong Kok Dimsum", "Type": "Eatery", "Cuisine": "Chinese", "Price Range": "$$", "Location": "Geylang", "Notes": ""},
-      {"Name": "Omote", "Type": "Restaurant", "Cuisine": "Japanese", "Price Range": "$$", "Location": "Thomson plaza", "Notes": ""},
-      {"Name": "De Fe Seafood", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$", "Location": "Amk 529", "Notes": "Pek Pek house zhicar"},
-      {"Name": "Seoul Noodle Shop", "Type": "Eatery", "Cuisine": "Korean", "Price Range": "$$", "Location": "Nex, Junction 8", "Notes": ""},
-      {"Name": "Fuego Mesa", "Type": "Restaurant", "Cuisine": "Mexican", "Price Range": "$$", "Location": "Farrer Park", "Notes": "Knock off Huevos"},
-      {"Name": "CoCo Ichibanya", "Type": "Restaurant", "Cuisine": "Japanese", "Price Range": "$$", "Location": "Plaza Singapura, Star Vista", "Notes": ""},
-      {"Name": "Sushi Zushi", "Type": "Restaurant", "Cuisine": "Japanese", "Price Range": "$$", "Location": "Funan", "Notes": ""},
-      {"Name": "Bao Er Café", "Type": "Eatery", "Cuisine": "Chinese", "Price Range": "$", "Location": "Balestier Plaza", "Notes": "Hokkien mee"},
-      {"Name": "Chomp Chomp", "Type": "Eatery", "Cuisine": "Chinese", "Price Range": "$", "Location": "Serangoon Garden", "Notes": ""},
-      {"Name": "Surrey Hills Grocer", "Type": "Restaurant", "Cuisine": "Café", "Price Range": "$$$", "Location": "Vivo city, Woodleigh mall", "Notes": ""},
-      {"Name": "PST Pizza Studio Tamaki", "Type": "Restaurant", "Cuisine": "Japanese", "Price Range": "$$$", "Location": "Tanjong Pagar", "Notes": "Fusion japanese pizza"},
-      {"Name": "Neptune Café", "Type": "Café", "Cuisine": "Café", "Price Range": "$$", "Location": "East Coast Road", "Notes": ""},
-      {"Name": "Basil King", "Type": "Hawker", "Cuisine": "Thai", "Price Range": "$", "Location": "Kovan, AMK", "Notes": ""},
-      {"Name": "Yaowarat Seafood", "Type": "Restaurant", "Cuisine": "Thai", "Price Range": "$$", "Location": "Lavender", "Notes": "Thai Chinese Zhicar"},
-      {"Name": "Tom Yum Mama", "Type": "Eatery", "Cuisine": "Thai", "Price Range": "$$", "Location": "Upper Thomson", "Notes": ""},
-      {"Name": "Five Guys", "Type": "Eatery", "Cuisine": "Western", "Price Range": "$$", "Location": "Ion Orchard", "Notes": ""},
-      {"Name": "Tan Yu", "Type": "Restaurant", "Cuisine": "Chinese", "Price Range": "$$$", "Location": "313 Somerset, Vivo city, Bugis", "Notes": ""},
-      {"Name": "Noodle Star K", "Type": "Restaurant", "Cuisine": "Korean", "Price Range": "$$", "Location": "Funan", "Notes": ""},
-      {"Name": "Rui Heng Braised Duck", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$", "Location": "Kovan", "Notes": "Duck rice behind my house"},
-      {"Name": "La Table d'Emma", "Type": "Restaurant", "Cuisine": "French", "Price Range": "$$$", "Location": "Telok Ayer", "Notes": ""},
-      {"Name": "Nanta BBQ", "Type": "Restaurant", "Cuisine": "Korean", "Price Range": "$$$", "Location": "Novena", "Notes": ""},
-      {"Name": "Song Fa", "Type": "Restaurant", "Cuisine": "Chinese", "Price Range": "$$", "Location": "Novena, Seletar Mall", "Notes": ""},
-      {"Name": "The Bark Café", "Type": "Restaurant", "Cuisine": "Chinese", "Price Range": "$$$", "Location": "Changi Prison", "Notes": ""},
-      {"Name": "Grub Pasta Kitchen", "Type": "Restaurant", "Cuisine": "Italian", "Price Range": "$$$", "Location": "Bishan Park", "Notes": ""},
-      {"Name": "Feng Food", "Type": "Eatery", "Cuisine": "Chinese", "Price Range": "$$", "Location": "Northpoint", "Notes": ""},
-      {"Name": "Lola's Café", "Type": "Café", "Cuisine": "Café", "Price Range": "$$", "Location": "Kovan", "Notes": ""},
-      {"Name": "Papi's Tacos", "Type": "Restaurant", "Cuisine": "Mexican", "Price Range": "$$$", "Location": "Seah street, Tanjong Pagar", "Notes": ""},
-      {"Name": "Yishun Park Hawker", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$", "Location": "Yishun park", "Notes": ""},
-      {"Name": "Sushiro", "Type": "Eatery", "Cuisine": "Japanese", "Price Range": "$$", "Location": "Waterway point, Thomson Plaza, Suntec City", "Notes": ""},
-      {"Name": "8 Degrees Taiwan", "Type": "Eatery", "Cuisine": "Taiwanese", "Price Range": "$$", "Location": "Kovan", "Notes": ""},
-      {"Name": "Toku Nori Handroll Bar", "Type": "Restaurant", "Cuisine": "Japanese", "Price Range": "$$$", "Location": "", "Notes": ""},
-      {"Name": "Jeong's Jjajang", "Type": "Restaurant", "Cuisine": "Korean", "Price Range": "$$", "Location": "Killiney Road", "Notes": ""},
-      {"Name": "Serangoon Garden Market", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$", "Location": "Serangoon Garden", "Notes": ""},
-      {"Name": "Hong Lim Hawker Centre", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$", "Location": "", "Notes": ""},
-      {"Name": "Old Airport Road Hawker Centre", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$", "Location": "Old Airport Road", "Notes": ""},
-      {"Name": "ABC Market", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$", "Location": "Queensway", "Notes": ""},
-      {"Name": "Alexandria Village", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$", "Location": "Queensway", "Notes": ""},
-      {"Name": "Yeo Keng Nam", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$$", "Location": "Serangoon", "Notes": "Chicken Rice"},
-      {"Name": "Xiang Xiang", "Type": "Restaurant", "Cuisine": "Chinese", "Price Range": "$$", "Location": "AMK Hub, Nex, Hougang Mall", "Notes": ""},
-      {"Name": "Xing Hua Lo", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$$", "Location": "AMK", "Notes": "Opposite Karen Yi Yi house"},
-      {"Name": "iSteaks", "Type": "Restaurant", "Cuisine": "Western", "Price Range": "$$", "Location": "myVillage, Star Vista", "Notes": ""},
-      {"Name": "Newton Food Centre", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$$", "Location": "Newton", "Notes": ""},
-      {"Name": "Adam Road Food Centre", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$", "Location": "Adam Road", "Notes": ""},
-      {"Name": "Chindamani", "Type": "Eatery", "Cuisine": "Indian", "Price Range": "$", "Location": "Defu , Kovan", "Notes": ""},
-      {"Name": "Rong Liang", "Type": "Eatery", "Cuisine": "Chinese", "Price Range": "$", "Location": "Clementi", "Notes": "Roast pork rice from uni"},
-      {"Name": "Black Tap", "Type": "Restaurant", "Cuisine": "Western", "Price Range": "$$$", "Location": "MBS", "Notes": ""},
-      {"Name": "Chinatown Complex", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$", "Location": "Chinatown", "Notes": ""},
-      {"Name": "Tiong Bahru Market", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$", "Location": "Tiong Bahru", "Notes": ""},
-      {"Name": "ECP Lagoon Hawker", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$", "Location": "ECP", "Notes": ""},
-      {"Name": "Lor Ah Soo Hawker", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$", "Location": "Lor Ah Soo", "Notes": ""},
-      {"Name": "Ahjummas", "Type": "Restaurant", "Cuisine": "Korean", "Price Range": "$$", "Location": "Northpoint, PLQ, Funan", "Notes": ""},
-      {"Name": "Maxwell Food Centre", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$", "Location": "Maxwell", "Notes": ""},
-      {"Name": "Bistecca Tuscan Steakhouse", "Type": "Restaurant", "Cuisine": "Western", "Price Range": "$$$$", "Location": "Mohamed Sultan Road", "Notes": ""},
-      {"Name": "Modu", "Type": "Restaurant", "Cuisine": "Korean", "Price Range": "$$$", "Location": "Mandarin Gallery", "Notes": ""},
-      {"Name": "Drim Korean Steak House", "Type": "Restaurant", "Cuisine": "Korean", "Price Range": "$$$$", "Location": "Mandarin Gallery", "Notes": ""},
-      {"Name": "Beauty in the Pot", "Type": "Restaurant", "Cuisine": "Chinese", "Price Range": "$$$", "Location": "Nex", "Notes": ""},
-      {"Name": "HDB Hub Hawker", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$", "Location": "TPY", "Notes": ""}
-    ];
+    let allRows = [];
     // ============================================================
 
     const filterCard = document.getElementById('filterCard');
@@ -822,19 +765,45 @@
     filterCard.style.pointerEvents = 'none';
     countHint.textContent = 'Loading from Google Sheets...';
 
-    fetch(SHEET_CSV_URL)
-      .then(r => r.text())
-      .then(text => {
-        allRows = parseCSV(text);
-        filterCard.style.opacity = '1';
-        filterCard.style.pointerEvents = 'auto';
-        populateFilters();
-        updateCount();
-      })
-      .catch(() => {
-        countHint.textContent = '⚠️ Could not load data. Check your internet connection.';
-        filterCard.style.opacity = '1';
-      });
+    Promise.all([
+      fetch(TRIED_CSV_URL).then(r => r.text()),
+      fetch(WISH_CSV_URL).then(r => r.text())
+    ]).then(([triedText, wishText]) => {
+      triedRows = parseCSV(triedText);
+      wishRows = parseCSV(wishText);
+      filterCard.style.opacity = '1';
+      filterCard.style.pointerEvents = 'auto';
+      switchTab(activeTab);
+    }).catch(() => {
+      countHint.textContent = '⚠️ Could not load data. Check your internet connection.';
+      filterCard.style.opacity = '1';
+    });
+
+    // ── Tab switching ────────────────────────────────────────────
+    function switchTab(tab) {
+      activeTab = tab;
+      allRows = (tab === 'wish') ? wishRows : triedRows;
+
+      document.querySelectorAll('.tab-btn').forEach(b =>
+        b.classList.toggle('active', b.dataset.tab === tab));
+
+      // Update headings/labels for context
+      document.querySelector('.subtitle').textContent =
+        tab === 'wish' ? 'Pick something new to try' : 'Filter and get a random pick';
+      document.getElementById('addTitle').textContent =
+        tab === 'wish' ? '➕ Add to Wishlist' : '➕ Add a Place';
+
+      // Hide any previous result/group output
+      resultCard.style.display = 'none';
+      document.getElementById('groupCard').style.display = 'none';
+
+      populateFilters();
+      updateCount();
+    }
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
 
     document.getElementById('manualToggle').addEventListener('click', () => {
       const content = document.getElementById('manualContent');
@@ -868,9 +837,6 @@
       return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(query);
     }
 
-    function isWantToTry(r) {
-      return (r['Status'] || '').toLowerCase().includes('want');
-    }
 
     function fillSelect(id, values) {
       const sel = document.getElementById(id);
@@ -883,15 +849,12 @@
       const price = document.getElementById('filterPrice').value;
       const location = document.getElementById('filterLocation').value;
       const type = document.getElementById('filterType').value;
-      const status = document.getElementById('filterStatus').value;
 
       return allRows.filter(r => {
         if (type && r['Type'] !== type) return false;
         if (cuisine && r['Cuisine'] !== cuisine) return false;
         if (price && r['Price Range'] !== price) return false;
         if (location && !splitLocations(r['Location']).includes(location)) return false;
-        if (status === 'want' && !isWantToTry(r)) return false;
-        if (status === 'tried' && isWantToTry(r)) return false;
         return true;
       });
     }
@@ -930,12 +893,6 @@
 
       const meta = document.createElement('div');
       meta.className = 'list-item-meta';
-      if (isWantToTry(r)) {
-        const w = document.createElement('span');
-        w.className = 'want-badge';
-        w.textContent = '⭐ Want to try';
-        meta.appendChild(w);
-      }
       if (outlets.length === 1) {
         const b = document.createElement('span');
         b.className = 'list-badge';
@@ -1063,11 +1020,12 @@
       });
     }
 
-    ['filterType', 'filterCuisine', 'filterPrice', 'filterLocation', 'filterStatus'].forEach(id => {
+    ['filterType', 'filterCuisine', 'filterPrice', 'filterLocation'].forEach(id => {
       document.getElementById(id).addEventListener('change', updateCount);
     });
 
     let lastPicked = null;
+    let lastPickedRow = null;
 
     function pick() {
       const filtered = getFiltered();
@@ -1075,8 +1033,13 @@
 
       const place = weightedPick(filtered);
       lastPicked = place['Name'];
+      lastPickedRow = place;
 
       updateBeenBtnLabel();
+
+      // Show "Mark as Tried" only on the wishlist tab; hide "Been Here" there
+      document.getElementById('markTriedBtn').style.display = activeTab === 'wish' ? 'inline-block' : 'none';
+      document.getElementById('beenHereBtn').style.display = activeTab === 'wish' ? 'none' : 'inline-block';
 
       document.getElementById('resultName').textContent = place['Name'] || '?';
 
@@ -1117,6 +1080,38 @@
       updateBeenBtnLabel();
       updateCount();
     });
+
+    document.getElementById('markTriedBtn').addEventListener('click', () => {
+      if (lastPickedRow) markAsTried(lastPickedRow);
+    });
+
+    // ── Mark a wishlist place as Tried (moves it to the main list) ──
+    async function markAsTried(r) {
+      if (!confirm(`Move "${r['Name']}" from your wishlist to your tried list?`)) return;
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'markTried',
+            sheet: WISH_SHEET_NAME,
+            Name: r['Name'], Type: r['Type'], Cuisine: r['Cuisine'],
+            'Price Range': r['Price Range'], Location: r['Location'], Notes: r['Notes']
+          })
+        });
+        // Update locally: remove from wishlist, add to tried
+        const i = wishRows.findIndex(x => x['Name'] === r['Name']);
+        if (i >= 0) wishRows.splice(i, 1);
+        triedRows.push(r);
+        resultCard.style.display = 'none';
+        updateCount();
+        alert(`✅ "${r['Name']}" moved to your tried list!`);
+      } catch (err) {
+        alert('❌ Failed to move. Check your connection.');
+      }
+    }
 
     // ── Group Mode ───────────────────────────────────────────────
     function pickGroup() {
@@ -1177,7 +1172,6 @@
       document.getElementById('editCuisine').value = r['Cuisine'] || '';
       document.getElementById('editPrice').value = r['Price Range'] || '';
       document.getElementById('editLocation').value = r['Location'] || '';
-      document.getElementById('editStatusField').value = isWantToTry(r) ? 'Want to Try' : '';
       document.getElementById('editNotes').value = r['Notes'] || '';
       document.getElementById('editStatus').textContent = '';
       document.getElementById('editModal').classList.add('open');
@@ -1209,7 +1203,7 @@
         'Price Range': document.getElementById('editPrice').value,
         Location: document.getElementById('editLocation').value.trim(),
         Notes: document.getElementById('editNotes').value.trim(),
-        Status: document.getElementById('editStatusField').value
+        sheet: activeSheetName()
       };
 
       const btn = document.getElementById('editSubmit');
@@ -1249,10 +1243,11 @@
           method: 'POST',
           mode: 'no-cors',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'delete', Name: editingOriginalName })
+          body: JSON.stringify({ action: 'delete', Name: editingOriginalName, sheet: activeSheetName() })
         });
-        // Remove locally so the list updates immediately
-        allRows = allRows.filter(r => r['Name'] !== editingOriginalName);
+        // Remove locally (mutate in place so the tab reference stays valid)
+        const di = allRows.findIndex(r => r['Name'] === editingOriginalName);
+        if (di >= 0) allRows.splice(di, 1);
         status.textContent = '✅ Deleted!';
         status.style.color = '#2d6a4f';
         setTimeout(() => { closeEditModal(); populateFilters(); updateCount(); }, 700);
@@ -1349,7 +1344,7 @@
         'Price Range': document.getElementById('addPrice').value,
         Location: document.getElementById('addLocation').value.trim(),
         Notes: document.getElementById('addNotes').value.trim(),
-        Status: document.getElementById('addStatusField').value
+        sheet: activeSheetName()
       };
 
       const btn = document.getElementById('addSubmit');
@@ -1366,14 +1361,22 @@
           body: JSON.stringify(entry)
         });
 
-        status.textContent = `✅ "${name}" added! Refresh the page to see it.`;
+        // Add locally so it shows immediately (mutate the active array in place)
+        const newRow = {
+          Name: entry.Name, Type: entry.Type, Cuisine: entry.Cuisine,
+          'Price Range': entry['Price Range'], Location: entry.Location, Notes: entry.Notes
+        };
+        allRows.push(newRow);
+        populateFilters();
+        updateCount();
+
+        status.textContent = `✅ "${name}" added!`;
         status.style.color = '#2d6a4f';
 
         // Clear form
         ['addName', 'addCuisine', 'addLocation', 'addNotes'].forEach(id => document.getElementById(id).value = '');
         document.getElementById('addType').value = '';
         document.getElementById('addPrice').value = '';
-        document.getElementById('addStatusField').value = '';
       } catch (err) {
         status.textContent = '❌ Failed to add. Check your connection.';
         status.style.color = '#c0392b';
