@@ -266,7 +266,7 @@
     // Each entry must have at minimum a "Name".
     // Other fields: Cuisine, Price Range ($ / $$ / $$$), Rating (1-5), Location, Notes
     // ============================================================
-                            const allRows = [
+                                const allRows = [
       {"Name": "Wang Dae Bak Korean BBQ", "Type": "Restaurant", "Cuisine": "Korean", "Price Range": "$$$", "Location": "Cross street", "Notes": "KBBQ"},
       {"Name": "Oriental Chinese Restaurant", "Type": "Restaurant", "Cuisine": "Chinese", "Price Range": "$$", "Location": "Chinatown", "Notes": "China skewers"},
       {"Name": "Gu Zao Ren", "Type": "Restaurant", "Cuisine": "Chinese", "Price Range": "$$", "Location": "Bugis", "Notes": "Authentic Fujian cuisine"},
@@ -332,8 +332,13 @@
       {"Name": "Tiong Bahru Market", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$", "Location": "Tiong Bahru", "Notes": ""},
       {"Name": "ECP Lagoon Hawker", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$", "Location": "ECP", "Notes": ""},
       {"Name": "Lor Ah Soo Hawker", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$", "Location": "Lor Ah Soo", "Notes": ""},
-      {"Name": "Ahjummas", "Type": "Hawker", "Cuisine": "Korean", "Price Range": "$$", "Location": "Northpoint, PLQ, Funan", "Notes": ""},
-      {"Name": "Maxwell Food Centre", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$", "Location": "Maxwell", "Notes": ""}
+      {"Name": "Ahjummas", "Type": "Restaurant", "Cuisine": "Korean", "Price Range": "$$", "Location": "Northpoint, PLQ, Funan", "Notes": ""},
+      {"Name": "Maxwell Food Centre", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$", "Location": "Maxwell", "Notes": ""},
+      {"Name": "Bistecca Tuscan Steakhouse", "Type": "Restaurant", "Cuisine": "Western", "Price Range": "$$$$", "Location": "Mohamed Sultan Road", "Notes": ""},
+      {"Name": "Modu", "Type": "Restaurant", "Cuisine": "Korean", "Price Range": "$$$", "Location": "Mandarin Gallery", "Notes": ""},
+      {"Name": "Drim Korean Steak House", "Type": "Restaurant", "Cuisine": "Korean", "Price Range": "$$$$", "Location": "Mandarin Gallery", "Notes": ""},
+      {"Name": "Beauty in the Pot", "Type": "Restaurant", "Cuisine": "Chinese", "Price Range": "$$$", "Location": "Nex", "Notes": ""},
+      {"Name": "HDB Hub Hawker", "Type": "Hawker", "Cuisine": "Chinese", "Price Range": "$", "Location": "TPY", "Notes": ""}
     ];
     // ============================================================
 
@@ -411,7 +416,7 @@
 
         const meta = document.createElement('div');
         meta.className = 'list-item-meta';
-        [['Type', '🏪'], ['Cuisine', '🍜'], ['Price Range', '💰'], ['Location', '📍']].forEach(([k, icon]) => {
+        [['Price Range', '💰'], ['Location', '📍']].forEach(([k, icon]) => {
           if (r[k]) {
             const b = document.createElement('span');
             b.className = 'list-badge';
