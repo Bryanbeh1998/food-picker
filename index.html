@@ -224,6 +224,31 @@
       border-top: 1px dashed #c2e0d0;
     }
 
+    .manual-step {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 16px;
+      align-items: flex-start;
+    }
+
+    .manual-num {
+      background: #2d6a4f;
+      color: white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .manual-step strong { font-size: 0.9rem; display: block; margin-bottom: 3px; color: #1a1a1a; }
+    .manual-step p { font-size: 0.83rem; color: #555; line-height: 1.5; margin: 0; }
+
     .group-btn {
       background: #40916c;
       flex-shrink: 0;
@@ -274,6 +299,22 @@
 
   <h1>🍽️ Where to Eat?</h1>
   <p class="subtitle">Filter and get a random pick</p>
+
+  <div class="card" id="manualCard" style="max-width:600px; width:100%;">
+    <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" id="manualToggle">
+      <h2 style="font-size:1rem; color:#2d6a4f; font-weight:700;">📖 How to Use</h2>
+      <span id="manualChevron" style="font-size:0.85rem; color:#2d6a4f;">▼</span>
+    </div>
+    <div id="manualContent" style="display:none; margin-top:16px;">
+      <div class="manual-section">
+        <div class="manual-step"><span class="manual-num">1</span><div><strong>Pick a Place</strong><p>Use the filters at the top to narrow down by Type, Cuisine, Price Range, or Location. Then hit <strong>🎲 Pick a Place</strong> to get a random suggestion from your filtered list.</p></div></div>
+        <div class="manual-step"><span class="manual-num">2</span><div><strong>Group Mode</strong><p>Deciding with friends? Hit <strong>👥 Group Mode</strong> to get multiple options at once. Use the dropdown to choose how many (3, 4, or 5). Hit <strong>New Options</strong> to reshuffle.</p></div></div>
+        <div class="manual-step"><span class="manual-num">3</span><div><strong>Browse the List</strong><p>Tap <strong>All Matches</strong> to see every restaurant that fits your current filters, sorted A–Z. A <span style="display:inline-block;width:7px;height:7px;background:#2d6a4f;border-radius:50%;vertical-align:middle;"></span> green dot means there's a note — tap the restaurant to reveal it.</p></div></div>
+        <div class="manual-step"><span class="manual-num">4</span><div><strong>Add a Place</strong><p>Tap <strong>➕ Add a Place</strong> to submit a new restaurant. Fill in the details and hit <strong>Add to List</strong> — it goes straight into the database. Refresh the page to see it appear.</p></div></div>
+        <div class="manual-step" style="margin-bottom:0;"><span class="manual-num">5</span><div><strong>Updating the List</strong><p>Your restaurant list lives in Google Sheets. You can add, edit, or delete rows there anytime. Just refresh the app and the changes will load automatically.</p></div></div>
+      </div>
+    </div>
+  </div>
 
   <div class="card" id="filterCard">
     <div class="filters">
@@ -516,6 +557,14 @@
         countHint.textContent = '⚠️ Could not load data. Check your internet connection.';
         filterCard.style.opacity = '1';
       });
+
+    document.getElementById('manualToggle').addEventListener('click', () => {
+      const content = document.getElementById('manualContent');
+      const chevron = document.getElementById('manualChevron');
+      const open = content.style.display !== 'none';
+      content.style.display = open ? 'none' : 'block';
+      chevron.textContent = open ? '▼' : '▲';
+    });
 
     let listExpanded = false;
     document.getElementById('listToggle').addEventListener('click', () => {
