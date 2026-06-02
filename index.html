@@ -224,6 +224,41 @@
       border-top: 1px dashed #c2e0d0;
     }
 
+    .group-btn {
+      background: #40916c;
+      flex-shrink: 0;
+      width: auto;
+      padding: 14px 20px;
+    }
+
+    .group-btn:hover { background: #2d6a4f; }
+
+    .group-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: #f4faf7;
+      margin-bottom: 8px;
+      gap: 10px;
+    }
+
+    .group-item:last-child { margin-bottom: 0; }
+
+    .group-item-num {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #2d6a4f;
+      min-width: 24px;
+    }
+
+    .group-item-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      flex: 1;
+    }
+
     .list-badge {
       background: #edf7f2;
       color: #2d6a4f;
@@ -263,7 +298,10 @@
         <select id="filterLocation"><option value="">Any</option></select>
       </div>
     </div>
-    <button class="pick-btn" id="pickBtn">🎲 Pick a Place</button>
+    <div style="display:flex; gap:10px;">
+      <button class="pick-btn" id="pickBtn">🎲 Pick a Place</button>
+      <button class="pick-btn group-btn" id="groupBtn">👥 Group Mode</button>
+    </div>
     <p class="count-hint" id="countHint"></p>
   </div>
 
@@ -333,6 +371,22 @@
     <div class="result-meta" id="resultMeta"></div>
     <div class="result-notes" id="resultNotes"></div>
     <button class="reroll-btn" id="rerollBtn">🔄 Pick Again</button>
+  </div>
+
+  <div class="card" id="groupCard" style="display:none;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+      <h2 style="font-size:1rem; color:#2d6a4f; font-weight:700;">👥 Group Options</h2>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <label style="font-size:0.8rem; margin:0;">Show</label>
+        <select id="groupCount" style="width:60px; padding:5px 8px;">
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5" selected>5</option>
+        </select>
+      </div>
+    </div>
+    <div id="groupList"></div>
+    <button class="pick-btn" id="groupReroll" style="margin-top:16px;">🔄 New Options</button>
   </div>
 
   <script>
@@ -605,6 +659,56 @@
 
     pickBtn.addEventListener('click', pick);
     rerollBtn.addEventListener('click', pick);
+
+    // ── Group Mode ───────────────────────────────────────────────
+    function pickGroup() {
+      const filtered = getFiltered();
+      if (!filtered.length) return;
+
+      const n = parseInt(document.getElementById('groupCount').value);
+      const shuffled = [...filtered].sort(() => Math.random() - 0.5);
+      const picks = shuffled.slice(0, Math.min(n, shuffled.length));
+
+      const groupList = document.getElementById('groupList');
+      groupList.innerHTML = '';
+      picks.forEach((place, i) => {
+        const item = document.createElement('div');
+        item.className = 'group-item';
+
+        const num = document.createElement('div');
+        num.className = 'group-item-num';
+        num.textContent = i + 1;
+
+        const name = document.createElement('div');
+        name.className = 'group-item-name';
+        name.textContent = place['Name'];
+
+        const meta = document.createElement('div');
+        meta.className = 'list-item-meta';
+        [['Price Range', '💰'], ['Location', '📍']].forEach(([k, icon]) => {
+          if (place[k]) {
+            const b = document.createElement('span');
+            b.className = 'list-badge';
+            b.textContent = `${icon} ${place[k]}`;
+            meta.appendChild(b);
+          }
+        });
+
+        item.appendChild(num);
+        item.appendChild(name);
+        item.appendChild(meta);
+        groupList.appendChild(item);
+      });
+
+      const groupCard = document.getElementById('groupCard');
+      resultCard.style.display = 'none';
+      groupCard.style.display = 'block';
+      groupCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    document.getElementById('groupBtn').addEventListener('click', pickGroup);
+    document.getElementById('groupReroll').addEventListener('click', pickGroup);
+    document.getElementById('groupCount').addEventListener('change', pickGroup);
 
     // ── Add a Place ──────────────────────────────────────────────
     const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyB52MkOU3s1IBN_PvBIGtAVxgsobpOKMz2TWiSBrI2gi_sQxYNOq0Q0yox2DU-U4On/exec';
