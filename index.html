@@ -255,11 +255,14 @@
   </div>
 
   <div class="card" id="listCard">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" id="listToggle">
       <h2 style="font-size:1rem; color:#2d6a4f; font-weight:700;">All Matches</h2>
-      <span id="listCount" style="font-size:0.8rem; color:#888;"></span>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span id="listCount" style="font-size:0.8rem; color:#888;"></span>
+        <span id="listChevron" style="font-size:0.85rem; color:#2d6a4f;">▲</span>
+      </div>
     </div>
-    <div id="restaurantList"></div>
+    <div id="restaurantList" style="margin-top:14px;"></div>
   </div>
 
   <div class="result-card" id="resultCard">
@@ -359,6 +362,13 @@
     const pickBtn = document.getElementById('pickBtn');
     const rerollBtn = document.getElementById('rerollBtn');
     const countHint = document.getElementById('countHint');
+
+    let listExpanded = true;
+    document.getElementById('listToggle').addEventListener('click', () => {
+      listExpanded = !listExpanded;
+      document.getElementById('restaurantList').style.display = listExpanded ? 'block' : 'none';
+      document.getElementById('listChevron').textContent = listExpanded ? '▲' : '▼';
+    });
 
     populateFilters();
     updateCount();
