@@ -471,6 +471,20 @@
 
     .list-item.visited { opacity: 0.7; }
 
+    .mark-tried-btn {
+      background: #2d6a4f;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .mark-tried-btn:hover { background: #1f4f3a; }
+
     /* ── Dark mode toggle ── */
     .theme-toggle {
       position: fixed;
@@ -930,29 +944,38 @@
       const controls = document.createElement('div');
       controls.className = 'detail-controls';
 
-      // Visit counter stepper: [−] 🍽️ n [+]
-      const stepper = document.createElement('div');
-      stepper.className = 'visit-stepper';
+      // Left side: on the wishlist tab show "Mark as Tried"; on the main tab show the visit counter
+      let leftControl;
+      if (activeTab === 'wish') {
+        leftControl = document.createElement('button');
+        leftControl.className = 'mark-tried-btn';
+        leftControl.textContent = '🍽️ Mark as Tried';
+        leftControl.addEventListener('click', e => { e.stopPropagation(); markAsTried(r); });
+      } else {
+        // Visit counter stepper: [−] 🍽️ n [+]
+        leftControl = document.createElement('div');
+        leftControl.className = 'visit-stepper';
 
-      const minus = document.createElement('button');
-      minus.className = 'been-btn';
-      minus.textContent = '−';
-      minus.title = 'Remove a visit';
-      minus.addEventListener('click', e => { e.stopPropagation(); changeVisit(r['Name'], -1); updateCount(); });
+        const minus = document.createElement('button');
+        minus.className = 'been-btn';
+        minus.textContent = '−';
+        minus.title = 'Remove a visit';
+        minus.addEventListener('click', e => { e.stopPropagation(); changeVisit(r['Name'], -1); updateCount(); });
 
-      const countLabel = document.createElement('span');
-      countLabel.className = 'visit-count' + (count > 0 ? ' active' : '');
-      countLabel.textContent = `🍽️ ${count} visit${count !== 1 ? 's' : ''}`;
+        const countLabel = document.createElement('span');
+        countLabel.className = 'visit-count' + (count > 0 ? ' active' : '');
+        countLabel.textContent = `🍽️ ${count} visit${count !== 1 ? 's' : ''}`;
 
-      const plus = document.createElement('button');
-      plus.className = 'been-btn';
-      plus.textContent = '+';
-      plus.title = 'Add a visit';
-      plus.addEventListener('click', e => { e.stopPropagation(); changeVisit(r['Name'], 1); updateCount(); });
+        const plus = document.createElement('button');
+        plus.className = 'been-btn';
+        plus.textContent = '+';
+        plus.title = 'Add a visit';
+        plus.addEventListener('click', e => { e.stopPropagation(); changeVisit(r['Name'], 1); updateCount(); });
 
-      stepper.appendChild(minus);
-      stepper.appendChild(countLabel);
-      stepper.appendChild(plus);
+        leftControl.appendChild(minus);
+        leftControl.appendChild(countLabel);
+        leftControl.appendChild(plus);
+      }
 
       const rightControls = document.createElement('div');
       rightControls.style.cssText = 'display:flex; gap:8px; align-items:center;';
@@ -976,7 +999,7 @@
       editBtn.addEventListener('click', e => { e.stopPropagation(); openEditModal(r); });
       rightControls.appendChild(editBtn);
 
-      controls.appendChild(stepper);
+      controls.appendChild(leftControl);
       controls.appendChild(rightControls);
       detail.appendChild(controls);
       row.appendChild(detail);
