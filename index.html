@@ -885,11 +885,6 @@
         b.className = 'list-badge';
         b.textContent = `📍 ${outlets[0]}`;
         meta.appendChild(b);
-      } else if (outlets.length > 1) {
-        const b = document.createElement('span');
-        b.className = 'list-badge';
-        b.textContent = `📍 ${outlets.length} outlets`;
-        meta.appendChild(b);
       }
 
       top.appendChild(name);
