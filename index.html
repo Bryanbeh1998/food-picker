@@ -191,11 +191,9 @@
 
     .list-item {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
       padding: 10px 0;
       border-bottom: 1px solid #eee;
-      gap: 10px;
     }
 
     .list-item:last-child { border-bottom: none; }
@@ -216,12 +214,22 @@
 
     .list-item-open { background: #f4faf7; border-radius: 8px; padding: 10px; margin: 2px 0; }
 
+    .list-detail { margin-top: 10px; }
+
+    .detail-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
     .list-note {
       font-size: 0.85rem;
       color: #2d6a4f;
-      margin-top: 6px;
-      padding-top: 6px;
-      border-top: 1px dashed #c2e0d0;
+      padding: 8px 10px;
+      background: rgba(45,106,79,0.06);
+      border-radius: 8px;
     }
 
     .manual-step {
@@ -833,8 +841,12 @@
     function buildListRow(r) {
       const row = document.createElement('div');
       row.className = 'list-item';
-      if (r['Notes']) row.style.cursor = 'pointer';
+      row.style.cursor = 'pointer';
 
+      const count = visitCount(r['Name']);
+      if (count > 0) row.classList.add('visited');
+
+      // ── Top row (always visible): name + location ──
       const top = document.createElement('div');
       top.style.cssText = 'display:flex; justify-content:space-between; align-items:center; gap:10px; width:100%;';
 
@@ -848,22 +860,33 @@
         name.appendChild(dot);
       }
 
-      const count = visitCount(r['Name']);
-      if (count > 0) row.classList.add('visited');
-
       const meta = document.createElement('div');
       meta.className = 'list-item-meta';
-      [['Price Range', '💰'], ['Location', '📍']].forEach(([k, icon]) => {
-        if (r[k]) {
-          const b = document.createElement('span');
-          b.className = 'list-badge';
-          b.textContent = `${icon} ${r[k]}`;
-          meta.appendChild(b);
-        }
-      });
+      if (r['Location']) {
+        const b = document.createElement('span');
+        b.className = 'list-badge';
+        b.textContent = `📍 ${r['Location']}`;
+        meta.appendChild(b);
+      }
 
       top.appendChild(name);
       top.appendChild(meta);
+      row.appendChild(top);
+
+      // ── Detail (hidden until row is tapped) ──
+      const detail = document.createElement('div');
+      detail.className = 'list-detail';
+      detail.style.display = 'none';
+
+      if (r['Notes']) {
+        const note = document.createElement('div');
+        note.className = 'list-note';
+        note.textContent = '💬 ' + r['Notes'];
+        detail.appendChild(note);
+      }
+
+      const controls = document.createElement('div');
+      controls.className = 'detail-controls';
 
       // Visit counter stepper: [−] 🍽️ n [+]
       const stepper = document.createElement('div');
@@ -873,13 +896,11 @@
       minus.className = 'been-btn';
       minus.textContent = '−';
       minus.title = 'Remove a visit';
-      minus.style.visibility = count > 0 ? 'visible' : 'hidden';
       minus.addEventListener('click', e => { e.stopPropagation(); changeVisit(r['Name'], -1); updateCount(); });
 
       const countLabel = document.createElement('span');
       countLabel.className = 'visit-count' + (count > 0 ? ' active' : '');
-      countLabel.textContent = `🍽️ ${count}`;
-      countLabel.title = 'Times visited';
+      countLabel.textContent = `🍽️ ${count} visit${count !== 1 ? 's' : ''}`;
 
       const plus = document.createElement('button');
       plus.className = 'been-btn';
@@ -890,30 +911,22 @@
       stepper.appendChild(minus);
       stepper.appendChild(countLabel);
       stepper.appendChild(plus);
-      top.appendChild(stepper);
 
       const editBtn = document.createElement('button');
       editBtn.className = 'edit-btn';
-      editBtn.textContent = '✏️';
-      editBtn.title = 'Edit';
+      editBtn.textContent = '✏️ Edit';
       editBtn.addEventListener('click', e => { e.stopPropagation(); openEditModal(r); });
-      top.appendChild(editBtn);
 
-      row.appendChild(top);
+      controls.appendChild(stepper);
+      controls.appendChild(editBtn);
+      detail.appendChild(controls);
+      row.appendChild(detail);
 
-      if (r['Notes']) {
-        const note = document.createElement('div');
-        note.className = 'list-note';
-        note.textContent = '💬 ' + r['Notes'];
-        note.style.display = 'none';
-        row.appendChild(note);
-
-        row.addEventListener('click', () => {
-          const isOpen = note.style.display !== 'none';
-          note.style.display = isOpen ? 'none' : 'block';
-          row.classList.toggle('list-item-open', !isOpen);
-        });
-      }
+      row.addEventListener('click', () => {
+        const isOpen = detail.style.display !== 'none';
+        detail.style.display = isOpen ? 'none' : 'block';
+        row.classList.toggle('list-item-open', !isOpen);
+      });
 
       return row;
     }
