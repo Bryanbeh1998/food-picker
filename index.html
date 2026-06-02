@@ -226,12 +226,16 @@
       margin-bottom: 4px;
     }
     .outlet-item {
+      display: block;
       font-size: 0.85rem;
       color: #2d6a4f;
-      padding: 4px 10px;
+      padding: 5px 10px;
       border-left: 2px solid #b7dfc9;
       margin-bottom: 3px;
+      text-decoration: none;
+      transition: background 0.15s;
     }
+    .outlet-item:hover { background: rgba(45,106,79,0.08); }
 
     .detail-controls {
       display: flex;
@@ -599,6 +603,7 @@
     <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
       <button class="reroll-btn" id="rerollBtn">🔄 Pick Again</button>
       <button class="reroll-btn" id="beenHereBtn">✓ Been Here</button>
+      <a class="reroll-btn" id="mapsBtn" href="#" target="_blank" rel="noopener" style="text-decoration:none; display:inline-block;">📍 Open in Maps</a>
     </div>
   </div>
 
@@ -825,6 +830,10 @@
       return val ? val.split(',').map(s => s.trim()).filter(Boolean) : [];
     }
 
+    function mapsUrl(query) {
+      return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(query);
+    }
+
     function fillSelect(id, values) {
       const sel = document.getElementById(id);
       sel.innerHTML = '<option value="">Any</option>';
@@ -900,8 +909,10 @@
       if (outlets.length > 1) {
         const outletBox = document.createElement('div');
         outletBox.className = 'outlet-list';
-        outletBox.innerHTML = '<div class="outlet-title">Outlets</div>' +
-          outlets.map(o => `<div class="outlet-item">📍 ${o}</div>`).join('');
+        outletBox.innerHTML = '<div class="outlet-title">Outlets — tap for directions</div>' +
+          outlets.map(o =>
+            `<a class="outlet-item" href="${mapsUrl(r['Name'] + ' ' + o)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">📍 ${o}</a>`
+          ).join('');
         detail.appendChild(outletBox);
       }
 
@@ -939,13 +950,30 @@
       stepper.appendChild(countLabel);
       stepper.appendChild(plus);
 
+      const rightControls = document.createElement('div');
+      rightControls.style.cssText = 'display:flex; gap:8px; align-items:center;';
+
+      // Directions link for single-location places (multi-outlet has per-outlet links above)
+      if (outlets.length <= 1) {
+        const mapsLink = document.createElement('a');
+        mapsLink.className = 'edit-btn';
+        mapsLink.textContent = '📍 Maps';
+        mapsLink.href = mapsUrl(outlets.length === 1 ? `${r['Name']} ${outlets[0]}` : r['Name']);
+        mapsLink.target = '_blank';
+        mapsLink.rel = 'noopener';
+        mapsLink.style.textDecoration = 'none';
+        mapsLink.addEventListener('click', e => e.stopPropagation());
+        rightControls.appendChild(mapsLink);
+      }
+
       const editBtn = document.createElement('button');
       editBtn.className = 'edit-btn';
       editBtn.textContent = '✏️ Edit';
       editBtn.addEventListener('click', e => { e.stopPropagation(); openEditModal(r); });
+      rightControls.appendChild(editBtn);
 
       controls.appendChild(stepper);
-      controls.appendChild(editBtn);
+      controls.appendChild(rightControls);
       detail.appendChild(controls);
       row.appendChild(detail);
 
@@ -1018,6 +1046,11 @@
 
       const notes = document.getElementById('resultNotes');
       notes.textContent = place['Notes'] || '';
+
+      // Maps link: use name + single location; for multi-outlet just the name
+      const outlets = splitLocations(place['Location']);
+      const query = outlets.length === 1 ? `${place['Name']} ${outlets[0]}` : place['Name'];
+      document.getElementById('mapsBtn').href = mapsUrl(query);
 
       resultCard.style.display = 'block';
       resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
