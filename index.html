@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Where to Eat?</title>
+  <script src="xlsx.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f9f6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 16px;
+      color: #1a1a1a;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: #2d6a4f;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 32px;
+      font-size: 0.95rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 28px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      margin-bottom: 24px;
+    }
+
+    .upload-area {
+      border: 2px dashed #b7dfc9;
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: #f9fdfb;
+    }
+
+    .upload-area:hover, .upload-area.dragover {
+      border-color: #2d6a4f;
+      background: #edf7f2;
+    }
+
+    .upload-area input { display: none; }
+
+    .upload-icon { font-size: 2.5rem; margin-bottom: 10px; }
+
+    .upload-area p { color: #555; font-size: 0.95rem; }
+    .upload-area span { color: #2d6a4f; font-weight: 600; cursor: pointer; }
+
+    .filters {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    label { font-size: 0.82rem; font-weight: 600; color: #444; display: block; margin-bottom: 5px; }
+
+    select {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid #d0e8dc;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      background: white;
+      color: #1a1a1a;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%232d6a4f' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      cursor: pointer;
+    }
+
+    select:focus { outline: none; border-color: #2d6a4f; }
+
+    .pick-btn {
+      width: 100%;
+      padding: 14px;
+      background: #2d6a4f;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .pick-btn:hover { background: #1f4f3a; }
+    .pick-btn:active { transform: scale(0.98); }
+    .pick-btn:disabled { background: #a0c4b4; cursor: not-allowed; }
+
+    .result-card {
+      display: none;
+      background: linear-gradient(135deg, #2d6a4f, #40916c);
+      color: white;
+      border-radius: 16px;
+      padding: 28px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 6px 24px rgba(45,106,79,0.3);
+      text-align: center;
+      animation: popIn 0.3s ease;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .result-label { font-size: 0.85rem; opacity: 0.8; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
+    .result-name { font-size: 2rem; font-weight: 700; margin-bottom: 16px; }
+
+    .result-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .badge {
+      background: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.85rem;
+    }
+
+    .result-notes {
+      font-size: 0.9rem;
+      opacity: 0.85;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+
+    .reroll-btn {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: 2px solid rgba(255,255,255,0.5);
+      border-radius: 8px;
+      padding: 9px 22px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .reroll-btn:hover { background: rgba(255,255,255,0.35); }
+
+    .count-hint {
+      font-size: 0.8rem;
+      color: #888;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .no-results {
+      text-align: center;
+      color: #888;
+      font-size: 0.95rem;
+      padding: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🍽️ Where to Eat?</h1>
+  <p class="subtitle">Upload your restaurant list and get a random pick</p>
+
+  <div class="card">
+    <div class="upload-area" id="uploadArea">
+      <div class="upload-icon">📂</div>
+      <p><span id="uploadTrigger">Click to upload</span> or drag & drop your Excel file</p>
+      <p style="font-size:0.8rem; color:#aaa; margin-top:6px;">.xlsx or .csv</p>
+      <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" />
+    </div>
+  </div>
+
+  <div class="card" id="filterCard" style="display:none;">
+    <div class="filters">
+      <div>
+        <label>Cuisine</label>
+        <select id="filterCuisine"><option value="">Any</option></select>
+      </div>
+      <div>
+        <label>Price Range</label>
+        <select id="filterPrice"><option value="">Any</option></select>
+      </div>
+      <div>
+        <label>Location</label>
+        <select id="filterLocation"><option value="">Any</option></select>
+      </div>
+      <div>
+        <label>Min Rating</label>
+        <select id="filterRating">
+          <option value="">Any</option>
+          <option value="3">3+</option>
+          <option value="4">4+</option>
+          <option value="5">5 only</option>
+        </select>
+      </div>
+    </div>
+    <button class="pick-btn" id="pickBtn">🎲 Pick a Place</button>
+    <p class="count-hint" id="countHint"></p>
+  </div>
+
+  <div class="result-card" id="resultCard">
+    <div class="result-label">Tonight you're going to</div>
+    <div class="result-name" id="resultName"></div>
+    <div class="result-meta" id="resultMeta"></div>
+    <div class="result-notes" id="resultNotes"></div>
+    <button class="reroll-btn" id="rerollBtn">🔄 Pick Again</button>
+  </div>
+
+  <script>
+    let allRows = [];
+    let headers = [];
+
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const uploadTrigger = document.getElementById('uploadTrigger');
+    const filterCard = document.getElementById('filterCard');
+    const resultCard = document.getElementById('resultCard');
+    const pickBtn = document.getElementById('pickBtn');
+    const rerollBtn = document.getElementById('rerollBtn');
+    const countHint = document.getElementById('countHint');
+
+    uploadTrigger.addEventListener('click', () => fileInput.click());
+    uploadArea.addEventListener('click', () => fileInput.click());
+
+    uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('dragover'); });
+    uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+    uploadArea.addEventListener('drop', e => {
+      e.preventDefault();
+      uploadArea.classList.remove('dragover');
+      handleFile(e.dataTransfer.files[0]);
+    });
+
+    fileInput.addEventListener('change', e => handleFile(e.target.files[0]));
+
+    function handleFile(file) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        const wb = XLSX.read(e.target.result, { type: 'binary' });
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const json = XLSX.utils.sheet_to_json(ws, { header: 1 });
+        if (json.length < 2) return alert('File appears empty.');
+
+        headers = json[0].map(h => String(h).trim());
+        allRows = json.slice(1).map(row => {
+          const obj = {};
+          headers.forEach((h, i) => obj[h] = row[i] !== undefined ? String(row[i]).trim() : '');
+          return obj;
+        }).filter(r => r[headers[0]]);
+
+        populateFilters();
+        filterCard.style.display = 'block';
+        resultCard.style.display = 'none';
+        updateCount();
+
+        uploadArea.style.borderColor = '#2d6a4f';
+        document.querySelector('.upload-area p').innerHTML = `✅ <strong>${file.name}</strong> loaded — ${allRows.length} places`;
+      };
+      reader.readAsBinaryString(file);
+    }
+
+    function populateFilters() {
+      const col = k => [...new Set(allRows.map(r => r[k]).filter(Boolean))].sort();
+      fillSelect('filterCuisine', col('Cuisine'));
+      fillSelect('filterPrice', col('Price Range'));
+      fillSelect('filterLocation', col('Location'));
+    }
+
+    function fillSelect(id, values) {
+      const sel = document.getElementById(id);
+      sel.innerHTML = '<option value="">Any</option>';
+      values.forEach(v => { const o = document.createElement('option'); o.value = v; o.textContent = v; sel.appendChild(o); });
+    }
+
+    function getFiltered() {
+      const cuisine = document.getElementById('filterCuisine').value;
+      const price = document.getElementById('filterPrice').value;
+      const location = document.getElementById('filterLocation').value;
+      const minRating = document.getElementById('filterRating').value;
+
+      return allRows.filter(r => {
+        if (cuisine && r['Cuisine'] !== cuisine) return false;
+        if (price && r['Price Range'] !== price) return false;
+        if (location && r['Location'] !== location) return false;
+        if (minRating && parseFloat(r['Rating']) < parseFloat(minRating)) return false;
+        return true;
+      });
+    }
+
+    function updateCount() {
+      const n = getFiltered().length;
+      countHint.textContent = n === 0 ? 'No matches — try widening your filters.' : `${n} place${n !== 1 ? 's' : ''} match your filters`;
+      pickBtn.disabled = n === 0;
+    }
+
+    ['filterCuisine', 'filterPrice', 'filterLocation', 'filterRating'].forEach(id => {
+      document.getElementById(id).addEventListener('change', updateCount);
+    });
+
+    function pick() {
+      const filtered = getFiltered();
+      if (!filtered.length) return;
+      const place = filtered[Math.floor(Math.random() * filtered.length)];
+
+      document.getElementById('resultName').textContent = place[headers[0]] || '?';
+
+      const meta = document.getElementById('resultMeta');
+      meta.innerHTML = '';
+      [['Cuisine', '🍜'], ['Price Range', '💰'], ['Location', '📍'], ['Rating', '⭐']].forEach(([k, icon]) => {
+        if (place[k]) {
+          const b = document.createElement('span');
+          b.className = 'badge';
+          b.textContent = `${icon} ${place[k]}`;
+          meta.appendChild(b);
+        }
+      });
+
+      const notes = document.getElementById('resultNotes');
+      notes.textContent = place['Notes'] || '';
+
+      resultCard.style.display = 'block';
+      resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    pickBtn.addEventListener('click', pick);
+    rerollBtn.addEventListener('click', pick);
+  </script>
+</body>
+</html>
