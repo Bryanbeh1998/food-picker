@@ -284,6 +284,29 @@
       flex: 1;
     }
 
+    .cuisine-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #2d6a4f;
+      color: white;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 8px;
+      margin: 16px 0 8px;
+    }
+
+    .cuisine-header:first-child { margin-top: 0; }
+
+    .cuisine-count {
+      background: rgba(255,255,255,0.25);
+      border-radius: 20px;
+      padding: 1px 10px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
     .edit-btn {
       background: none;
       border: 1.5px solid #b7dfc9;
@@ -716,6 +739,63 @@
       renderList(filtered);
     }
 
+    function buildListRow(r) {
+      const row = document.createElement('div');
+      row.className = 'list-item';
+      if (r['Notes']) row.style.cursor = 'pointer';
+
+      const top = document.createElement('div');
+      top.style.cssText = 'display:flex; justify-content:space-between; align-items:center; gap:10px; width:100%;';
+
+      const name = document.createElement('div');
+      name.className = 'list-item-name';
+      name.textContent = r['Name'];
+      if (r['Notes']) {
+        const dot = document.createElement('span');
+        dot.title = 'Has a note';
+        dot.style.cssText = 'display:inline-block; width:7px; height:7px; background:#2d6a4f; border-radius:50%; margin-left:7px; vertical-align:middle; flex-shrink:0;';
+        name.appendChild(dot);
+      }
+
+      const meta = document.createElement('div');
+      meta.className = 'list-item-meta';
+      [['Price Range', '💰'], ['Location', '📍']].forEach(([k, icon]) => {
+        if (r[k]) {
+          const b = document.createElement('span');
+          b.className = 'list-badge';
+          b.textContent = `${icon} ${r[k]}`;
+          meta.appendChild(b);
+        }
+      });
+
+      top.appendChild(name);
+      top.appendChild(meta);
+      const editBtn = document.createElement('button');
+      editBtn.className = 'edit-btn';
+      editBtn.textContent = '✏️';
+      editBtn.title = 'Edit';
+      editBtn.addEventListener('click', e => { e.stopPropagation(); openEditModal(r); });
+      top.appendChild(editBtn);
+
+      row.appendChild(top);
+
+      if (r['Notes']) {
+        const note = document.createElement('div');
+        note.className = 'list-note';
+        note.textContent = '💬 ' + r['Notes'];
+        note.style.display = 'none';
+        row.appendChild(note);
+
+        row.addEventListener('click', () => {
+          const isOpen = note.style.display !== 'none';
+          note.style.display = isOpen ? 'none' : 'block';
+          row.classList.toggle('list-item-open', !isOpen);
+        });
+      }
+
+      return row;
+    }
+
     function renderList(filtered) {
       const list = document.getElementById('restaurantList');
       const count = document.getElementById('listCount');
@@ -727,62 +807,22 @@
         return;
       }
 
-      const sorted = [...filtered].sort((a, b) => a['Name'].localeCompare(b['Name']));
-      sorted.forEach(r => {
-        const row = document.createElement('div');
-        row.className = 'list-item';
-        if (r['Notes']) row.style.cursor = 'pointer';
+      // Group by cuisine
+      const groups = {};
+      filtered.forEach(r => {
+        const cuisine = r['Cuisine'] || 'Other';
+        (groups[cuisine] = groups[cuisine] || []).push(r);
+      });
 
-        const top = document.createElement('div');
-        top.style.cssText = 'display:flex; justify-content:space-between; align-items:center; gap:10px; width:100%;';
+      const cuisineNames = Object.keys(groups).sort();
+      cuisineNames.forEach(cuisine => {
+        const header = document.createElement('div');
+        header.className = 'cuisine-header';
+        header.innerHTML = `<span>${cuisine}</span><span class="cuisine-count">${groups[cuisine].length}</span>`;
+        list.appendChild(header);
 
-        const name = document.createElement('div');
-        name.className = 'list-item-name';
-        name.textContent = r['Name'];
-        if (r['Notes']) {
-          const dot = document.createElement('span');
-          dot.title = 'Has a note';
-          dot.style.cssText = 'display:inline-block; width:7px; height:7px; background:#2d6a4f; border-radius:50%; margin-left:7px; vertical-align:middle; flex-shrink:0;';
-          name.appendChild(dot);
-        }
-
-        const meta = document.createElement('div');
-        meta.className = 'list-item-meta';
-        [['Price Range', '💰'], ['Location', '📍']].forEach(([k, icon]) => {
-          if (r[k]) {
-            const b = document.createElement('span');
-            b.className = 'list-badge';
-            b.textContent = `${icon} ${r[k]}`;
-            meta.appendChild(b);
-          }
-        });
-
-        top.appendChild(name);
-        top.appendChild(meta);
-        const editBtn = document.createElement('button');
-        editBtn.className = 'edit-btn';
-        editBtn.textContent = '✏️';
-        editBtn.title = 'Edit';
-        editBtn.addEventListener('click', e => { e.stopPropagation(); openEditModal(r); });
-        top.appendChild(editBtn);
-
-        row.appendChild(top);
-
-        if (r['Notes']) {
-          const note = document.createElement('div');
-          note.className = 'list-note';
-          note.textContent = '💬 ' + r['Notes'];
-          note.style.display = 'none';
-          row.appendChild(note);
-
-          row.addEventListener('click', () => {
-            const isOpen = note.style.display !== 'none';
-            note.style.display = isOpen ? 'none' : 'block';
-            row.classList.toggle('list-item-open', !isOpen);
-          });
-        }
-
-        list.appendChild(row);
+        const items = groups[cuisine].sort((a, b) => a['Name'].localeCompare(b['Name']));
+        items.forEach(r => list.appendChild(buildListRow(r)));
       });
     }
 
