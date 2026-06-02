@@ -284,6 +284,58 @@
       flex: 1;
     }
 
+    .edit-btn {
+      background: none;
+      border: 1.5px solid #b7dfc9;
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-size: 0.75rem;
+      color: #2d6a4f;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .edit-btn:hover { background: #edf7f2; }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .modal-header h2 { font-size: 1rem; color: #2d6a4f; }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: #888;
+      line-height: 1;
+    }
+
     .list-badge {
       background: #edf7f2;
       color: #2d6a4f;
@@ -428,6 +480,56 @@
     </div>
     <div id="groupList"></div>
     <button class="pick-btn" id="groupReroll" style="margin-top:16px;">🔄 New Options</button>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal-overlay" id="editModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>✏️ Edit Place</h2>
+        <button class="modal-close" id="editModalClose">✕</button>
+      </div>
+      <div class="filters" style="margin-bottom:14px;">
+        <div style="grid-column:1/-1;">
+          <label>Name *</label>
+          <input id="editName" type="text" />
+        </div>
+        <div>
+          <label>Type</label>
+          <select id="editType">
+            <option value="">— Select —</option>
+            <option>Restaurant</option>
+            <option>Hawker</option>
+            <option>Eatery</option>
+            <option>Café</option>
+          </select>
+        </div>
+        <div>
+          <label>Cuisine</label>
+          <input id="editCuisine" type="text" />
+        </div>
+        <div>
+          <label>Price Range</label>
+          <select id="editPrice">
+            <option value="">— Select —</option>
+            <option>$</option>
+            <option>$$</option>
+            <option>$$$</option>
+            <option>$$$$</option>
+          </select>
+        </div>
+        <div>
+          <label>Location</label>
+          <input id="editLocation" type="text" />
+        </div>
+        <div style="grid-column:1/-1;">
+          <label>Notes</label>
+          <input id="editNotes" type="text" />
+        </div>
+      </div>
+      <button class="pick-btn" id="editSubmit">Save Changes</button>
+      <p id="editStatus" style="text-align:center; font-size:0.85rem; margin-top:10px; min-height:1.2em;"></p>
+    </div>
   </div>
 
   <script>
@@ -657,6 +759,13 @@
 
         top.appendChild(name);
         top.appendChild(meta);
+        const editBtn = document.createElement('button');
+        editBtn.className = 'edit-btn';
+        editBtn.textContent = '✏️';
+        editBtn.title = 'Edit';
+        editBtn.addEventListener('click', e => { e.stopPropagation(); openEditModal(r); });
+        top.appendChild(editBtn);
+
         row.appendChild(top);
 
         if (r['Notes']) {
@@ -759,8 +868,74 @@
     document.getElementById('groupReroll').addEventListener('click', pickGroup);
     document.getElementById('groupCount').addEventListener('change', pickGroup);
 
+    // ── Edit Modal ───────────────────────────────────────────────
+    let editingOriginalName = '';
+
+    function openEditModal(r) {
+      editingOriginalName = r['Name'];
+      document.getElementById('editName').value = r['Name'] || '';
+      document.getElementById('editType').value = r['Type'] || '';
+      document.getElementById('editCuisine').value = r['Cuisine'] || '';
+      document.getElementById('editPrice').value = r['Price Range'] || '';
+      document.getElementById('editLocation').value = r['Location'] || '';
+      document.getElementById('editNotes').value = r['Notes'] || '';
+      document.getElementById('editStatus').textContent = '';
+      document.getElementById('editModal').classList.add('open');
+    }
+
+    function closeEditModal() {
+      document.getElementById('editModal').classList.remove('open');
+    }
+
+    document.getElementById('editModalClose').addEventListener('click', closeEditModal);
+    document.getElementById('editModal').addEventListener('click', e => {
+      if (e.target === document.getElementById('editModal')) closeEditModal();
+    });
+
+    document.getElementById('editSubmit').addEventListener('click', async () => {
+      const name = document.getElementById('editName').value.trim();
+      if (!name) {
+        document.getElementById('editStatus').textContent = '⚠️ Name is required.';
+        document.getElementById('editStatus').style.color = '#c0392b';
+        return;
+      }
+
+      const entry = {
+        action: 'edit',
+        originalName: editingOriginalName,
+        Name: name,
+        Type: document.getElementById('editType').value,
+        Cuisine: document.getElementById('editCuisine').value.trim(),
+        'Price Range': document.getElementById('editPrice').value,
+        Location: document.getElementById('editLocation').value.trim(),
+        Notes: document.getElementById('editNotes').value.trim()
+      };
+
+      const btn = document.getElementById('editSubmit');
+      const status = document.getElementById('editStatus');
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(entry)
+        });
+        status.textContent = '✅ Saved! Refresh the page to see changes.';
+        status.style.color = '#2d6a4f';
+      } catch (err) {
+        status.textContent = '❌ Failed to save. Check your connection.';
+        status.style.color = '#c0392b';
+      }
+
+      btn.disabled = false;
+      btn.textContent = 'Save Changes';
+    });
+
     // ── Add a Place ──────────────────────────────────────────────
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyB52MkOU3s1IBN_PvBIGtAVxgsobpOKMz2TWiSBrI2gi_sQxYNOq0Q0yox2DU-U4On/exec';
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwypSGGDq1-zf92c3jFzYvLwgR7x9EztjSiHKTjrJuVox1HSuVP87XxA3WnEYqbL8uf/exec';
 
     document.getElementById('addToggle').addEventListener('click', () => {
       const form = document.getElementById('addForm');
