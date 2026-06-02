@@ -201,6 +201,16 @@
       justify-content: flex-end;
     }
 
+    .list-item-open { background: #f4faf7; border-radius: 8px; padding: 10px; margin: 2px 0; }
+
+    .list-note {
+      font-size: 0.85rem;
+      color: #2d6a4f;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed #c2e0d0;
+    }
+
     .list-badge {
       background: #edf7f2;
       color: #2d6a4f;
@@ -409,6 +419,10 @@
       sorted.forEach(r => {
         const row = document.createElement('div');
         row.className = 'list-item';
+        if (r['Notes']) row.style.cursor = 'pointer';
+
+        const top = document.createElement('div');
+        top.style.cssText = 'display:flex; justify-content:space-between; align-items:center; gap:10px; width:100%;';
 
         const name = document.createElement('div');
         name.className = 'list-item-name';
@@ -425,8 +439,24 @@
           }
         });
 
-        row.appendChild(name);
-        row.appendChild(meta);
+        top.appendChild(name);
+        top.appendChild(meta);
+        row.appendChild(top);
+
+        if (r['Notes']) {
+          const note = document.createElement('div');
+          note.className = 'list-note';
+          note.textContent = '💬 ' + r['Notes'];
+          note.style.display = 'none';
+          row.appendChild(note);
+
+          row.addEventListener('click', () => {
+            const isOpen = note.style.display !== 'none';
+            note.style.display = isOpen ? 'none' : 'block';
+            row.classList.toggle('list-item-open', !isOpen);
+          });
+        }
+
         list.appendChild(row);
       });
     }
