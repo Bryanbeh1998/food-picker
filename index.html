@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Where to Eat?</title>
-  <script src="xlsx.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -181,18 +180,9 @@
 <body>
 
   <h1>🍽️ Where to Eat?</h1>
-  <p class="subtitle">Upload your restaurant list and get a random pick</p>
+  <p class="subtitle">Filter and get a random pick</p>
 
-  <div class="card">
-    <div class="upload-area" id="uploadArea">
-      <div class="upload-icon">📂</div>
-      <p><span id="uploadTrigger">Click to upload</span> or drag & drop your Excel file</p>
-      <p style="font-size:0.8rem; color:#aaa; margin-top:6px;">.xlsx or .csv</p>
-      <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" />
-    </div>
-  </div>
-
-  <div class="card" id="filterCard" style="display:none;">
+  <div class="card" id="filterCard">
     <div class="filters">
       <div>
         <label>Cuisine</label>
@@ -229,57 +219,45 @@
   </div>
 
   <script>
-    let allRows = [];
-    let headers = [];
+    // ============================================================
+    // RESTAURANT DATA — edit this list to update your restaurants
+    // Each entry must have at minimum a "Name".
+    // Other fields: Cuisine, Price Range ($ / $$ / $$$), Rating (1-5), Location, Notes
+    // ============================================================
+    const allRows = [
+      { "Name": "Shake Shack", "Cuisine": "American", "Price Range": "$$", "Rating": "4", "Location": "Downtown", "Notes": "Great burgers, outdoor seating" },
+      { "Name": "Sushi Tei", "Cuisine": "Japanese", "Price Range": "$$", "Rating": "5", "Location": "Orchard", "Notes": "Best omakase in town" },
+      { "Name": "Putien", "Cuisine": "Chinese", "Price Range": "$$", "Rating": "4", "Location": "Bugis", "Notes": "Authentic Fujian cuisine" },
+      { "Name": "Lavo", "Cuisine": "Italian", "Price Range": "$$$", "Rating": "4", "Location": "Marina Bay", "Notes": "Rooftop views, good pasta" },
+      { "Name": "PS. Cafe", "Cuisine": "Western", "Price Range": "$$", "Rating": "4", "Location": "Dempsey", "Notes": "Cozy brunch spot" },
+      { "Name": "Jumbo Seafood", "Cuisine": "Seafood", "Price Range": "$$$", "Rating": "5", "Location": "Clarke Quay", "Notes": "Famous chili crab" },
+      { "Name": "Tim Ho Wan", "Cuisine": "Dim Sum", "Price Range": "$", "Rating": "4", "Location": "Toa Payoh", "Notes": "Michelin-starred dim sum" },
+      { "Name": "Burnt Ends", "Cuisine": "BBQ", "Price Range": "$$$", "Rating": "5", "Location": "Tanjong Pagar", "Notes": "Award-winning open-fire BBQ" },
+      { "Name": "Paradise Dynasty", "Cuisine": "Chinese", "Price Range": "$$", "Rating": "3", "Location": "Ion Orchard", "Notes": "Colorful xiao long bao" },
+      { "Name": "The Coconut Club", "Cuisine": "Malay", "Price Range": "$$", "Rating": "5", "Location": "Ann Siang", "Notes": "Best nasi lemak in Singapore" },
+      { "Name": "Odette", "Cuisine": "French", "Price Range": "$$$", "Rating": "5", "Location": "City Hall", "Notes": "3 Michelin stars, tasting menu" },
+      { "Name": "Hawker Chan", "Cuisine": "Chinese", "Price Range": "$", "Rating": "4", "Location": "Chinatown", "Notes": "Michelin-starred soya chicken" },
+      { "Name": "Neon Pigeon", "Cuisine": "Japanese", "Price Range": "$$", "Rating": "4", "Location": "Amoy Street", "Notes": "Modern izakaya vibes" },
+      { "Name": "Artichoke", "Cuisine": "Middle Eastern", "Price Range": "$$", "Rating": "4", "Location": "Bugis", "Notes": "Creative mezze plates" },
+      { "Name": "Lim Teck Kee", "Cuisine": "Local", "Price Range": "$", "Rating": "5", "Location": "Balestier", "Notes": "Old school char kway teow" },
+      { "Name": "Bird Bird", "Cuisine": "American", "Price Range": "$$", "Rating": "4", "Location": "Telok Ayer", "Notes": "Nashville hot chicken" },
+      { "Name": "Iggy's", "Cuisine": "European", "Price Range": "$$$", "Rating": "4", "Location": "Orchard", "Notes": "Intimate fine dining" },
+      { "Name": "Ramen Keisuke", "Cuisine": "Japanese", "Price Range": "$", "Rating": "4", "Location": "Tanjong Pagar", "Notes": "Rich tonkotsu broth" },
+      { "Name": "Zafferano", "Cuisine": "Italian", "Price Range": "$$$", "Rating": "4", "Location": "Marina Bay", "Notes": "Panoramic harbour views" },
+      { "Name": "Boon Tong Kee", "Cuisine": "Chinese", "Price Range": "$$", "Rating": "4", "Location": "Balestier", "Notes": "Classic Hainanese chicken rice" }
+    ];
+    // ============================================================
 
-    const uploadArea = document.getElementById('uploadArea');
-    const fileInput = document.getElementById('fileInput');
-    const uploadTrigger = document.getElementById('uploadTrigger');
+    const headers = ["Name", "Cuisine", "Price Range", "Rating", "Location", "Notes"];
+
     const filterCard = document.getElementById('filterCard');
     const resultCard = document.getElementById('resultCard');
     const pickBtn = document.getElementById('pickBtn');
     const rerollBtn = document.getElementById('rerollBtn');
     const countHint = document.getElementById('countHint');
 
-    uploadTrigger.addEventListener('click', () => fileInput.click());
-    uploadArea.addEventListener('click', () => fileInput.click());
-
-    uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('dragover'); });
-    uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
-    uploadArea.addEventListener('drop', e => {
-      e.preventDefault();
-      uploadArea.classList.remove('dragover');
-      handleFile(e.dataTransfer.files[0]);
-    });
-
-    fileInput.addEventListener('change', e => handleFile(e.target.files[0]));
-
-    function handleFile(file) {
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = e => {
-        const wb = XLSX.read(e.target.result, { type: 'binary' });
-        const ws = wb.Sheets[wb.SheetNames[0]];
-        const json = XLSX.utils.sheet_to_json(ws, { header: 1 });
-        if (json.length < 2) return alert('File appears empty.');
-
-        headers = json[0].map(h => String(h).trim());
-        allRows = json.slice(1).map(row => {
-          const obj = {};
-          headers.forEach((h, i) => obj[h] = row[i] !== undefined ? String(row[i]).trim() : '');
-          return obj;
-        }).filter(r => r[headers[0]]);
-
-        populateFilters();
-        filterCard.style.display = 'block';
-        resultCard.style.display = 'none';
-        updateCount();
-
-        uploadArea.style.borderColor = '#2d6a4f';
-        document.querySelector('.upload-area p').innerHTML = `✅ <strong>${file.name}</strong> loaded — ${allRows.length} places`;
-      };
-      reader.readAsBinaryString(file);
-    }
+    populateFilters();
+    updateCount();
 
     function populateFilters() {
       const col = k => [...new Set(allRows.map(r => r[k]).filter(Boolean))].sort();
@@ -324,7 +302,7 @@
       if (!filtered.length) return;
       const place = filtered[Math.floor(Math.random() * filtered.length)];
 
-      document.getElementById('resultName').textContent = place[headers[0]] || '?';
+      document.getElementById('resultName').textContent = place['Name'] || '?';
 
       const meta = document.getElementById('resultMeta');
       meta.innerHTML = '';
