@@ -490,11 +490,7 @@
     <div class="filters">
       <div>
         <label>Type</label>
-        <select id="filterType">
-          <option value="">Any</option>
-          <option value="Hawker">Hawker</option>
-          <option value="Restaurant">Restaurant</option>
-        </select>
+        <select id="filterType"><option value="">Any</option></select>
       </div>
       <div>
         <label>Cuisine</label>
@@ -800,6 +796,7 @@
     function populateFilters() {
       const col = k => [...new Set(allRows.map(r => r[k]).filter(Boolean))].sort();
       const locations = [...new Set(allRows.flatMap(r => splitLocations(r['Location'])))].sort();
+      fillSelect('filterType', col('Type'));
       fillSelect('filterCuisine', col('Cuisine'));
       fillSelect('filterPrice', col('Price Range'));
       fillSelect('filterLocation', locations);
