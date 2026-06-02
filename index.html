@@ -267,17 +267,6 @@
     <p class="count-hint" id="countHint"></p>
   </div>
 
-  <div class="card" id="listCard">
-    <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" id="listToggle">
-      <h2 style="font-size:1rem; color:#2d6a4f; font-weight:700;">All Matches</h2>
-      <div style="display:flex; align-items:center; gap:8px;">
-        <span id="listCount" style="font-size:0.8rem; color:#888;"></span>
-        <span id="listChevron" style="font-size:0.85rem; color:#2d6a4f;">▲</span>
-      </div>
-    </div>
-    <div id="restaurantList" style="margin-top:14px;"></div>
-  </div>
-
   <div class="card" id="addCard">
     <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" id="addToggle">
       <h2 style="font-size:1rem; color:#2d6a4f; font-weight:700;">➕ Add a Place</h2>
@@ -325,6 +314,17 @@
       <button class="pick-btn" id="addSubmit">Add to List</button>
       <p id="addStatus" style="text-align:center; font-size:0.85rem; margin-top:10px; min-height:1.2em;"></p>
     </div>
+  </div>
+
+  <div class="card" id="listCard">
+    <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" id="listToggle">
+      <h2 style="font-size:1rem; color:#2d6a4f; font-weight:700;">All Matches</h2>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span id="listCount" style="font-size:0.8rem; color:#888;"></span>
+        <span id="listChevron" style="font-size:0.85rem; color:#2d6a4f;">▼</span>
+      </div>
+    </div>
+    <div id="restaurantList" style="display:none; margin-top:14px;"></div>
   </div>
 
   <div class="result-card" id="resultCard">
@@ -463,7 +463,7 @@
         filterCard.style.opacity = '1';
       });
 
-    let listExpanded = true;
+    let listExpanded = false;
     document.getElementById('listToggle').addEventListener('click', () => {
       listExpanded = !listExpanded;
       document.getElementById('restaurantList').style.display = listExpanded ? 'block' : 'none';
