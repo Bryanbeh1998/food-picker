@@ -993,15 +993,6 @@
         rightControls.appendChild(mapsLink);
       }
 
-      // On the main tab, offer "move back to wishlist"
-      if (activeTab === 'tried') {
-        const wishBtn = document.createElement('button');
-        wishBtn.className = 'edit-btn';
-        wishBtn.textContent = '⭐ To Wishlist';
-        wishBtn.addEventListener('click', e => { e.stopPropagation(); markAsWish(r); });
-        rightControls.appendChild(wishBtn);
-      }
-
       const editBtn = document.createElement('button');
       editBtn.className = 'edit-btn';
       editBtn.textContent = '✏️ Edit';
@@ -1140,33 +1131,6 @@
         resultCard.style.display = 'none';
         updateCount();
         alert(`✅ "${r['Name']}" moved to your tried list!`);
-      } catch (err) {
-        alert('❌ Failed to move. Check your connection.');
-      }
-    }
-
-    // ── Move a tried place back to the Wishlist ──────────────────
-    async function markAsWish(r) {
-      if (!confirm(`Move "${r['Name']}" back to your wishlist?`)) return;
-
-      try {
-        await fetch(APPS_SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            action: 'markWish',
-            Name: r['Name'], Type: r['Type'], Cuisine: r['Cuisine'],
-            'Price Range': r['Price Range'], Location: r['Location'], Notes: r['Notes']
-          })
-        });
-        // Update locally: remove from tried, add to wishlist
-        const i = triedRows.findIndex(x => x['Name'] === r['Name']);
-        if (i >= 0) triedRows.splice(i, 1);
-        wishRows.push(r);
-        resultCard.style.display = 'none';
-        updateCount();
-        alert(`⭐ "${r['Name']}" moved to your wishlist!`);
       } catch (err) {
         alert('❌ Failed to move. Check your connection.');
       }
