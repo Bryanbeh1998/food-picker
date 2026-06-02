@@ -260,9 +260,14 @@
 
     function populateFilters() {
       const col = k => [...new Set(allRows.map(r => r[k]).filter(Boolean))].sort();
+      const locations = [...new Set(allRows.flatMap(r => splitLocations(r['Location'])))].sort();
       fillSelect('filterCuisine', col('Cuisine'));
       fillSelect('filterPrice', col('Price Range'));
-      fillSelect('filterLocation', col('Location'));
+      fillSelect('filterLocation', locations);
+    }
+
+    function splitLocations(val) {
+      return val ? val.split(',').map(s => s.trim()).filter(Boolean) : [];
     }
 
     function fillSelect(id, values) {
@@ -281,7 +286,7 @@
         if (type && r['Type'] !== type) return false;
         if (cuisine && r['Cuisine'] !== cuisine) return false;
         if (price && r['Price Range'] !== price) return false;
-        if (location && r['Location'] !== location) return false;
+        if (location && !splitLocations(r['Location']).includes(location)) return false;
         return true;
       });
     }
