@@ -275,11 +275,32 @@
 
   <script>
     // ============================================================
-    // RESTAURANT DATA — edit this list to update your restaurants
-    // Each entry must have at minimum a "Name".
-    // Other fields: Cuisine, Price Range ($ / $$ / $$$), Rating (1-5), Location, Notes
+    // GOOGLE SHEETS DATA SOURCE
+    // To update your restaurant list, just edit your Google Sheet.
     // ============================================================
-                                const allRows = [
+    const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQL1lE_VlPGQS9CDcR-wZREWpSD2MW1Jtk8jYW8dBVW5BnHecTE-Y0TEG-zI7MCKorwJGAe0JL-nZfG/pub?gid=0&single=true&output=csv';
+
+    function parseCSV(text) {
+      const lines = text.trim().split('\n');
+      const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+      return lines.slice(1).map(line => {
+        const vals = [];
+        let cur = '', inQ = false;
+        for (let i = 0; i < line.length; i++) {
+          const ch = line[i];
+          if (ch === '"') { inQ = !inQ; }
+          else if (ch === ',' && !inQ) { vals.push(cur.trim()); cur = ''; }
+          else { cur += ch; }
+        }
+        vals.push(cur.trim());
+        const obj = {};
+        headers.forEach((h, i) => obj[h] = (vals[i] || '').replace(/^"|"$/g, ''));
+        return obj;
+      }).filter(r => r[headers[0]]);
+    }
+
+    // placeholder so the rest of the code references allRows
+    let allRows = [
       {"Name": "Wang Dae Bak Korean BBQ", "Type": "Restaurant", "Cuisine": "Korean", "Price Range": "$$$", "Location": "Cross street", "Notes": "KBBQ"},
       {"Name": "Oriental Chinese Restaurant", "Type": "Restaurant", "Cuisine": "Chinese", "Price Range": "$$", "Location": "Chinatown", "Notes": "China skewers"},
       {"Name": "Gu Zao Ren", "Type": "Restaurant", "Cuisine": "Chinese", "Price Range": "$$", "Location": "Bugis", "Notes": "Authentic Fujian cuisine"},
@@ -355,13 +376,30 @@
     ];
     // ============================================================
 
-    const headers = ["Name", "Type", "Cuisine", "Price Range", "Location", "Notes"];
-
     const filterCard = document.getElementById('filterCard');
     const resultCard = document.getElementById('resultCard');
     const pickBtn = document.getElementById('pickBtn');
     const rerollBtn = document.getElementById('rerollBtn');
     const countHint = document.getElementById('countHint');
+
+    // Show loading state
+    filterCard.style.opacity = '0.4';
+    filterCard.style.pointerEvents = 'none';
+    countHint.textContent = 'Loading from Google Sheets...';
+
+    fetch(SHEET_CSV_URL)
+      .then(r => r.text())
+      .then(text => {
+        allRows = parseCSV(text);
+        filterCard.style.opacity = '1';
+        filterCard.style.pointerEvents = 'auto';
+        populateFilters();
+        updateCount();
+      })
+      .catch(() => {
+        countHint.textContent = '⚠️ Could not load data. Check your internet connection.';
+        filterCard.style.opacity = '1';
+      });
 
     let listExpanded = true;
     document.getElementById('listToggle').addEventListener('click', () => {
@@ -369,9 +407,6 @@
       document.getElementById('restaurantList').style.display = listExpanded ? 'block' : 'none';
       document.getElementById('listChevron').textContent = listExpanded ? '▲' : '▼';
     });
-
-    populateFilters();
-    updateCount();
 
     function populateFilters() {
       const col = k => [...new Set(allRows.map(r => r[k]).filter(Boolean))].sort();
