@@ -175,6 +175,41 @@
       font-size: 0.95rem;
       padding: 16px;
     }
+
+    .list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+      gap: 10px;
+    }
+
+    .list-item:last-child { border-bottom: none; }
+
+    .list-item-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      flex: 1;
+    }
+
+    .list-item-meta {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .list-badge {
+      background: #edf7f2;
+      color: #2d6a4f;
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
   </style>
 </head>
 <body>
@@ -207,6 +242,14 @@
     </div>
     <button class="pick-btn" id="pickBtn">🎲 Pick a Place</button>
     <p class="count-hint" id="countHint"></p>
+  </div>
+
+  <div class="card" id="listCard">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+      <h2 style="font-size:1rem; color:#2d6a4f; font-weight:700;">All Matches</h2>
+      <span id="listCount" style="font-size:0.8rem; color:#888;"></span>
+    </div>
+    <div id="restaurantList"></div>
   </div>
 
   <div class="result-card" id="resultCard">
@@ -339,9 +382,48 @@
     }
 
     function updateCount() {
-      const n = getFiltered().length;
+      const filtered = getFiltered();
+      const n = filtered.length;
       countHint.textContent = n === 0 ? 'No matches — try widening your filters.' : `${n} place${n !== 1 ? 's' : ''} match your filters`;
       pickBtn.disabled = n === 0;
+      renderList(filtered);
+    }
+
+    function renderList(filtered) {
+      const list = document.getElementById('restaurantList');
+      const count = document.getElementById('listCount');
+      count.textContent = `${filtered.length} place${filtered.length !== 1 ? 's' : ''}`;
+      list.innerHTML = '';
+
+      if (!filtered.length) {
+        list.innerHTML = '<p class="no-results">No matches for current filters.</p>';
+        return;
+      }
+
+      const sorted = [...filtered].sort((a, b) => a['Name'].localeCompare(b['Name']));
+      sorted.forEach(r => {
+        const row = document.createElement('div');
+        row.className = 'list-item';
+
+        const name = document.createElement('div');
+        name.className = 'list-item-name';
+        name.textContent = r['Name'];
+
+        const meta = document.createElement('div');
+        meta.className = 'list-item-meta';
+        [['Type', '🏪'], ['Cuisine', '🍜'], ['Price Range', '💰'], ['Location', '📍']].forEach(([k, icon]) => {
+          if (r[k]) {
+            const b = document.createElement('span');
+            b.className = 'list-badge';
+            b.textContent = `${icon} ${r[k]}`;
+            meta.appendChild(b);
+          }
+        });
+
+        row.appendChild(name);
+        row.appendChild(meta);
+        list.appendChild(row);
+      });
     }
 
     ['filterType', 'filterCuisine', 'filterPrice', 'filterLocation'].forEach(id => {
