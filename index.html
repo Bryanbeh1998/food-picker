@@ -196,15 +196,6 @@
         <label>Location</label>
         <select id="filterLocation"><option value="">Any</option></select>
       </div>
-      <div>
-        <label>Min Rating</label>
-        <select id="filterRating">
-          <option value="">Any</option>
-          <option value="3">3+</option>
-          <option value="4">4+</option>
-          <option value="5">5 only</option>
-        </select>
-      </div>
     </div>
     <button class="pick-btn" id="pickBtn">🎲 Pick a Place</button>
     <p class="count-hint" id="countHint"></p>
@@ -224,31 +215,31 @@
     // Each entry must have at minimum a "Name".
     // Other fields: Cuisine, Price Range ($ / $$ / $$$), Rating (1-5), Location, Notes
     // ============================================================
-        const allRows = [
-      {"Name": "Shake Shack", "Cuisine": "American", "Price Range": "$$", "Rating": "4", "Location": "Downtown", "Notes": "Great burgers, outdoor seating"},
-      {"Name": "Sushi Tei", "Cuisine": "Japanese", "Price Range": "$$", "Rating": "5", "Location": "Orchard", "Notes": "Best omakase in town"},
-      {"Name": "Putien", "Cuisine": "Chinese", "Price Range": "$$", "Rating": "4", "Location": "Bugis", "Notes": "Authentic Fujian cuisine"},
-      {"Name": "Lavo", "Cuisine": "Italian", "Price Range": "$$$", "Rating": "4", "Location": "Marina Bay", "Notes": "Rooftop views, good pasta"},
-      {"Name": "PS. Cafe", "Cuisine": "Western", "Price Range": "$$", "Rating": "4", "Location": "Dempsey", "Notes": "Cozy brunch spot"},
-      {"Name": "Jumbo Seafood", "Cuisine": "Seafood", "Price Range": "$$$", "Rating": "5", "Location": "Clarke Quay", "Notes": "Famous chili crab"},
-      {"Name": "Tim Ho Wan", "Cuisine": "Dim Sum", "Price Range": "$", "Rating": "4", "Location": "Toa Payoh", "Notes": "Michelin-starred dim sum"},
-      {"Name": "Burnt Ends", "Cuisine": "BBQ", "Price Range": "$$$", "Rating": "5", "Location": "Tanjong Pagar", "Notes": "Award-winning open-fire BBQ"},
-      {"Name": "Paradise Dynasty", "Cuisine": "Chinese", "Price Range": "$$", "Rating": "3", "Location": "Ion Orchard", "Notes": "Colorful xiao long bao"},
-      {"Name": "The Coconut Club", "Cuisine": "Malay", "Price Range": "$$", "Rating": "5", "Location": "Ann Siang", "Notes": "Best nasi lemak in Singapore"},
-      {"Name": "Odette", "Cuisine": "French", "Price Range": "$$$", "Rating": "5", "Location": "City Hall", "Notes": "3 Michelin stars, tasting menu"},
-      {"Name": "Hawker Chan", "Cuisine": "Chinese", "Price Range": "$", "Rating": "4", "Location": "Chinatown", "Notes": "Michelin-starred soya chicken"},
-      {"Name": "Neon Pigeon", "Cuisine": "Japanese", "Price Range": "$$", "Rating": "4", "Location": "Amoy Street", "Notes": "Modern izakaya vibes"},
-      {"Name": "Artichoke", "Cuisine": "Middle Eastern", "Price Range": "$$", "Rating": "4", "Location": "Bugis", "Notes": "Creative mezze plates"},
-      {"Name": "Lim Teck Kee", "Cuisine": "Local", "Price Range": "$", "Rating": "5", "Location": "Balestier", "Notes": "Old school char kway teow"},
-      {"Name": "Bird Bird", "Cuisine": "American", "Price Range": "$$", "Rating": "4", "Location": "Telok Ayer", "Notes": "Nashville hot chicken"},
-      {"Name": "Iggy's", "Cuisine": "European", "Price Range": "$$$", "Rating": "4", "Location": "Orchard", "Notes": "Intimate fine dining"},
-      {"Name": "Ramen Keisuke", "Cuisine": "Japanese", "Price Range": "$", "Rating": "4", "Location": "Tanjong Pagar", "Notes": "Rich tonkotsu broth"},
-      {"Name": "Zafferano", "Cuisine": "Italian", "Price Range": "$$$", "Rating": "4", "Location": "Marina Bay", "Notes": "Panoramic harbour views"},
-      {"Name": "Boon Tong Kee", "Cuisine": "Chinese", "Price Range": "$$", "Rating": "4", "Location": "Balestier", "Notes": "Classic Hainanese chicken rice"}
+            const allRows = [
+      {"Name": "Shake Shack", "Cuisine": "American", "Price Range": "$$", "Location": "Downtown", "Notes": "Great burgers, outdoor seating"},
+      {"Name": "Sushi Tei", "Cuisine": "Japanese", "Price Range": "$$", "Location": "Orchard", "Notes": "Best omakase in town"},
+      {"Name": "Putien", "Cuisine": "Chinese", "Price Range": "$$", "Location": "Bugis", "Notes": "Authentic Fujian cuisine"},
+      {"Name": "Lavo", "Cuisine": "Italian", "Price Range": "$$$", "Location": "Marina Bay", "Notes": "Rooftop views, good pasta"},
+      {"Name": "PS. Cafe", "Cuisine": "Western", "Price Range": "$$", "Location": "Dempsey", "Notes": "Cozy brunch spot"},
+      {"Name": "Jumbo Seafood", "Cuisine": "Seafood", "Price Range": "$$$", "Location": "Clarke Quay", "Notes": "Famous chili crab"},
+      {"Name": "Tim Ho Wan", "Cuisine": "Dim Sum", "Price Range": "$", "Location": "Toa Payoh", "Notes": "Michelin-starred dim sum"},
+      {"Name": "Burnt Ends", "Cuisine": "BBQ", "Price Range": "$$$", "Location": "Tanjong Pagar", "Notes": "Award-winning open-fire BBQ"},
+      {"Name": "Paradise Dynasty", "Cuisine": "Chinese", "Price Range": "$$", "Location": "Ion Orchard", "Notes": "Colorful xiao long bao"},
+      {"Name": "The Coconut Club", "Cuisine": "Malay", "Price Range": "$$", "Location": "Ann Siang", "Notes": "Best nasi lemak in Singapore"},
+      {"Name": "Odette", "Cuisine": "French", "Price Range": "$$$", "Location": "City Hall", "Notes": "3 Michelin stars, tasting menu"},
+      {"Name": "Hawker Chan", "Cuisine": "Chinese", "Price Range": "$", "Location": "Chinatown", "Notes": "Michelin-starred soya chicken"},
+      {"Name": "Neon Pigeon", "Cuisine": "Japanese", "Price Range": "$$", "Location": "Amoy Street", "Notes": "Modern izakaya vibes"},
+      {"Name": "Artichoke", "Cuisine": "Middle Eastern", "Price Range": "$$", "Location": "Bugis", "Notes": "Creative mezze plates"},
+      {"Name": "Lim Teck Kee", "Cuisine": "Local", "Price Range": "$", "Location": "Balestier", "Notes": "Old school char kway teow"},
+      {"Name": "Bird Bird", "Cuisine": "American", "Price Range": "$$", "Location": "Telok Ayer", "Notes": "Nashville hot chicken"},
+      {"Name": "Iggy's", "Cuisine": "European", "Price Range": "$$$", "Location": "Orchard", "Notes": "Intimate fine dining"},
+      {"Name": "Ramen Keisuke", "Cuisine": "Japanese", "Price Range": "$", "Location": "Tanjong Pagar", "Notes": "Rich tonkotsu broth"},
+      {"Name": "Zafferano", "Cuisine": "Italian", "Price Range": "$$$", "Location": "Marina Bay", "Notes": "Panoramic harbour views"},
+      {"Name": "Boon Tong Kee", "Cuisine": "Chinese", "Price Range": "$$", "Location": "Balestier", "Notes": "Classic Hainanese chicken rice"}
     ];
     // ============================================================
 
-    const headers = ["Name", "Cuisine", "Price Range", "Rating", "Location", "Notes"];
+    const headers = ["Name", "Cuisine", "Price Range", "Location", "Notes"];
 
     const filterCard = document.getElementById('filterCard');
     const resultCard = document.getElementById('resultCard');
@@ -276,13 +267,10 @@
       const cuisine = document.getElementById('filterCuisine').value;
       const price = document.getElementById('filterPrice').value;
       const location = document.getElementById('filterLocation').value;
-      const minRating = document.getElementById('filterRating').value;
-
       return allRows.filter(r => {
         if (cuisine && r['Cuisine'] !== cuisine) return false;
         if (price && r['Price Range'] !== price) return false;
         if (location && r['Location'] !== location) return false;
-        if (minRating && parseFloat(r['Rating']) < parseFloat(minRating)) return false;
         return true;
       });
     }
@@ -293,7 +281,7 @@
       pickBtn.disabled = n === 0;
     }
 
-    ['filterCuisine', 'filterPrice', 'filterLocation', 'filterRating'].forEach(id => {
+    ['filterCuisine', 'filterPrice', 'filterLocation'].forEach(id => {
       document.getElementById(id).addEventListener('change', updateCount);
     });
 
@@ -306,7 +294,7 @@
 
       const meta = document.getElementById('resultMeta');
       meta.innerHTML = '';
-      [['Cuisine', '🍜'], ['Price Range', '💰'], ['Location', '📍'], ['Rating', '⭐']].forEach(([k, icon]) => {
+      [['Cuisine', '🍜'], ['Price Range', '💰'], ['Location', '📍']].forEach(([k, icon]) => {
         if (place[k]) {
           const b = document.createElement('span');
           b.className = 'badge';
