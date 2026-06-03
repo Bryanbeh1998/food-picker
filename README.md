@@ -9,6 +9,7 @@ A personal web app that helps you decide where to eat. Filter your restaurant li
 ## Features
 
 - **Three tabs** — 🍽️ *Eat* (places you go to), ⭐ *Want to Try* (your bucket list), and 🍰 *Dessert* (sweet spots), each backed by its own Google Sheet tab with its own full picker
+- **Multi-country** — group tabs by country; a 📍 location pill switches the whole app between countries, with an optional City sub-filter detected from the sheet
 - **Random pick** — get a single suggestion based on your filters
 - **Group mode** — generate 3–5 options at once for group decisions
 - **Filters** — narrow down by Type, Cuisine, Price Range, and Location
@@ -26,13 +27,15 @@ A personal web app that helps you decide where to eat. Filter your restaurant li
 
 ## How the data works
 
-The restaurant lists live in a **Google Sheet** with three tabs, each published to the web as CSV and loaded live whenever the app opens:
+The lists live in **one Google Sheet**, with tabs grouped by country. Each tab is published to the web as CSV and loaded live whenever the app opens. For one country you have three tabs:
 
 | Tab | Purpose |
 |---|---|
 | **Main tab** (e.g. *Food Places*) | Places you've been to / go to regularly |
 | **Wishlist** | Places you want to try |
 | **Dessert** | Dessert / sweet spots |
+
+To add another country, create another set of three tabs (e.g. *Japan Eat*, *Japan Wishlist*, *Japan Dessert*) and register them in the `COUNTRIES` config in `index.html` — see [Adding a country](#adding-a-country) below. **City** is handled by an optional `City` column within each tab (not separate tabs), and the app detects the distinct cities automatically.
 
 You can update them two ways:
 
@@ -47,7 +50,7 @@ You can update them two ways:
 2. Add, edit, or remove rows
 3. Refresh the app — changes appear (the published CSV can take a few minutes to refresh)
 
-### Sheet columns (same for both tabs)
+### Sheet columns (same for every tab, in this order)
 
 | Column | Required | Description |
 |---|---|---|
@@ -55,28 +58,48 @@ You can update them two ways:
 | Type | | `Restaurant`, `Hawker`, `Eatery`, or `Café` |
 | Cuisine | | e.g. `Chinese`, `Japanese`, `Western` |
 | Price Range | | `$`, `$$`, `$$$`, or `$$$$` |
-| Location | | Single or multiple locations separated by commas |
+| Location | | Single or multiple areas separated by commas |
 | Notes | | Any personal notes — shown when you tap the restaurant |
+| City | | Optional. e.g. `Tokyo`. Detected automatically to power the City sub-filter |
 
 > The visit counts are stored in your **browser** (localStorage), not the sheet — they're personal to your device.
+
+---
+
+## Adding a country
+
+1. In the spreadsheet, create three new tabs for the country (e.g. `Japan Eat`, `Japan Wishlist`, `Japan Dessert`) with the same column headers.
+2. Publish each new tab to the web as CSV and note its URL / `gid`.
+3. In `index.html`, add a block to the `COUNTRIES` config:
+   ```js
+   'Japan': {
+     tried:   { url: csv('<gid>'), sheet: 'Japan Eat' },
+     wish:    { url: csv('<gid>'), sheet: 'Japan Wishlist' },
+     dessert: { url: csv('<gid>'), sheet: 'Japan Dessert' },
+   },
+   ```
+4. Fill the `City` column in those tabs (e.g. `Tokyo`, `Osaka`) to enable the city sub-filter.
+
+The 📍 location pill appears automatically once there's more than one country (or the current country has cities). No per-row Country column is needed — the country **is** the tab group.
 
 ---
 
 ## Tech stack
 
 - Vanilla HTML / CSS / JavaScript — no frameworks, single `index.html` file
-- Google Sheets as the database — two tabs, each published as CSV for reads
+- Google Sheets as the database — one spreadsheet, tabs grouped by country, each published as CSV for reads
 - Google Apps Script as the write API (handles add, edit, delete, and move-between-tabs)
 - Hosted on GitHub Pages (free, permanent)
 
 ## Architecture at a glance
 
 ```
-        reads (CSV ×3)                  writes (POST)
+        reads (CSV, 3 per country)        writes (POST)
 Google Sheet ──────────►   App   ◄────────────────────  Google Apps Script
- ├─ Main tab             (browser)                          (write API)
- ├─ Wishlist tab            │
- └─ Dessert tab     GitHub Pages (static host)
+ ├─ Singapore: Eat / Wishlist / Dessert                    (write API)
+ ├─ Japan: Eat / Wishlist / Dessert  (browser)
+ └─ …                        │
+                     GitHub Pages (static host)
 ```
 
 - **Reads:** the app fetches both tabs' published CSVs on load and parses them in the browser
