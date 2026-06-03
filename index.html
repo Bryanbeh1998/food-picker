@@ -669,7 +669,7 @@
         <label>Cuisine</label>
         <select id="filterCuisine"><option value="">Any</option></select>
       </div>
-      <div>
+      <div id="priceFilterWrap">
         <label>Price Range</label>
         <select id="filterPrice"><option value="">Any</option></select>
       </div>
@@ -854,6 +854,7 @@
         dessert: { url: csv('126015194'),  sheet: 'Singapore Dessert' },
       },
       'Japan': {
+        hideFilters: ['cuisine', 'price'],   // filters to hide for this country
         tried:   { url: csv('976139678'),  sheet: 'Japan Eat' },
         wish:    { url: csv('287331733'),  sheet: 'Japan Wishlist' },
         dessert: { url: csv('144175571'),  sheet: 'Japan Dessert' },
@@ -1006,10 +1007,7 @@
       document.querySelector('.subtitle').textContent = subtitles[tab];
       document.getElementById('addTitle').textContent = addTitles[tab];
 
-      // Dessert tab has no cuisine filter
-      const cuisineWrap = document.getElementById('cuisineFilterWrap');
-      cuisineWrap.style.display = tab === 'dessert' ? 'none' : '';
-      if (tab === 'dessert') document.getElementById('filterCuisine').value = '';
+      updateFilterVisibility();
 
       // Hide any previous result/group output
       resultCard.style.display = 'none';
@@ -1017,6 +1015,18 @@
 
       populateFilters();
       updateCount();
+    }
+
+    // Show/hide filters based on the country (config) and the active tab
+    function updateFilterVisibility() {
+      const hidden = new Set(COUNTRIES[selectedCountry].hideFilters || []);
+      const setHidden = (wrapId, selId, hide) => {
+        document.getElementById(wrapId).style.display = hide ? 'none' : '';
+        if (hide) document.getElementById(selId).value = '';
+      };
+      // Cuisine is also hidden on the Dessert tab everywhere
+      setHidden('cuisineFilterWrap', 'filterCuisine', hidden.has('cuisine') || activeTab === 'dessert');
+      setHidden('priceFilterWrap', 'filterPrice', hidden.has('price'));
     }
 
     document.querySelectorAll('.tab-btn').forEach(btn => {
