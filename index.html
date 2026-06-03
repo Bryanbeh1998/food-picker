@@ -542,8 +542,9 @@
   <p class="subtitle">Filter and get a random pick</p>
 
   <div class="tab-bar" id="tabBar">
-    <button class="tab-btn active" data-tab="tried">🍽️ Where to Eat</button>
+    <button class="tab-btn active" data-tab="tried">🍽️ Eat</button>
     <button class="tab-btn" data-tab="wish">⭐ Want to Try</button>
+    <button class="tab-btn" data-tab="dessert">🍰 Dessert</button>
   </div>
 
   <div class="card" id="manualCard" style="max-width:600px; width:100%;">
@@ -737,14 +738,21 @@
     // ============================================================
     const TRIED_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQL1lE_VlPGQS9CDcR-wZREWpSD2MW1Jtk8jYW8dBVW5BnHecTE-Y0TEG-zI7MCKorwJGAe0JL-nZfG/pub?gid=0&single=true&output=csv';
     const WISH_CSV_URL  = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQL1lE_VlPGQS9CDcR-wZREWpSD2MW1Jtk8jYW8dBVW5BnHecTE-Y0TEG-zI7MCKorwJGAe0JL-nZfG/pub?gid=1180892767&single=true&output=csv';
+    const DESSERT_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQL1lE_VlPGQS9CDcR-wZREWpSD2MW1Jtk8jYW8dBVW5BnHecTE-Y0TEG-zI7MCKorwJGAe0JL-nZfG/pub?gid=126015194&single=true&output=csv';
 
     // The tab names in your spreadsheet (used when writing back via Apps Script)
     const WISH_SHEET_NAME = 'Wishlist';
+    const DESSERT_SHEET_NAME = 'Dessert';
 
-    let activeTab = 'tried';   // 'tried' or 'wish'
+    let activeTab = 'tried';   // 'tried' | 'wish' | 'dessert'
     let triedRows = [];
     let wishRows = [];
-    function activeSheetName() { return activeTab === 'wish' ? WISH_SHEET_NAME : ''; }
+    let dessertRows = [];
+    function activeSheetName() {
+      if (activeTab === 'wish') return WISH_SHEET_NAME;
+      if (activeTab === 'dessert') return DESSERT_SHEET_NAME;
+      return '';
+    }
 
     function parseCSV(text) {
       const lines = text.trim().split('\n');
@@ -781,10 +789,12 @@
 
     Promise.all([
       fetch(TRIED_CSV_URL).then(r => r.text()),
-      fetch(WISH_CSV_URL).then(r => r.text())
-    ]).then(([triedText, wishText]) => {
+      fetch(WISH_CSV_URL).then(r => r.text()),
+      fetch(DESSERT_CSV_URL).then(r => r.text())
+    ]).then(([triedText, wishText, dessertText]) => {
       triedRows = parseCSV(triedText);
       wishRows = parseCSV(wishText);
+      dessertRows = parseCSV(dessertText);
       filterCard.style.opacity = '1';
       filterCard.style.pointerEvents = 'auto';
       switchTab(activeTab);
@@ -796,16 +806,16 @@
     // ── Tab switching ────────────────────────────────────────────
     function switchTab(tab) {
       activeTab = tab;
-      allRows = (tab === 'wish') ? wishRows : triedRows;
+      allRows = tab === 'wish' ? wishRows : tab === 'dessert' ? dessertRows : triedRows;
 
       document.querySelectorAll('.tab-btn').forEach(b =>
         b.classList.toggle('active', b.dataset.tab === tab));
 
       // Update headings/labels for context
-      document.querySelector('.subtitle').textContent =
-        tab === 'wish' ? 'Pick something new to try' : 'Filter and get a random pick';
-      document.getElementById('addTitle').textContent =
-        tab === 'wish' ? '➕ Add to Wishlist' : '➕ Add a Place';
+      const subtitles = { wish: 'Pick something new to try', dessert: 'Find a sweet spot', tried: 'Filter and get a random pick' };
+      const addTitles = { wish: '➕ Add to Wishlist', dessert: '➕ Add a Dessert Spot', tried: '➕ Add a Place' };
+      document.querySelector('.subtitle').textContent = subtitles[tab];
+      document.getElementById('addTitle').textContent = addTitles[tab];
 
       // Hide any previous result/group output
       resultCard.style.display = 'none';
