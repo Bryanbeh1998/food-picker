@@ -571,7 +571,7 @@
         <label>Type</label>
         <select id="filterType"><option value="">Any</option></select>
       </div>
-      <div>
+      <div id="cuisineFilterWrap">
         <label>Cuisine</label>
         <select id="filterCuisine"><option value="">Any</option></select>
       </div>
@@ -816,6 +816,11 @@
       const addTitles = { wish: '➕ Add to Wishlist', dessert: '➕ Add a Dessert Spot', tried: '➕ Add a Place' };
       document.querySelector('.subtitle').textContent = subtitles[tab];
       document.getElementById('addTitle').textContent = addTitles[tab];
+
+      // Dessert tab has no cuisine filter
+      const cuisineWrap = document.getElementById('cuisineFilterWrap');
+      cuisineWrap.style.display = tab === 'dessert' ? 'none' : '';
+      if (tab === 'dessert') document.getElementById('filterCuisine').value = '';
 
       // Hide any previous result/group output
       resultCard.style.display = 'none';
