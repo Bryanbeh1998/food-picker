@@ -661,7 +661,7 @@
 
   <div class="card" id="filterCard">
     <div class="filters">
-      <div>
+      <div id="typeFilterWrap">
         <label>Type</label>
         <select id="filterType"><option value="">Any</option></select>
       </div>
@@ -673,7 +673,7 @@
         <label>Price Range</label>
         <select id="filterPrice"><option value="">Any</option></select>
       </div>
-      <div>
+      <div id="locationFilterWrap">
         <label>Location</label>
         <select id="filterLocation"><option value="">Any</option></select>
       </div>
@@ -837,32 +837,57 @@
     // ============================================================
     // DATA SOURCES — one spreadsheet, tabs grouped by country.
     //
-    // To ADD A COUNTRY:
-    //   1. In the spreadsheet, create 3 new tabs for it
-    //      (e.g. "Japan Eat", "Japan Wishlist", "Japan Dessert")
-    //   2. Publish EACH tab to the web as CSV (File → Share → Publish to web)
-    //   3. Add an entry below with the 3 CSV URLs and the exact tab names.
-    // The location pill appears automatically once there's >1 country.
+    // ✨ AUTO-DISCOVERY: To add a country, just create 3 tabs named by the
+    //    convention "<Country> Eat", "<Country> Wishlist", "<Country> Dessert"
+    //    (e.g. "Japan Eat"). Make sure the document is published to the web.
+    //    The app reads the published tab list and picks them up automatically —
+    //    no code changes, no gids to copy.
     // ============================================================
     const SHEET_BASE = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQL1lE_VlPGQS9CDcR-wZREWpSD2MW1Jtk8jYW8dBVW5BnHecTE-Y0TEG-zI7MCKorwJGAe0JL-nZfG/pub';
+    const PUBHTML_URL = SHEET_BASE + 'html';
     const csv = gid => `${SHEET_BASE}?gid=${gid}&single=true&output=csv`;
+    const CATEGORY = { eat: 'tried', wishlist: 'wish', dessert: 'dessert' };
 
-    const COUNTRIES = {
+    // Built at startup from the spreadsheet's published tab list
+    let COUNTRIES = {};
+
+    // Used only if auto-discovery fails (e.g. offline)
+    const FALLBACK_COUNTRIES = {
       'Singapore': {
         tried:   { url: csv('0'),          sheet: 'Singapore Eat' },
         wish:    { url: csv('1180892767'), sheet: 'Singapore Wishlist' },
         dessert: { url: csv('126015194'),  sheet: 'Singapore Dessert' },
       },
-      'Japan': {
-        hideFilters: ['cuisine', 'price'],   // filters to hide for this country
-        tried:   { url: csv('976139678'),  sheet: 'Japan Eat' },
-        wish:    { url: csv('287331733'),  sheet: 'Japan Wishlist' },
-        dessert: { url: csv('144175571'),  sheet: 'Japan Dessert' },
-      },
     };
 
-    let selectedCountry = localStorage.getItem('foodpicker_country');
-    if (!selectedCountry || !COUNTRIES[selectedCountry]) selectedCountry = Object.keys(COUNTRIES)[0];
+    // Read the published tab list and group tabs into countries by name
+    async function discoverCountries() {
+      try {
+        const text = await fetch(PUBHTML_URL).then(r => r.text());
+        const re = /name:\s*"([^"]+)"[^}]*?gid:\s*"(\d+)"/g;
+        const found = {};
+        let m;
+        while ((m = re.exec(text)) !== null) {
+          const name = m[1].trim();
+          const parts = name.match(/^(.+)\s+(Eat|Wishlist|Dessert)$/i);
+          if (!parts) continue;
+          const country = parts[1].trim();
+          const cat = CATEGORY[parts[2].toLowerCase()];
+          (found[country] = found[country] || {})[cat] = { url: csv(m[2]), sheet: name };
+        }
+        // Keep only countries that have all three tabs
+        const complete = {};
+        Object.keys(found).forEach(c => {
+          const e = found[c];
+          if (e.tried && e.wish && e.dessert) complete[c] = e;
+        });
+        return Object.keys(complete).length ? complete : FALLBACK_COUNTRIES;
+      } catch (err) {
+        return FALLBACK_COUNTRIES;
+      }
+    }
+
+    let selectedCountry = '';
     let selectedCity = '';   // '' = all cities; reset whenever country changes
 
     let activeTab = 'tried';   // 'tried' | 'wish' | 'dessert'
@@ -991,7 +1016,13 @@
       document.getElementById('countryGate').style.display = 'flex';
     }
 
-    showGate();
+    // Discover countries from the sheet, then show the country gate
+    discoverCountries().then(map => {
+      COUNTRIES = map;
+      selectedCountry = localStorage.getItem('foodpicker_country');
+      if (!selectedCountry || !COUNTRIES[selectedCountry]) selectedCountry = Object.keys(COUNTRIES)[0];
+      showGate();
+    });
 
     // ── Tab switching ────────────────────────────────────────────
     function switchTab(tab) {
@@ -1007,26 +1038,12 @@
       document.querySelector('.subtitle').textContent = subtitles[tab];
       document.getElementById('addTitle').textContent = addTitles[tab];
 
-      updateFilterVisibility();
-
       // Hide any previous result/group output
       resultCard.style.display = 'none';
       document.getElementById('groupCard').style.display = 'none';
 
       populateFilters();
       updateCount();
-    }
-
-    // Show/hide filters based on the country (config) and the active tab
-    function updateFilterVisibility() {
-      const hidden = new Set(COUNTRIES[selectedCountry].hideFilters || []);
-      const setHidden = (wrapId, selId, hide) => {
-        document.getElementById(wrapId).style.display = hide ? 'none' : '';
-        if (hide) document.getElementById(selId).value = '';
-      };
-      // Cuisine is also hidden on the Dessert tab everywhere
-      setHidden('cuisineFilterWrap', 'filterCuisine', hidden.has('cuisine') || activeTab === 'dessert');
-      setHidden('priceFilterWrap', 'filterPrice', hidden.has('price'));
     }
 
     document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1068,11 +1085,21 @@
     function populateFilters() {
       const scoped = allRows.filter(inCityScope);
       const col = k => [...new Set(scoped.map(r => r[k]).filter(Boolean))].sort();
+      const types = col('Type'), cuisines = col('Cuisine'), prices = col('Price Range');
       const locations = [...new Set(scoped.flatMap(r => splitLocations(r['Location'])))].sort();
-      fillSelect('filterType', col('Type'));
-      fillSelect('filterCuisine', col('Cuisine'));
-      fillSelect('filterPrice', col('Price Range'));
+
+      fillSelect('filterType', types);
+      fillSelect('filterCuisine', cuisines);
+      fillSelect('filterPrice', prices);
       fillSelect('filterLocation', locations);
+
+      // A filter only shows if the current data actually has values for it.
+      // (Cuisine is also hidden on the Dessert tab.)
+      const show = (wrapId, ok) => { document.getElementById(wrapId).style.display = ok ? '' : 'none'; };
+      show('typeFilterWrap', types.length > 0);
+      show('cuisineFilterWrap', cuisines.length > 0 && activeTab !== 'dessert');
+      show('priceFilterWrap', prices.length > 0);
+      show('locationFilterWrap', locations.length > 0);
     }
 
     function splitLocations(val) {
