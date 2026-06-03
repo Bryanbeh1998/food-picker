@@ -583,9 +583,13 @@
   <div class="loc-wrap" id="locWrap" style="display:none;">
     <button class="loc-pill" id="locPill"><span id="locPillLabel">📍 Singapore</span> <span style="opacity:0.6;">▾</span></button>
     <div class="loc-panel" id="locPanel" style="display:none;">
-      <div style="grid-column:1/-1;">
+      <div>
         <label>Country</label>
         <select id="locCountry"></select>
+      </div>
+      <div id="locCityWrap">
+        <label>City</label>
+        <select id="locCity"></select>
       </div>
     </div>
   </div>
@@ -679,6 +683,10 @@
           <label>Location / Area</label>
           <input id="addLocation" type="text" placeholder="e.g. Clarke Quay" />
         </div>
+        <div>
+          <label>City</label>
+          <input id="addCity" type="text" placeholder="e.g. Tokyo" />
+        </div>
         <div style="grid-column:1/-1;">
           <label>Notes</label>
           <input id="addNotes" type="text" placeholder="Any extra info" />
@@ -769,6 +777,10 @@
           <label>Location / Area</label>
           <input id="editLocation" type="text" />
         </div>
+        <div>
+          <label>City</label>
+          <input id="editCity" type="text" />
+        </div>
         <div style="grid-column:1/-1;">
           <label>Notes</label>
           <input id="editNotes" type="text" />
@@ -809,6 +821,7 @@
 
     let selectedCountry = localStorage.getItem('foodpicker_country');
     if (!selectedCountry || !COUNTRIES[selectedCountry]) selectedCountry = Object.keys(COUNTRIES)[0];
+    let selectedCity = '';   // '' = all cities; reset whenever country changes
 
     let activeTab = 'tried';   // 'tried' | 'wish' | 'dessert'
     let triedRows = [];
@@ -818,24 +831,48 @@
     function activeSheetName() { return COUNTRIES[selectedCountry][activeTab].sheet; }
     function triedSheetName()  { return COUNTRIES[selectedCountry].tried.sheet; }
 
-    function setupCountryPill() {
+    const rowCity = r => (r['City'] || '').trim();
+    function citiesInData() {
+      return [...new Set([...triedRows, ...wishRows, ...dessertRows].map(rowCity).filter(Boolean))].sort();
+    }
+    function inCityScope(r) { return !selectedCity || rowCity(r) === selectedCity; }
+
+    // Builds the country + city pickers and decides whether the pill is shown
+    function setupLocationUI() {
       const countries = Object.keys(COUNTRIES);
-      const wrap = document.getElementById('locWrap');
-      if (countries.length <= 1) { wrap.style.display = 'none'; return; }
-      wrap.style.display = 'flex';
-      const sel = document.getElementById('locCountry');
-      sel.innerHTML = '';
+      const cities = citiesInData();
+
+      // Country dropdown
+      const countrySel = document.getElementById('locCountry');
+      countrySel.innerHTML = '';
       countries.forEach(c => {
         const o = document.createElement('option');
         o.value = c; o.textContent = c;
         if (c === selectedCountry) o.selected = true;
-        sel.appendChild(o);
+        countrySel.appendChild(o);
       });
+
+      // City dropdown (detected from this country's data)
+      const citySel = document.getElementById('locCity');
+      citySel.innerHTML = '<option value="">All cities</option>';
+      cities.forEach(c => {
+        const o = document.createElement('option');
+        o.value = c; o.textContent = c;
+        if (c === selectedCity) o.selected = true;
+        citySel.appendChild(o);
+      });
+      document.getElementById('locCityWrap').style.display = cities.length ? '' : 'none';
+
+      // Show the pill if there's a real choice to make (>1 country or this country has cities)
+      document.getElementById('locWrap').style.display =
+        (countries.length > 1 || cities.length > 0) ? 'flex' : 'none';
+
       updateLocPillLabel();
     }
 
     function updateLocPillLabel() {
-      document.getElementById('locPillLabel').textContent = '📍 ' + selectedCountry;
+      document.getElementById('locPillLabel').textContent =
+        '📍 ' + selectedCountry + (selectedCity ? ' · ' + selectedCity : '');
     }
 
     function parseCSV(text) {
@@ -869,6 +906,7 @@
     // Load a country's three tabs (Eat / Wishlist / Dessert)
     function loadCountry(country) {
       selectedCountry = country;
+      selectedCity = '';
       localStorage.setItem('foodpicker_country', country);
       const c = COUNTRIES[country];
 
@@ -886,6 +924,7 @@
         dessertRows = parseCSV(dessertText);
         filterCard.style.opacity = '1';
         filterCard.style.pointerEvents = 'auto';
+        setupLocationUI();
         switchTab(activeTab);
       }).catch(() => {
         countHint.textContent = '⚠️ Could not load data. Check your internet connection.';
@@ -893,7 +932,6 @@
       });
     }
 
-    setupCountryPill();
     loadCountry(selectedCountry);
 
     // ── Tab switching ────────────────────────────────────────────
@@ -933,9 +971,15 @@
       p.style.display = p.style.display === 'none' ? 'grid' : 'none';
     });
     document.getElementById('locCountry').addEventListener('change', e => {
-      document.getElementById('locPanel').style.display = 'none';
-      updateLocPillLabel();
       loadCountry(e.target.value);
+    });
+    document.getElementById('locCity').addEventListener('change', e => {
+      selectedCity = e.target.value;
+      updateLocPillLabel();
+      resultCard.style.display = 'none';
+      document.getElementById('groupCard').style.display = 'none';
+      populateFilters();
+      updateCount();
     });
 
     document.getElementById('manualToggle').addEventListener('click', () => {
@@ -954,8 +998,9 @@
     });
 
     function populateFilters() {
-      const col = k => [...new Set(allRows.map(r => r[k]).filter(Boolean))].sort();
-      const locations = [...new Set(allRows.flatMap(r => splitLocations(r['Location'])))].sort();
+      const scoped = allRows.filter(inCityScope);
+      const col = k => [...new Set(scoped.map(r => r[k]).filter(Boolean))].sort();
+      const locations = [...new Set(scoped.flatMap(r => splitLocations(r['Location'])))].sort();
       fillSelect('filterType', col('Type'));
       fillSelect('filterCuisine', col('Cuisine'));
       fillSelect('filterPrice', col('Price Range'));
@@ -970,9 +1015,9 @@
       return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(query);
     }
 
-    // Build a Maps search string: name + area + country (for accuracy abroad)
+    // Build a Maps search string: name + area + city + country (for accuracy abroad)
     function mapsQueryFor(r, outlet) {
-      return [r['Name'], outlet || '', selectedCountry].filter(Boolean).join(' ');
+      return [r['Name'], outlet || '', rowCity(r), selectedCountry].filter(Boolean).join(' ');
     }
 
 
@@ -989,6 +1034,7 @@
       const type = document.getElementById('filterType').value;
 
       return allRows.filter(r => {
+        if (!inCityScope(r)) return false;
         if (type && r['Type'] !== type) return false;
         if (cuisine && r['Cuisine'] !== cuisine) return false;
         if (price && r['Price Range'] !== price) return false;
@@ -1245,7 +1291,7 @@
             sheet: COUNTRIES[selectedCountry].wish.sheet,
             targetSheet: triedSheetName(),
             Name: r['Name'], Type: r['Type'], Cuisine: r['Cuisine'],
-            'Price Range': r['Price Range'], Location: r['Location'], Notes: r['Notes']
+            'Price Range': r['Price Range'], Location: r['Location'], City: r['City'] || '', Notes: r['Notes']
           })
         });
         // Update locally: remove from wishlist, add to tried
@@ -1319,6 +1365,7 @@
       document.getElementById('editCuisine').value = r['Cuisine'] || '';
       document.getElementById('editPrice').value = r['Price Range'] || '';
       document.getElementById('editLocation').value = r['Location'] || '';
+      document.getElementById('editCity').value = r['City'] || '';
       document.getElementById('editNotes').value = r['Notes'] || '';
       document.getElementById('editStatus').textContent = '';
       document.getElementById('editModal').classList.add('open');
@@ -1349,6 +1396,7 @@
         Cuisine: document.getElementById('editCuisine').value.trim(),
         'Price Range': document.getElementById('editPrice').value,
         Location: document.getElementById('editLocation').value.trim(),
+        City: document.getElementById('editCity').value.trim(),
         Notes: document.getElementById('editNotes').value.trim(),
         sheet: activeSheetName()
       };
@@ -1474,6 +1522,10 @@
       const open = form.style.display !== 'none';
       form.style.display = open ? 'none' : 'block';
       chevron.textContent = open ? '▼' : '▲';
+      // Prefill City with the current city scope
+      if (!open && selectedCity && !document.getElementById('addCity').value) {
+        document.getElementById('addCity').value = selectedCity;
+      }
     });
 
     document.getElementById('addSubmit').addEventListener('click', async () => {
@@ -1490,6 +1542,7 @@
         Cuisine: document.getElementById('addCuisine').value.trim(),
         'Price Range': document.getElementById('addPrice').value,
         Location: document.getElementById('addLocation').value.trim(),
+        City: document.getElementById('addCity').value.trim() || selectedCity,
         Notes: document.getElementById('addNotes').value.trim(),
         sheet: activeSheetName()
       };
@@ -1511,9 +1564,10 @@
         // Add locally so it shows immediately (mutate the active array in place)
         const newRow = {
           Name: entry.Name, Type: entry.Type, Cuisine: entry.Cuisine,
-          'Price Range': entry['Price Range'], Location: entry.Location, Notes: entry.Notes
+          'Price Range': entry['Price Range'], Location: entry.Location, City: entry.City, Notes: entry.Notes
         };
         allRows.push(newRow);
+        setupLocationUI();
         populateFilters();
         updateCount();
 
@@ -1521,7 +1575,7 @@
         status.style.color = '#5a9e7e';
 
         // Clear form
-        ['addName', 'addCuisine', 'addLocation', 'addNotes'].forEach(id => document.getElementById(id).value = '');
+        ['addName', 'addCuisine', 'addLocation', 'addCity', 'addNotes'].forEach(id => document.getElementById(id).value = '');
         document.getElementById('addType').value = '';
         document.getElementById('addPrice').value = '';
       } catch (err) {
