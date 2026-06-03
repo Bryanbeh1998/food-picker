@@ -706,13 +706,7 @@
         </div>
         <div id="addPriceWrap">
           <label>Price Range</label>
-          <select id="addPrice">
-            <option value="">— Select —</option>
-            <option>$</option>
-            <option>$$</option>
-            <option>$$$</option>
-            <option>$$$$</option>
-          </select>
+          <select id="addPrice"><option value="">— Select —</option></select>
         </div>
         <div>
           <label>Location / Area</label>
@@ -794,13 +788,7 @@
         </div>
         <div id="editPriceWrap">
           <label>Price Range</label>
-          <select id="editPrice">
-            <option value="">— Select —</option>
-            <option>$</option>
-            <option>$$</option>
-            <option>$$$</option>
-            <option>$$$$</option>
-          </select>
+          <select id="editPrice"><option value="">— Select —</option></select>
         </div>
         <div>
           <label>Location / Area</label>
@@ -1089,9 +1077,18 @@
       show('priceFilterWrap', prices.length > 0 && activeTab !== 'dessert');
       show('locationFilterWrap', locations.length > 0);
 
-      // Type dropdowns in Add/Edit forms follow the types actually in the sheet
-      fillTypeSelect('addType', types);
-      fillTypeSelect('editType', types);
+      // Add/Edit dropdowns follow the sheet's values. Use the current tab's values,
+      // but fall back to the whole country's values when this tab is empty
+      // (e.g. an empty Wishlist still offers the country's known types/prices).
+      const countryRows = [...triedRows, ...wishRows, ...dessertRows].filter(inCityScope);
+      const cwTypes = [...new Set(countryRows.map(r => r['Type']).filter(Boolean))].sort();
+      const cwPrices = [...new Set(countryRows.map(r => r['Price Range']).filter(Boolean))].sort();
+      const typeOpts = types.length ? types : cwTypes;
+      const priceOpts = prices.length ? prices : cwPrices;
+      fillTypeSelect('addType', typeOpts);
+      fillTypeSelect('editType', typeOpts);
+      fillTypeSelect('addPrice', priceOpts);
+      fillTypeSelect('editPrice', priceOpts);
 
       // The Dessert add/edit forms only need Type — hide Cuisine & Price
       const dessert = activeTab === 'dessert';
