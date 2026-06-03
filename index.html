@@ -9,7 +9,7 @@
 
     body {
       font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
-      background: #f4f9f6;
+      background: #e9f4ed;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -20,7 +20,7 @@
 
     h1 {
       font-size: 2rem;
-      color: #2d6a4f;
+      color: #5a9e7e;
       margin-bottom: 6px;
     }
 
@@ -46,7 +46,7 @@
       width: 100%;
       max-width: 600px;
       margin-bottom: 24px;
-      background: #e4f0ea;
+      background: #d8ecdf;
       border-radius: 12px;
       padding: 5px;
     }
@@ -60,23 +60,23 @@
       font-size: 0.92rem;
       font-weight: 600;
       font-family: inherit;
-      color: #5a7a6c;
+      color: #6e9685;
       cursor: pointer;
       transition: all 0.15s;
     }
 
     .tab-btn.active {
       background: white;
-      color: #2d6a4f;
+      color: #5a9e7e;
       box-shadow: 0 1px 4px rgba(0,0,0,0.1);
     }
 
     body.dark .tab-bar { background: #1d2c25; }
     body.dark .tab-btn { color: #9bb5a8; }
-    body.dark .tab-btn.active { background: #2d6a4f; color: white; }
+    body.dark .tab-btn.active { background: #5a9e7e; color: white; }
 
     .upload-area {
-      border: 2px dashed #b7dfc9;
+      border: 2px dashed #c9e9d7;
       border-radius: 12px;
       padding: 32px;
       text-align: center;
@@ -86,8 +86,8 @@
     }
 
     .upload-area:hover, .upload-area.dragover {
-      border-color: #2d6a4f;
-      background: #edf7f2;
+      border-color: #5a9e7e;
+      background: #eef8f2;
     }
 
     .upload-area input { display: none; }
@@ -95,7 +95,7 @@
     .upload-icon { font-size: 2.5rem; margin-bottom: 10px; }
 
     .upload-area p { color: #555; font-size: 0.95rem; }
-    .upload-area span { color: #2d6a4f; font-weight: 600; cursor: pointer; }
+    .upload-area span { color: #5a9e7e; font-weight: 600; cursor: pointer; }
 
     .filters {
       display: grid;
@@ -109,24 +109,24 @@
     select {
       width: 100%;
       padding: 9px 12px;
-      border: 1.5px solid #d0e8dc;
+      border: 1.5px solid #dcefe4;
       border-radius: 8px;
       font-size: 0.92rem;
       background: white;
       color: #1a1a1a;
       appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%232d6a4f' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235a9e7e' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 12px center;
       cursor: pointer;
     }
 
-    select:focus { outline: none; border-color: #2d6a4f; }
+    select:focus { outline: none; border-color: #5a9e7e; }
 
     .pick-btn {
       width: 100%;
       padding: 14px;
-      background: #2d6a4f;
+      background: #5a9e7e;
       color: white;
       border: none;
       border-radius: 10px;
@@ -136,13 +136,13 @@
       transition: background 0.2s, transform 0.1s;
     }
 
-    .pick-btn:hover { background: #1f4f3a; }
+    .pick-btn:hover { background: #4a8b6c; }
     .pick-btn:active { transform: scale(0.98); }
     .pick-btn:disabled { background: #a0c4b4; cursor: not-allowed; }
 
     .result-card {
       display: none;
-      background: linear-gradient(135deg, #2d6a4f, #40916c);
+      background: linear-gradient(135deg, #5a9e7e, #84c7a4);
       color: white;
       border-radius: 16px;
       padding: 28px;
@@ -214,7 +214,7 @@
     input[type="text"] {
       width: 100%;
       padding: 9px 12px;
-      border: 1.5px solid #d0e8dc;
+      border: 1.5px solid #dcefe4;
       border-radius: 8px;
       font-size: 0.92rem;
       font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
@@ -222,7 +222,7 @@
       background: white;
     }
 
-    input[type="text"]:focus { outline: none; border-color: #2d6a4f; }
+    input[type="text"]:focus { outline: none; border-color: #5a9e7e; }
 
     .list-item {
       display: flex;
@@ -247,7 +247,7 @@
       justify-content: flex-end;
     }
 
-    .list-item-open { background: #f4faf7; border-radius: 8px; padding: 10px; margin: 2px 0; }
+    .list-item-open { background: #eef8f2; border-radius: 8px; padding: 10px; margin: 2px 0; }
 
     .list-detail { margin-top: 10px; }
 
@@ -263,9 +263,9 @@
     .outlet-item {
       display: block;
       font-size: 0.85rem;
-      color: #2d6a4f;
+      color: #5a9e7e;
       padding: 5px 10px;
-      border-left: 2px solid #b7dfc9;
+      border-left: 2px solid #c9e9d7;
       margin-bottom: 3px;
       text-decoration: none;
       transition: background 0.15s;
@@ -282,7 +282,7 @@
 
     .list-note {
       font-size: 0.85rem;
-      color: #2d6a4f;
+      color: #5a9e7e;
       padding: 8px 10px;
       background: rgba(45,106,79,0.06);
       border-radius: 8px;
@@ -296,7 +296,7 @@
     }
 
     .manual-num {
-      background: #2d6a4f;
+      background: #5a9e7e;
       color: white;
       border-radius: 50%;
       width: 24px;
@@ -314,13 +314,13 @@
     .manual-step p { font-size: 0.83rem; color: #555; line-height: 1.5; margin: 0; }
 
     .group-btn {
-      background: #40916c;
+      background: #84c7a4;
       flex-shrink: 0;
       width: auto;
       padding: 14px 20px;
     }
 
-    .group-btn:hover { background: #2d6a4f; }
+    .group-btn:hover { background: #5a9e7e; }
 
     .group-item {
       display: flex;
@@ -328,7 +328,7 @@
       align-items: center;
       padding: 12px 14px;
       border-radius: 10px;
-      background: #f4faf7;
+      background: #eef8f2;
       margin-bottom: 8px;
       gap: 10px;
     }
@@ -338,7 +338,7 @@
     .group-item-num {
       font-size: 1.1rem;
       font-weight: 700;
-      color: #2d6a4f;
+      color: #5a9e7e;
       min-width: 24px;
     }
 
@@ -352,7 +352,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #2d6a4f;
+      background: #5a9e7e;
       color: white;
       font-size: 0.85rem;
       font-weight: 700;
@@ -373,16 +373,16 @@
 
     .edit-btn {
       background: none;
-      border: 1.5px solid #b7dfc9;
+      border: 1.5px solid #c9e9d7;
       border-radius: 6px;
       padding: 3px 8px;
       font-size: 0.75rem;
-      color: #2d6a4f;
+      color: #5a9e7e;
       cursor: pointer;
       flex-shrink: 0;
       transition: background 0.15s;
     }
-    .edit-btn:hover { background: #edf7f2; }
+    .edit-btn:hover { background: #eef8f2; }
 
     .modal-overlay {
       display: none;
@@ -412,7 +412,7 @@
       margin-bottom: 18px;
     }
 
-    .modal-header h2 { font-size: 1rem; color: #2d6a4f; }
+    .modal-header h2 { font-size: 1rem; color: #5a9e7e; }
 
     .modal-close {
       background: none;
@@ -424,8 +424,8 @@
     }
 
     .list-badge {
-      background: #edf7f2;
-      color: #2d6a4f;
+      background: #eef8f2;
+      color: #5a9e7e;
       border-radius: 20px;
       padding: 3px 10px;
       font-size: 0.75rem;
@@ -472,7 +472,7 @@
     .list-item.visited { opacity: 0.7; }
 
     .mark-tried-btn {
-      background: #2d6a4f;
+      background: #5a9e7e;
       color: white;
       border: none;
       border-radius: 8px;
@@ -483,7 +483,7 @@
       cursor: pointer;
       transition: background 0.15s;
     }
-    .mark-tried-btn:hover { background: #1f4f3a; }
+    .mark-tried-btn:hover { background: #4a8b6c; }
 
     /* ── Dark mode toggle ── */
     .theme-toggle {
@@ -491,7 +491,7 @@
       top: 16px;
       right: 16px;
       background: white;
-      border: 1.5px solid #d0e8dc;
+      border: 1.5px solid #dcefe4;
       border-radius: 50%;
       width: 42px;
       height: 42px;
@@ -548,14 +548,14 @@
 
   <div class="card" id="manualCard" style="max-width:600px; width:100%;">
     <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" id="manualToggle">
-      <h2 style="font-size:1rem; color:#2d6a4f; font-weight:700;">📖 How to Use</h2>
-      <span id="manualChevron" style="font-size:0.85rem; color:#2d6a4f;">▼</span>
+      <h2 style="font-size:1rem; color:#5a9e7e; font-weight:700;">📖 How to Use</h2>
+      <span id="manualChevron" style="font-size:0.85rem; color:#5a9e7e;">▼</span>
     </div>
     <div id="manualContent" style="display:none; margin-top:16px;">
       <div class="manual-section">
         <div class="manual-step"><span class="manual-num">1</span><div><strong>Pick a Place</strong><p>Use the filters at the top to narrow down by Type, Cuisine, Price Range, or Location. Then hit <strong>🎲 Pick a Place</strong> to get a random suggestion from your filtered list.</p></div></div>
         <div class="manual-step"><span class="manual-num">2</span><div><strong>Group Mode</strong><p>Deciding with friends? Hit <strong>👥 Group Mode</strong> to get multiple options at once. Use the dropdown to choose how many (3, 4, or 5). Hit <strong>New Options</strong> to reshuffle.</p></div></div>
-        <div class="manual-step"><span class="manual-num">3</span><div><strong>Browse the List</strong><p>Tap <strong>All Matches</strong> to see every restaurant that fits your current filters, grouped by cuisine. A <span style="display:inline-block;width:7px;height:7px;background:#2d6a4f;border-radius:50%;vertical-align:middle;"></span> green dot means there's a note — tap the restaurant to reveal it.</p></div></div>
+        <div class="manual-step"><span class="manual-num">3</span><div><strong>Browse the List</strong><p>Tap <strong>All Matches</strong> to see every restaurant that fits your current filters, grouped by cuisine. A <span style="display:inline-block;width:7px;height:7px;background:#5a9e7e;border-radius:50%;vertical-align:middle;"></span> green dot means there's a note — tap the restaurant to reveal it.</p></div></div>
         <div class="manual-step"><span class="manual-num">4</span><div><strong>Visit Counter</strong><p>Each list item has a <strong>🍽️ counter</strong> with <strong>+</strong> / <strong>−</strong> buttons, and results have a <strong>✓ Been Here</strong> button. The more times you've visited a place, the less often it gets suggested — but it's never fully excluded, so you can still go back to favourites.</p></div></div>
         <div class="manual-step"><span class="manual-num">5</span><div><strong>Add or Edit a Place</strong><p>Tap <strong>➕ Add a Place</strong> to add a new restaurant, or the <strong>✏️</strong> button on any list item to edit or delete it. Changes save straight to the database — refresh to see them.</p></div></div>
         <div class="manual-step"><span class="manual-num">6</span><div><strong>Two Tabs</strong><p>Switch between <strong>🍽️ Where to Eat</strong> (places you go to) and <strong>⭐ Want to Try</strong> (your bucket list) using the tabs up top. Each has its own list and picker. When you finally visit a wishlist place, pick it and hit <strong>🍽️ Mark as Tried</strong> to move it over to your main list automatically.</p></div></div>
@@ -592,8 +592,8 @@
 
   <div class="card" id="addCard">
     <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" id="addToggle">
-      <h2 id="addTitle" style="font-size:1rem; color:#2d6a4f; font-weight:700;">➕ Add a Place</h2>
-      <span id="addChevron" style="font-size:0.85rem; color:#2d6a4f;">▼</span>
+      <h2 id="addTitle" style="font-size:1rem; color:#5a9e7e; font-weight:700;">➕ Add a Place</h2>
+      <span id="addChevron" style="font-size:0.85rem; color:#5a9e7e;">▼</span>
     </div>
     <div id="addForm" style="display:none; margin-top:18px;">
       <div class="filters" style="margin-bottom:14px;">
@@ -641,10 +641,10 @@
 
   <div class="card" id="listCard">
     <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" id="listToggle">
-      <h2 style="font-size:1rem; color:#2d6a4f; font-weight:700;">All Matches</h2>
+      <h2 style="font-size:1rem; color:#5a9e7e; font-weight:700;">All Matches</h2>
       <div style="display:flex; align-items:center; gap:8px;">
         <span id="listCount" style="font-size:0.8rem; color:#888;"></span>
-        <span id="listChevron" style="font-size:0.85rem; color:#2d6a4f;">▼</span>
+        <span id="listChevron" style="font-size:0.85rem; color:#5a9e7e;">▼</span>
       </div>
     </div>
     <div id="restaurantList" style="display:none; margin-top:14px;"></div>
@@ -665,7 +665,7 @@
 
   <div class="card" id="groupCard" style="display:none;">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-      <h2 style="font-size:1rem; color:#2d6a4f; font-weight:700;">👥 Group Options</h2>
+      <h2 style="font-size:1rem; color:#5a9e7e; font-weight:700;">👥 Group Options</h2>
       <div style="display:flex; align-items:center; gap:8px;">
         <label style="font-size:0.8rem; margin:0;">Show</label>
         <select id="groupCount" style="width:60px; padding:5px 8px;">
@@ -899,7 +899,7 @@
       if (r['Notes']) {
         const dot = document.createElement('span');
         dot.title = 'Has a note';
-        dot.style.cssText = 'display:inline-block; width:7px; height:7px; background:#2d6a4f; border-radius:50%; margin-left:7px; vertical-align:middle; flex-shrink:0;';
+        dot.style.cssText = 'display:inline-block; width:7px; height:7px; background:#5a9e7e; border-radius:50%; margin-left:7px; vertical-align:middle; flex-shrink:0;';
         name.appendChild(dot);
       }
 
@@ -1242,7 +1242,7 @@
           body: JSON.stringify(entry)
         });
         status.textContent = '✅ Saved! Refresh the page to see changes.';
-        status.style.color = '#2d6a4f';
+        status.style.color = '#5a9e7e';
       } catch (err) {
         status.textContent = '❌ Failed to save. Check your connection.';
         status.style.color = '#c0392b';
@@ -1272,7 +1272,7 @@
         const di = allRows.findIndex(r => r['Name'] === editingOriginalName);
         if (di >= 0) allRows.splice(di, 1);
         status.textContent = '✅ Deleted!';
-        status.style.color = '#2d6a4f';
+        status.style.color = '#5a9e7e';
         setTimeout(() => { closeEditModal(); populateFilters(); updateCount(); }, 700);
       } catch (err) {
         status.textContent = '❌ Failed to delete. Check your connection.';
@@ -1394,7 +1394,7 @@
         updateCount();
 
         status.textContent = `✅ "${name}" added!`;
-        status.style.color = '#2d6a4f';
+        status.style.color = '#5a9e7e';
 
         // Clear form
         ['addName', 'addCuisine', 'addLocation', 'addNotes'].forEach(id => document.getElementById(id).value = '');
