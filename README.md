@@ -12,15 +12,15 @@ A personal web app that helps you decide where to eat. Filter your restaurant li
 - **Multi-country** — group tabs by country; a 📍 location pill switches the whole app between countries, with an optional City sub-filter detected from the sheet
 - **Random pick** — get a single suggestion based on your filters
 - **Group mode** — generate 3–5 options at once for group decisions
-- **Filters** — narrow down by Type, Cuisine, Price Range, and Location
-- **All Matches list** — every restaurant that fits your filters, grouped by cuisine with a count per category; tap any to expand its notes, visit counter, and map link
+- **Smart filters** — narrow down by Type, Cuisine, Price Range, and Location. Filters **auto-hide** when a tab has no data for them (e.g. Dessert hides Cuisine & Price), so you only see what's relevant
+- **All Matches list** — every place that fits your filters, grouped by cuisine with a count per category; tap any to expand its notes, visit counter, and map link
 - **Smart suggestions (visit counter)** — mark how many times you've been somewhere; the more you've visited, the less often it's suggested (but never fully excluded)
 - **Mark as Tried** — on the wishlist, one tap moves a place into your main list automatically
 - **Open in Google Maps** — every pick and outlet links straight to directions
 - **Multi-location support** — chains with several branches show each outlet in an expandable sublist
-- **Add / Edit / Delete** — manage places directly from the app; changes write straight back to Google Sheets
+- **Add / Edit / Delete** — manage places directly from the app; changes write straight back to Google Sheets. The **Type dropdown is populated from the types already in your sheet**
 - **Dark mode** — toggle in the top-right corner; your choice is remembered
-- **Pastel green theme** with a built-in "How to Use" manual
+- **Pastel green theme** with a built-in, compact "How to Use" guide
 - **Live data** — powered by Google Sheets, no redeployment needed to update the lists
 
 ---
