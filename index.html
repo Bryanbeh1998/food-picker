@@ -583,13 +583,9 @@
   <div class="loc-wrap" id="locWrap" style="display:none;">
     <button class="loc-pill" id="locPill"><span id="locPillLabel">📍 Singapore</span> <span style="opacity:0.6;">▾</span></button>
     <div class="loc-panel" id="locPanel" style="display:none;">
-      <div>
+      <div style="grid-column:1/-1;">
         <label>Country</label>
         <select id="locCountry"></select>
-      </div>
-      <div>
-        <label>City</label>
-        <select id="locCity"></select>
       </div>
     </div>
   </div>
@@ -683,14 +679,6 @@
           <label>Location / Area</label>
           <input id="addLocation" type="text" placeholder="e.g. Clarke Quay" />
         </div>
-        <div>
-          <label>Country</label>
-          <input id="addCountry" type="text" placeholder="e.g. Singapore" />
-        </div>
-        <div>
-          <label>City</label>
-          <input id="addCity" type="text" placeholder="e.g. Singapore" />
-        </div>
         <div style="grid-column:1/-1;">
           <label>Notes</label>
           <input id="addNotes" type="text" placeholder="Any extra info" />
@@ -781,14 +769,6 @@
           <label>Location / Area</label>
           <input id="editLocation" type="text" />
         </div>
-        <div>
-          <label>Country</label>
-          <input id="editCountry" type="text" />
-        </div>
-        <div>
-          <label>City</label>
-          <input id="editCity" type="text" />
-        </div>
         <div style="grid-column:1/-1;">
           <label>Notes</label>
           <input id="editNotes" type="text" />
@@ -802,100 +782,60 @@
 
   <script>
     // ============================================================
-    // GOOGLE SHEETS DATA SOURCES
-    // Two tabs in the same spreadsheet, each published as CSV.
+    // DATA SOURCES — one spreadsheet, tabs grouped by country.
+    //
+    // To ADD A COUNTRY:
+    //   1. In the spreadsheet, create 3 new tabs for it
+    //      (e.g. "Japan Eat", "Japan Wishlist", "Japan Dessert")
+    //   2. Publish EACH tab to the web as CSV (File → Share → Publish to web)
+    //   3. Add an entry below with the 3 CSV URLs and the exact tab names.
+    // The location pill appears automatically once there's >1 country.
     // ============================================================
-    const TRIED_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQL1lE_VlPGQS9CDcR-wZREWpSD2MW1Jtk8jYW8dBVW5BnHecTE-Y0TEG-zI7MCKorwJGAe0JL-nZfG/pub?gid=0&single=true&output=csv';
-    const WISH_CSV_URL  = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQL1lE_VlPGQS9CDcR-wZREWpSD2MW1Jtk8jYW8dBVW5BnHecTE-Y0TEG-zI7MCKorwJGAe0JL-nZfG/pub?gid=1180892767&single=true&output=csv';
-    const DESSERT_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQL1lE_VlPGQS9CDcR-wZREWpSD2MW1Jtk8jYW8dBVW5BnHecTE-Y0TEG-zI7MCKorwJGAe0JL-nZfG/pub?gid=126015194&single=true&output=csv';
+    const SHEET_BASE = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQL1lE_VlPGQS9CDcR-wZREWpSD2MW1Jtk8jYW8dBVW5BnHecTE-Y0TEG-zI7MCKorwJGAe0JL-nZfG/pub';
+    const csv = gid => `${SHEET_BASE}?gid=${gid}&single=true&output=csv`;
 
-    // The tab names in your spreadsheet (used when writing back via Apps Script)
-    const WISH_SHEET_NAME = 'Wishlist';
-    const DESSERT_SHEET_NAME = 'Dessert';
+    const COUNTRIES = {
+      'Singapore': {
+        tried:   { url: csv('0'),          sheet: '' },          // '' = the main/first tab
+        wish:    { url: csv('1180892767'), sheet: 'Wishlist' },
+        dessert: { url: csv('126015194'),  sheet: 'Dessert' },
+      },
+      // 'Japan': {
+      //   tried:   { url: csv('<gid>'), sheet: 'Japan Eat' },
+      //   wish:    { url: csv('<gid>'), sheet: 'Japan Wishlist' },
+      //   dessert: { url: csv('<gid>'), sheet: 'Japan Dessert' },
+      // },
+    };
+
+    let selectedCountry = localStorage.getItem('foodpicker_country');
+    if (!selectedCountry || !COUNTRIES[selectedCountry]) selectedCountry = Object.keys(COUNTRIES)[0];
 
     let activeTab = 'tried';   // 'tried' | 'wish' | 'dessert'
     let triedRows = [];
     let wishRows = [];
     let dessertRows = [];
-    function activeSheetName() {
-      if (activeTab === 'wish') return WISH_SHEET_NAME;
-      if (activeTab === 'dessert') return DESSERT_SHEET_NAME;
-      return '';
-    }
 
-    // ── Location scope (Country / City) ──────────────────────────
-    const HOME_COUNTRY = 'Singapore';
-    let selectedCountry = localStorage.getItem('foodpicker_country') || HOME_COUNTRY;
-    let selectedCity = localStorage.getItem('foodpicker_city') || '';   // '' = all cities
+    function activeSheetName() { return COUNTRIES[selectedCountry][activeTab].sheet; }
+    function triedSheetName()  { return COUNTRIES[selectedCountry].tried.sheet; }
 
-    const rowCountry = r => ((r['Country'] || '').trim()) || HOME_COUNTRY;
-    const rowCity = r => (r['City'] || '').trim();
-
-    function inScope(r) {
-      if (rowCountry(r) !== selectedCountry) return false;
-      if (selectedCity && rowCity(r) !== selectedCity) return false;
-      return true;
-    }
-
-    function allLoadedRows() {
-      return [...triedRows, ...wishRows, ...dessertRows];
-    }
-
-    function setupLocationScope() {
-      const countries = [...new Set(allLoadedRows().map(rowCountry))].sort();
-
-      // Only show the location pill once there's more than one country
+    function setupCountryPill() {
+      const countries = Object.keys(COUNTRIES);
       const wrap = document.getElementById('locWrap');
-      if (countries.length <= 1) {
-        wrap.style.display = 'none';
-        selectedCountry = countries[0] || HOME_COUNTRY;
-        selectedCity = '';
-        return;
-      }
+      if (countries.length <= 1) { wrap.style.display = 'none'; return; }
       wrap.style.display = 'flex';
-
-      if (!countries.includes(selectedCountry)) { selectedCountry = countries[0]; selectedCity = ''; }
-
-      const countrySel = document.getElementById('locCountry');
-      countrySel.innerHTML = '';
+      const sel = document.getElementById('locCountry');
+      sel.innerHTML = '';
       countries.forEach(c => {
         const o = document.createElement('option');
         o.value = c; o.textContent = c;
         if (c === selectedCountry) o.selected = true;
-        countrySel.appendChild(o);
+        sel.appendChild(o);
       });
-
-      rebuildCityOptions();
       updateLocPillLabel();
-    }
-
-    function rebuildCityOptions() {
-      const cities = [...new Set(allLoadedRows().filter(r => rowCountry(r) === selectedCountry).map(rowCity).filter(Boolean))].sort();
-      const citySel = document.getElementById('locCity');
-      citySel.innerHTML = '<option value="">All cities</option>';
-      cities.forEach(c => {
-        const o = document.createElement('option');
-        o.value = c; o.textContent = c;
-        if (c === selectedCity) o.selected = true;
-        citySel.appendChild(o);
-      });
-      // City select is pointless if there are no named cities
-      citySel.parentElement.style.display = cities.length ? '' : 'none';
     }
 
     function updateLocPillLabel() {
-      document.getElementById('locPillLabel').textContent =
-        '📍 ' + selectedCountry + (selectedCity ? ' · ' + selectedCity : '');
-    }
-
-    function applyScope() {
-      localStorage.setItem('foodpicker_country', selectedCountry);
-      localStorage.setItem('foodpicker_city', selectedCity);
-      updateLocPillLabel();
-      resultCard.style.display = 'none';
-      document.getElementById('groupCard').style.display = 'none';
-      populateFilters();
-      updateCount();
+      document.getElementById('locPillLabel').textContent = '📍 ' + selectedCountry;
     }
 
     function parseCSV(text) {
@@ -926,27 +866,35 @@
     const rerollBtn = document.getElementById('rerollBtn');
     const countHint = document.getElementById('countHint');
 
-    // Show loading state
-    filterCard.style.opacity = '0.4';
-    filterCard.style.pointerEvents = 'none';
-    countHint.textContent = 'Loading from Google Sheets...';
+    // Load a country's three tabs (Eat / Wishlist / Dessert)
+    function loadCountry(country) {
+      selectedCountry = country;
+      localStorage.setItem('foodpicker_country', country);
+      const c = COUNTRIES[country];
 
-    Promise.all([
-      fetch(TRIED_CSV_URL).then(r => r.text()),
-      fetch(WISH_CSV_URL).then(r => r.text()),
-      fetch(DESSERT_CSV_URL).then(r => r.text())
-    ]).then(([triedText, wishText, dessertText]) => {
-      triedRows = parseCSV(triedText);
-      wishRows = parseCSV(wishText);
-      dessertRows = parseCSV(dessertText);
-      filterCard.style.opacity = '1';
-      filterCard.style.pointerEvents = 'auto';
-      setupLocationScope();
-      switchTab(activeTab);
-    }).catch(() => {
-      countHint.textContent = '⚠️ Could not load data. Check your internet connection.';
-      filterCard.style.opacity = '1';
-    });
+      filterCard.style.opacity = '0.4';
+      filterCard.style.pointerEvents = 'none';
+      countHint.textContent = 'Loading from Google Sheets...';
+
+      return Promise.all([
+        fetch(c.tried.url).then(r => r.text()),
+        fetch(c.wish.url).then(r => r.text()),
+        fetch(c.dessert.url).then(r => r.text())
+      ]).then(([triedText, wishText, dessertText]) => {
+        triedRows = parseCSV(triedText);
+        wishRows = parseCSV(wishText);
+        dessertRows = parseCSV(dessertText);
+        filterCard.style.opacity = '1';
+        filterCard.style.pointerEvents = 'auto';
+        switchTab(activeTab);
+      }).catch(() => {
+        countHint.textContent = '⚠️ Could not load data. Check your internet connection.';
+        filterCard.style.opacity = '1';
+      });
+    }
+
+    setupCountryPill();
+    loadCountry(selectedCountry);
 
     // ── Tab switching ────────────────────────────────────────────
     function switchTab(tab) {
@@ -985,14 +933,9 @@
       p.style.display = p.style.display === 'none' ? 'grid' : 'none';
     });
     document.getElementById('locCountry').addEventListener('change', e => {
-      selectedCountry = e.target.value;
-      selectedCity = '';
-      rebuildCityOptions();
-      applyScope();
-    });
-    document.getElementById('locCity').addEventListener('change', e => {
-      selectedCity = e.target.value;
-      applyScope();
+      document.getElementById('locPanel').style.display = 'none';
+      updateLocPillLabel();
+      loadCountry(e.target.value);
     });
 
     document.getElementById('manualToggle').addEventListener('click', () => {
@@ -1011,9 +954,8 @@
     });
 
     function populateFilters() {
-      const scoped = allRows.filter(inScope);
-      const col = k => [...new Set(scoped.map(r => r[k]).filter(Boolean))].sort();
-      const locations = [...new Set(scoped.flatMap(r => splitLocations(r['Location'])))].sort();
+      const col = k => [...new Set(allRows.map(r => r[k]).filter(Boolean))].sort();
+      const locations = [...new Set(allRows.flatMap(r => splitLocations(r['Location'])))].sort();
       fillSelect('filterType', col('Type'));
       fillSelect('filterCuisine', col('Cuisine'));
       fillSelect('filterPrice', col('Price Range'));
@@ -1028,9 +970,9 @@
       return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(query);
     }
 
-    // Build a Maps search string: name + area + city + country (for accuracy abroad)
+    // Build a Maps search string: name + area + country (for accuracy abroad)
     function mapsQueryFor(r, outlet) {
-      return [r['Name'], outlet || '', rowCity(r), rowCountry(r)].filter(Boolean).join(' ');
+      return [r['Name'], outlet || '', selectedCountry].filter(Boolean).join(' ');
     }
 
 
@@ -1047,7 +989,6 @@
       const type = document.getElementById('filterType').value;
 
       return allRows.filter(r => {
-        if (!inScope(r)) return false;
         if (type && r['Type'] !== type) return false;
         if (cuisine && r['Cuisine'] !== cuisine) return false;
         if (price && r['Price Range'] !== price) return false;
@@ -1301,10 +1242,10 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             action: 'markTried',
-            sheet: WISH_SHEET_NAME,
+            sheet: COUNTRIES[selectedCountry].wish.sheet,
+            targetSheet: triedSheetName(),
             Name: r['Name'], Type: r['Type'], Cuisine: r['Cuisine'],
-            'Price Range': r['Price Range'], Location: r['Location'],
-            Country: r['Country'] || '', City: r['City'] || '', Notes: r['Notes']
+            'Price Range': r['Price Range'], Location: r['Location'], Notes: r['Notes']
           })
         });
         // Update locally: remove from wishlist, add to tried
@@ -1378,8 +1319,6 @@
       document.getElementById('editCuisine').value = r['Cuisine'] || '';
       document.getElementById('editPrice').value = r['Price Range'] || '';
       document.getElementById('editLocation').value = r['Location'] || '';
-      document.getElementById('editCountry').value = r['Country'] || '';
-      document.getElementById('editCity').value = r['City'] || '';
       document.getElementById('editNotes').value = r['Notes'] || '';
       document.getElementById('editStatus').textContent = '';
       document.getElementById('editModal').classList.add('open');
@@ -1410,8 +1349,6 @@
         Cuisine: document.getElementById('editCuisine').value.trim(),
         'Price Range': document.getElementById('editPrice').value,
         Location: document.getElementById('editLocation').value.trim(),
-        Country: document.getElementById('editCountry').value.trim(),
-        City: document.getElementById('editCity').value.trim(),
         Notes: document.getElementById('editNotes').value.trim(),
         sheet: activeSheetName()
       };
@@ -1537,11 +1474,6 @@
       const open = form.style.display !== 'none';
       form.style.display = open ? 'none' : 'block';
       chevron.textContent = open ? '▼' : '▲';
-      // Prefill country/city with the current location scope
-      if (!open) {
-        if (!document.getElementById('addCountry').value) document.getElementById('addCountry').value = selectedCountry;
-        if (!document.getElementById('addCity').value && selectedCity) document.getElementById('addCity').value = selectedCity;
-      }
     });
 
     document.getElementById('addSubmit').addEventListener('click', async () => {
@@ -1558,8 +1490,6 @@
         Cuisine: document.getElementById('addCuisine').value.trim(),
         'Price Range': document.getElementById('addPrice').value,
         Location: document.getElementById('addLocation').value.trim(),
-        Country: document.getElementById('addCountry').value.trim() || selectedCountry,
-        City: document.getElementById('addCity').value.trim() || (selectedCity || ''),
         Notes: document.getElementById('addNotes').value.trim(),
         sheet: activeSheetName()
       };
@@ -1581,11 +1511,9 @@
         // Add locally so it shows immediately (mutate the active array in place)
         const newRow = {
           Name: entry.Name, Type: entry.Type, Cuisine: entry.Cuisine,
-          'Price Range': entry['Price Range'], Location: entry.Location,
-          Country: entry.Country, City: entry.City, Notes: entry.Notes
+          'Price Range': entry['Price Range'], Location: entry.Location, Notes: entry.Notes
         };
         allRows.push(newRow);
-        setupLocationScope();
         populateFilters();
         updateCount();
 
@@ -1593,7 +1521,7 @@
         status.style.color = '#5a9e7e';
 
         // Clear form
-        ['addName', 'addCuisine', 'addLocation', 'addCountry', 'addCity', 'addNotes'].forEach(id => document.getElementById(id).value = '');
+        ['addName', 'addCuisine', 'addLocation', 'addNotes'].forEach(id => document.getElementById(id).value = '');
         document.getElementById('addType').value = '';
         document.getElementById('addPrice').value = '';
       } catch (err) {
