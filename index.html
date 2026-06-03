@@ -40,6 +40,45 @@
       margin-bottom: 24px;
     }
 
+    .loc-wrap {
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .loc-pill {
+      background: white;
+      border: 1.5px solid #c9e9d7;
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: inherit;
+      color: #5a9e7e;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: background 0.15s;
+    }
+    .loc-pill:hover { background: #f3faf6; }
+
+    .loc-panel {
+      width: 100%;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      padding: 16px;
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    body.dark .loc-pill { background: #1d2c25; border-color: #3a5446; color: #7fc4a3; }
+    body.dark .loc-panel { background: #1d2c25; }
+
     .tab-bar {
       display: flex;
       gap: 8px;
@@ -541,6 +580,20 @@
   <h1>🍽️ Where to Eat?</h1>
   <p class="subtitle">Filter and get a random pick</p>
 
+  <div class="loc-wrap" id="locWrap" style="display:none;">
+    <button class="loc-pill" id="locPill"><span id="locPillLabel">📍 Singapore</span> <span style="opacity:0.6;">▾</span></button>
+    <div class="loc-panel" id="locPanel" style="display:none;">
+      <div>
+        <label>Country</label>
+        <select id="locCountry"></select>
+      </div>
+      <div>
+        <label>City</label>
+        <select id="locCity"></select>
+      </div>
+    </div>
+  </div>
+
   <div class="tab-bar" id="tabBar">
     <button class="tab-btn active" data-tab="tried">🍽️ Eat</button>
     <button class="tab-btn" data-tab="wish">⭐ Want to Try</button>
@@ -627,8 +680,16 @@
           </select>
         </div>
         <div>
-          <label>Location</label>
+          <label>Location / Area</label>
           <input id="addLocation" type="text" placeholder="e.g. Clarke Quay" />
+        </div>
+        <div>
+          <label>Country</label>
+          <input id="addCountry" type="text" placeholder="e.g. Singapore" />
+        </div>
+        <div>
+          <label>City</label>
+          <input id="addCity" type="text" placeholder="e.g. Singapore" />
         </div>
         <div style="grid-column:1/-1;">
           <label>Notes</label>
@@ -717,8 +778,16 @@
           </select>
         </div>
         <div>
-          <label>Location</label>
+          <label>Location / Area</label>
           <input id="editLocation" type="text" />
+        </div>
+        <div>
+          <label>Country</label>
+          <input id="editCountry" type="text" />
+        </div>
+        <div>
+          <label>City</label>
+          <input id="editCity" type="text" />
         </div>
         <div style="grid-column:1/-1;">
           <label>Notes</label>
@@ -752,6 +821,81 @@
       if (activeTab === 'wish') return WISH_SHEET_NAME;
       if (activeTab === 'dessert') return DESSERT_SHEET_NAME;
       return '';
+    }
+
+    // ── Location scope (Country / City) ──────────────────────────
+    const HOME_COUNTRY = 'Singapore';
+    let selectedCountry = localStorage.getItem('foodpicker_country') || HOME_COUNTRY;
+    let selectedCity = localStorage.getItem('foodpicker_city') || '';   // '' = all cities
+
+    const rowCountry = r => ((r['Country'] || '').trim()) || HOME_COUNTRY;
+    const rowCity = r => (r['City'] || '').trim();
+
+    function inScope(r) {
+      if (rowCountry(r) !== selectedCountry) return false;
+      if (selectedCity && rowCity(r) !== selectedCity) return false;
+      return true;
+    }
+
+    function allLoadedRows() {
+      return [...triedRows, ...wishRows, ...dessertRows];
+    }
+
+    function setupLocationScope() {
+      const countries = [...new Set(allLoadedRows().map(rowCountry))].sort();
+
+      // Only show the location pill once there's more than one country
+      const wrap = document.getElementById('locWrap');
+      if (countries.length <= 1) {
+        wrap.style.display = 'none';
+        selectedCountry = countries[0] || HOME_COUNTRY;
+        selectedCity = '';
+        return;
+      }
+      wrap.style.display = 'flex';
+
+      if (!countries.includes(selectedCountry)) { selectedCountry = countries[0]; selectedCity = ''; }
+
+      const countrySel = document.getElementById('locCountry');
+      countrySel.innerHTML = '';
+      countries.forEach(c => {
+        const o = document.createElement('option');
+        o.value = c; o.textContent = c;
+        if (c === selectedCountry) o.selected = true;
+        countrySel.appendChild(o);
+      });
+
+      rebuildCityOptions();
+      updateLocPillLabel();
+    }
+
+    function rebuildCityOptions() {
+      const cities = [...new Set(allLoadedRows().filter(r => rowCountry(r) === selectedCountry).map(rowCity).filter(Boolean))].sort();
+      const citySel = document.getElementById('locCity');
+      citySel.innerHTML = '<option value="">All cities</option>';
+      cities.forEach(c => {
+        const o = document.createElement('option');
+        o.value = c; o.textContent = c;
+        if (c === selectedCity) o.selected = true;
+        citySel.appendChild(o);
+      });
+      // City select is pointless if there are no named cities
+      citySel.parentElement.style.display = cities.length ? '' : 'none';
+    }
+
+    function updateLocPillLabel() {
+      document.getElementById('locPillLabel').textContent =
+        '📍 ' + selectedCountry + (selectedCity ? ' · ' + selectedCity : '');
+    }
+
+    function applyScope() {
+      localStorage.setItem('foodpicker_country', selectedCountry);
+      localStorage.setItem('foodpicker_city', selectedCity);
+      updateLocPillLabel();
+      resultCard.style.display = 'none';
+      document.getElementById('groupCard').style.display = 'none';
+      populateFilters();
+      updateCount();
     }
 
     function parseCSV(text) {
@@ -797,6 +941,7 @@
       dessertRows = parseCSV(dessertText);
       filterCard.style.opacity = '1';
       filterCard.style.pointerEvents = 'auto';
+      setupLocationScope();
       switchTab(activeTab);
     }).catch(() => {
       countHint.textContent = '⚠️ Could not load data. Check your internet connection.';
@@ -834,6 +979,22 @@
       btn.addEventListener('click', () => switchTab(btn.dataset.tab));
     });
 
+    // ── Location pill events ─────────────────────────────────────
+    document.getElementById('locPill').addEventListener('click', () => {
+      const p = document.getElementById('locPanel');
+      p.style.display = p.style.display === 'none' ? 'grid' : 'none';
+    });
+    document.getElementById('locCountry').addEventListener('change', e => {
+      selectedCountry = e.target.value;
+      selectedCity = '';
+      rebuildCityOptions();
+      applyScope();
+    });
+    document.getElementById('locCity').addEventListener('change', e => {
+      selectedCity = e.target.value;
+      applyScope();
+    });
+
     document.getElementById('manualToggle').addEventListener('click', () => {
       const content = document.getElementById('manualContent');
       const chevron = document.getElementById('manualChevron');
@@ -850,8 +1011,9 @@
     });
 
     function populateFilters() {
-      const col = k => [...new Set(allRows.map(r => r[k]).filter(Boolean))].sort();
-      const locations = [...new Set(allRows.flatMap(r => splitLocations(r['Location'])))].sort();
+      const scoped = allRows.filter(inScope);
+      const col = k => [...new Set(scoped.map(r => r[k]).filter(Boolean))].sort();
+      const locations = [...new Set(scoped.flatMap(r => splitLocations(r['Location'])))].sort();
       fillSelect('filterType', col('Type'));
       fillSelect('filterCuisine', col('Cuisine'));
       fillSelect('filterPrice', col('Price Range'));
@@ -864,6 +1026,11 @@
 
     function mapsUrl(query) {
       return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(query);
+    }
+
+    // Build a Maps search string: name + area + city + country (for accuracy abroad)
+    function mapsQueryFor(r, outlet) {
+      return [r['Name'], outlet || '', rowCity(r), rowCountry(r)].filter(Boolean).join(' ');
     }
 
 
@@ -880,6 +1047,7 @@
       const type = document.getElementById('filterType').value;
 
       return allRows.filter(r => {
+        if (!inScope(r)) return false;
         if (type && r['Type'] !== type) return false;
         if (cuisine && r['Cuisine'] !== cuisine) return false;
         if (price && r['Price Range'] !== price) return false;
@@ -944,7 +1112,7 @@
         outletBox.className = 'outlet-list';
         outletBox.innerHTML = '<div class="outlet-title">Outlets — tap for directions</div>' +
           outlets.map(o =>
-            `<a class="outlet-item" href="${mapsUrl(r['Name'] + ' ' + o)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">📍 ${o}</a>`
+            `<a class="outlet-item" href="${mapsUrl(mapsQueryFor(r, o))}" target="_blank" rel="noopener" onclick="event.stopPropagation()">📍 ${o}</a>`
           ).join('');
         detail.appendChild(outletBox);
       }
@@ -1000,7 +1168,7 @@
         const mapsLink = document.createElement('a');
         mapsLink.className = 'edit-btn';
         mapsLink.textContent = '📍 Maps';
-        mapsLink.href = mapsUrl(outlets.length === 1 ? `${r['Name']} ${outlets[0]}` : r['Name']);
+        mapsLink.href = mapsUrl(mapsQueryFor(r, outlets.length === 1 ? outlets[0] : ''));
         mapsLink.target = '_blank';
         mapsLink.rel = 'noopener';
         mapsLink.style.textDecoration = 'none';
@@ -1095,10 +1263,9 @@
       const notes = document.getElementById('resultNotes');
       notes.textContent = place['Notes'] || '';
 
-      // Maps link: use name + single location; for multi-outlet just the name
+      // Maps link: name + single area (if one) + city + country
       const outlets = splitLocations(place['Location']);
-      const query = outlets.length === 1 ? `${place['Name']} ${outlets[0]}` : place['Name'];
-      document.getElementById('mapsBtn').href = mapsUrl(query);
+      document.getElementById('mapsBtn').href = mapsUrl(mapsQueryFor(place, outlets.length === 1 ? outlets[0] : ''));
 
       resultCard.style.display = 'block';
       resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -1136,7 +1303,8 @@
             action: 'markTried',
             sheet: WISH_SHEET_NAME,
             Name: r['Name'], Type: r['Type'], Cuisine: r['Cuisine'],
-            'Price Range': r['Price Range'], Location: r['Location'], Notes: r['Notes']
+            'Price Range': r['Price Range'], Location: r['Location'],
+            Country: r['Country'] || '', City: r['City'] || '', Notes: r['Notes']
           })
         });
         // Update locally: remove from wishlist, add to tried
@@ -1210,6 +1378,8 @@
       document.getElementById('editCuisine').value = r['Cuisine'] || '';
       document.getElementById('editPrice').value = r['Price Range'] || '';
       document.getElementById('editLocation').value = r['Location'] || '';
+      document.getElementById('editCountry').value = r['Country'] || '';
+      document.getElementById('editCity').value = r['City'] || '';
       document.getElementById('editNotes').value = r['Notes'] || '';
       document.getElementById('editStatus').textContent = '';
       document.getElementById('editModal').classList.add('open');
@@ -1240,6 +1410,8 @@
         Cuisine: document.getElementById('editCuisine').value.trim(),
         'Price Range': document.getElementById('editPrice').value,
         Location: document.getElementById('editLocation').value.trim(),
+        Country: document.getElementById('editCountry').value.trim(),
+        City: document.getElementById('editCity').value.trim(),
         Notes: document.getElementById('editNotes').value.trim(),
         sheet: activeSheetName()
       };
@@ -1365,6 +1537,11 @@
       const open = form.style.display !== 'none';
       form.style.display = open ? 'none' : 'block';
       chevron.textContent = open ? '▼' : '▲';
+      // Prefill country/city with the current location scope
+      if (!open) {
+        if (!document.getElementById('addCountry').value) document.getElementById('addCountry').value = selectedCountry;
+        if (!document.getElementById('addCity').value && selectedCity) document.getElementById('addCity').value = selectedCity;
+      }
     });
 
     document.getElementById('addSubmit').addEventListener('click', async () => {
@@ -1381,6 +1558,8 @@
         Cuisine: document.getElementById('addCuisine').value.trim(),
         'Price Range': document.getElementById('addPrice').value,
         Location: document.getElementById('addLocation').value.trim(),
+        Country: document.getElementById('addCountry').value.trim() || selectedCountry,
+        City: document.getElementById('addCity').value.trim() || (selectedCity || ''),
         Notes: document.getElementById('addNotes').value.trim(),
         sheet: activeSheetName()
       };
@@ -1402,9 +1581,11 @@
         // Add locally so it shows immediately (mutate the active array in place)
         const newRow = {
           Name: entry.Name, Type: entry.Type, Cuisine: entry.Cuisine,
-          'Price Range': entry['Price Range'], Location: entry.Location, Notes: entry.Notes
+          'Price Range': entry['Price Range'], Location: entry.Location,
+          Country: entry.Country, City: entry.City, Notes: entry.Notes
         };
         allRows.push(newRow);
+        setupLocationScope();
         populateFilters();
         updateCount();
 
@@ -1412,7 +1593,7 @@
         status.style.color = '#5a9e7e';
 
         // Clear form
-        ['addName', 'addCuisine', 'addLocation', 'addNotes'].forEach(id => document.getElementById(id).value = '');
+        ['addName', 'addCuisine', 'addLocation', 'addCountry', 'addCity', 'addNotes'].forEach(id => document.getElementById(id).value = '');
         document.getElementById('addType').value = '';
         document.getElementById('addPrice').value = '';
       } catch (err) {
