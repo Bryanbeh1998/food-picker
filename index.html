@@ -4,6 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Where to Eat?</title>
+
+  <!-- PWA / installable app -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#5a9e7e" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Food Picker" />
+
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -810,6 +819,11 @@
   </div>
 
   <script>
+    // Register the service worker (makes the app installable + load offline)
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+    }
+
     // ============================================================
     // DATA SOURCES — one spreadsheet, tabs grouped by country.
     //

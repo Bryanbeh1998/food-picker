@@ -1,0 +1,15 @@
+{
+  "name": "Food Picker",
+  "short_name": "Food Picker",
+  "description": "Filter your restaurant lists and get a random suggestion.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#e9f4ed",
+  "theme_color": "#5a9e7e",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
