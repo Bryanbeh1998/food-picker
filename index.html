@@ -698,19 +698,13 @@
         </div>
         <div>
           <label>Type</label>
-          <select id="addType">
-            <option value="">— Select —</option>
-            <option>Restaurant</option>
-            <option>Hawker</option>
-            <option>Eatery</option>
-            <option>Café</option>
-          </select>
+          <select id="addType"><option value="">— Select —</option></select>
         </div>
-        <div>
+        <div id="addCuisineWrap">
           <label>Cuisine</label>
           <input id="addCuisine" type="text" placeholder="e.g. Chinese" />
         </div>
-        <div>
+        <div id="addPriceWrap">
           <label>Price Range</label>
           <select id="addPrice">
             <option value="">— Select —</option>
@@ -792,19 +786,13 @@
         </div>
         <div>
           <label>Type</label>
-          <select id="editType">
-            <option value="">— Select —</option>
-            <option>Restaurant</option>
-            <option>Hawker</option>
-            <option>Eatery</option>
-            <option>Café</option>
-          </select>
+          <select id="editType"><option value="">— Select —</option></select>
         </div>
-        <div>
+        <div id="editCuisineWrap">
           <label>Cuisine</label>
           <input id="editCuisine" type="text" />
         </div>
-        <div>
+        <div id="editPriceWrap">
           <label>Price Range</label>
           <select id="editPrice">
             <option value="">— Select —</option>
@@ -1100,6 +1088,25 @@
       show('cuisineFilterWrap', cuisines.length > 0 && activeTab !== 'dessert');
       show('priceFilterWrap', prices.length > 0 && activeTab !== 'dessert');
       show('locationFilterWrap', locations.length > 0);
+
+      // Type dropdowns in Add/Edit forms follow the types actually in the sheet
+      fillTypeSelect('addType', types);
+      fillTypeSelect('editType', types);
+
+      // The Dessert add/edit forms only need Type — hide Cuisine & Price
+      const dessert = activeTab === 'dessert';
+      show('addCuisineWrap', !dessert);
+      show('addPriceWrap', !dessert);
+      show('editCuisineWrap', !dessert);
+      show('editPriceWrap', !dessert);
+    }
+
+    function fillTypeSelect(id, values) {
+      const sel = document.getElementById(id);
+      const cur = sel.value;
+      sel.innerHTML = '<option value="">— Select —</option>';
+      values.forEach(v => { const o = document.createElement('option'); o.value = v; o.textContent = v; sel.appendChild(o); });
+      if ([...sel.options].some(o => o.value === cur)) sel.value = cur;
     }
 
     function splitLocations(val) {
