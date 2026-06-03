@@ -27,13 +27,15 @@ A personal web app that helps you decide where to eat. Filter your restaurant li
 
 ## How the data works
 
-The lists live in **one Google Sheet**, with tabs grouped by country. Each tab is published to the web as CSV and loaded live whenever the app opens. For one country you have three tabs:
+The lists live in **one Google Sheet**, with tabs grouped by country and named by a fixed convention: **`<Country> Eat`**, **`<Country> Wishlist`**, **`<Country> Dessert`**. Each tab is published to the web as CSV and loaded live whenever the app opens.
 
-| Tab | Purpose |
+| Tab (per country) | Purpose |
 |---|---|
-| **Main tab** (e.g. *Food Places*) | Places you've been to / go to regularly |
-| **Wishlist** | Places you want to try |
-| **Dessert** | Dessert / sweet spots |
+| **`<Country> Eat`** | Places you've been to / go to regularly |
+| **`<Country> Wishlist`** | Places you want to try |
+| **`<Country> Dessert`** | Dessert / sweet spots |
+
+The app **auto-discovers countries** by reading the spreadsheet's published tab list — so you never edit code or copy gids. A country shows up as soon as all three of its tabs exist and are published.
 
 To add another country, create another set of three tabs (e.g. *Japan Eat*, *Japan Wishlist*, *Japan Dessert*) and register them in the `COUNTRIES` config in `index.html` — see [Adding a country](#adding-a-country) below. **City** is handled by an optional `City` column within each tab (not separate tabs), and the app detects the distinct cities automatically.
 
@@ -66,21 +68,27 @@ You can update them two ways:
 
 ---
 
-## Adding a country
+## Adding a country (no code, no copy-paste)
 
-1. In the spreadsheet, create three new tabs for the country (e.g. `Japan Eat`, `Japan Wishlist`, `Japan Dessert`) with the same column headers.
-2. Publish each new tab to the web as CSV and note its URL / `gid`.
-3. In `index.html`, add a block to the `COUNTRIES` config:
-   ```js
-   'Japan': {
-     tried:   { url: csv('<gid>'), sheet: 'Japan Eat' },
-     wish:    { url: csv('<gid>'), sheet: 'Japan Wishlist' },
-     dessert: { url: csv('<gid>'), sheet: 'Japan Dessert' },
-   },
-   ```
-4. Fill the `City` column in those tabs (e.g. `Tokyo`, `Osaka`) to enable the city sub-filter.
+Thanks to auto-discovery, adding a country is purely a spreadsheet task:
 
-The 📍 location pill appears automatically once there's more than one country (or the current country has cities). No per-row Country column is needed — the country **is** the tab group.
+1. **Create three tabs** named exactly:
+   - `<Country> Eat` (e.g. `Thailand Eat`)
+   - `<Country> Wishlist`
+   - `<Country> Dessert`
+   
+   …with the usual column headers.
+2. **Publish each tab as CSV**: File → Share → Publish to web → select the tab → CSV → Publish. *(Publish each tab individually — "Entire Document" doesn't reliably expose CSV.)*
+3. *(Optional)* Fill the **`City`** column (e.g. `Bangkok`, `Phuket`) to enable the city sub-filter for that country.
+4. **Refresh the app.** The country appears in the gate automatically.
+
+That's it — **you don't paste URLs or gids anywhere**, and there's no code change. The app reads the published tab list, groups tabs by name, and shows any country that has all three tabs.
+
+Notes:
+- A country only appears once **all three** of its tabs exist and are published.
+- The tab names must match the convention exactly (`<Country> Eat` / `Wishlist` / `Dessert`).
+- Filters auto-hide when a country has no data for them (e.g. a country with no Cuisine values won't show the Cuisine filter).
+- No per-row Country column is needed — the country **is** the tab group.
 
 ---
 
