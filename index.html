@@ -849,15 +849,15 @@
 
     const COUNTRIES = {
       'Singapore': {
-        tried:   { url: csv('0'),          sheet: '' },          // '' = the main/first tab
-        wish:    { url: csv('1180892767'), sheet: 'Wishlist' },
-        dessert: { url: csv('126015194'),  sheet: 'Dessert' },
+        tried:   { url: csv('0'),          sheet: 'Singapore Eat' },
+        wish:    { url: csv('1180892767'), sheet: 'Singapore Wishlist' },
+        dessert: { url: csv('126015194'),  sheet: 'Singapore Dessert' },
       },
-      // 'Japan': {
-      //   tried:   { url: csv('<gid>'), sheet: 'Japan Eat' },
-      //   wish:    { url: csv('<gid>'), sheet: 'Japan Wishlist' },
-      //   dessert: { url: csv('<gid>'), sheet: 'Japan Dessert' },
-      // },
+      'Japan': {
+        tried:   { url: csv('976139678'),  sheet: 'Japan Eat' },
+        wish:    { url: csv('287331733'),  sheet: 'Japan Wishlist' },
+        dessert: { url: csv('144175571'),  sheet: 'Japan Dessert' },
+      },
     };
 
     let selectedCountry = localStorage.getItem('foodpicker_country');
