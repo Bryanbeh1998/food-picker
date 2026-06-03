@@ -8,7 +8,7 @@ A personal web app that helps you decide where to eat. Filter your restaurant li
 
 ## Features
 
-- **Two tabs** — 🍽️ *Where to Eat* (places you go to) and ⭐ *Want to Try* (your bucket list), each backed by its own Google Sheet tab with its own full picker
+- **Three tabs** — 🍽️ *Eat* (places you go to), ⭐ *Want to Try* (your bucket list), and 🍰 *Dessert* (sweet spots), each backed by its own Google Sheet tab with its own full picker
 - **Random pick** — get a single suggestion based on your filters
 - **Group mode** — generate 3–5 options at once for group decisions
 - **Filters** — narrow down by Type, Cuisine, Price Range, and Location
@@ -26,12 +26,13 @@ A personal web app that helps you decide where to eat. Filter your restaurant li
 
 ## How the data works
 
-The restaurant lists live in a **Google Sheet** with two tabs, each published to the web as CSV and loaded live whenever the app opens:
+The restaurant lists live in a **Google Sheet** with three tabs, each published to the web as CSV and loaded live whenever the app opens:
 
 | Tab | Purpose |
 |---|---|
 | **Main tab** (e.g. *Food Places*) | Places you've been to / go to regularly |
 | **Wishlist** | Places you want to try |
+| **Dessert** | Dessert / sweet spots |
 
 You can update them two ways:
 
@@ -71,11 +72,11 @@ You can update them two ways:
 ## Architecture at a glance
 
 ```
-        reads (CSV ×2)                  writes (POST)
+        reads (CSV ×3)                  writes (POST)
 Google Sheet ──────────►   App   ◄────────────────────  Google Apps Script
  ├─ Main tab             (browser)                          (write API)
- └─ Wishlist tab            │
-                   GitHub Pages (static host)
+ ├─ Wishlist tab            │
+ └─ Dessert tab     GitHub Pages (static host)
 ```
 
 - **Reads:** the app fetches both tabs' published CSVs on load and parses them in the browser
