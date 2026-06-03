@@ -1629,9 +1629,18 @@
 
     document.getElementById('addSubmit').addEventListener('click', async () => {
       const name = document.getElementById('addName').value.trim();
+      const addStatus = document.getElementById('addStatus');
       if (!name) {
-        document.getElementById('addStatus').textContent = '⚠️ Name is required.';
-        document.getElementById('addStatus').style.color = '#c0392b';
+        addStatus.textContent = '⚠️ Name is required.';
+        addStatus.style.color = '#c0392b';
+        return;
+      }
+
+      // Duplicate guard — block if a place with the same name is already on this tab
+      const dup = allRows.find(r => (r['Name'] || '').trim().toLowerCase() === name.toLowerCase());
+      if (dup) {
+        addStatus.textContent = `⚠️ "${dup['Name']}" is already in this list.`;
+        addStatus.style.color = '#c0392b';
         return;
       }
 
