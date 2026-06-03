@@ -1098,7 +1098,7 @@
       const show = (wrapId, ok) => { document.getElementById(wrapId).style.display = ok ? '' : 'none'; };
       show('typeFilterWrap', types.length > 0);
       show('cuisineFilterWrap', cuisines.length > 0 && activeTab !== 'dessert');
-      show('priceFilterWrap', prices.length > 0);
+      show('priceFilterWrap', prices.length > 0 && activeTab !== 'dessert');
       show('locationFilterWrap', locations.length > 0);
     }
 
