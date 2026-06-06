@@ -707,7 +707,7 @@
         </div>
         <div>
           <label>Type</label>
-          <select id="addType"><option value="">— Select —</option></select>
+          <input id="addType" type="text" list="typeOptions" placeholder="Pick or type a new one" />
         </div>
         <div id="addCuisineWrap">
           <label>Cuisine</label>
@@ -776,6 +776,8 @@
   </div>
 
   <!-- Edit Modal -->
+  <datalist id="typeOptions"></datalist>
+
   <div class="modal-overlay" id="editModal">
     <div class="modal">
       <div class="modal-header">
@@ -789,7 +791,7 @@
         </div>
         <div>
           <label>Type</label>
-          <select id="editType"><option value="">— Select —</option></select>
+          <input id="editType" type="text" list="typeOptions" placeholder="Pick or type a new one" />
         </div>
         <div id="editCuisineWrap">
           <label>Cuisine</label>
@@ -1099,8 +1101,11 @@
       const cwPrices = [...new Set(countryRows.map(r => r['Price Range']).filter(Boolean))].sort();
       const typeOpts = types.length ? types : cwTypes;
       const priceOpts = prices.length ? prices : cwPrices;
-      fillTypeSelect('addType', typeOpts);
-      fillTypeSelect('editType', typeOpts);
+      // Type is a free-text input with suggestions, so you can enter a new type
+      const dl = document.getElementById('typeOptions');
+      dl.innerHTML = '';
+      typeOpts.forEach(v => { const o = document.createElement('option'); o.value = v; dl.appendChild(o); });
+      // Price stays a fixed dropdown
       fillTypeSelect('addPrice', priceOpts);
       fillTypeSelect('editPrice', priceOpts);
 
