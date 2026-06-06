@@ -945,7 +945,8 @@
     let selectedCountry = '';
     let selectedCity = '';   // '' = all cities; reset whenever country changes
 
-    let activeTab = 'tried';   // 'tried' | 'wish' | 'dessert'
+    let activeTab = ['tried', 'wish', 'dessert'].includes(localStorage.getItem('foodpicker_tab'))
+      ? localStorage.getItem('foodpicker_tab') : 'tried';   // 'tried' | 'wish' | 'dessert'
     let triedRows = [];
     let wishRows = [];
     let dessertRows = [];
@@ -1063,6 +1064,7 @@
         b.className = 'gate-btn';
         b.textContent = '📍 ' + c;
         b.addEventListener('click', () => {
+          localStorage.setItem('foodpicker_entered', '1');
           document.getElementById('countryGate').style.display = 'none';
           loadCountry(c);
         });
@@ -1071,17 +1073,29 @@
       document.getElementById('countryGate').style.display = 'flex';
     }
 
-    // Discover countries from the sheet, then show the country gate
+    // Discover countries, then either restore the last session or show the gate
     discoverCountries().then(map => {
       COUNTRIES = map;
-      selectedCountry = localStorage.getItem('foodpicker_country');
-      if (!selectedCountry || !COUNTRIES[selectedCountry]) selectedCountry = Object.keys(COUNTRIES)[0];
-      showGate();
+      const savedCountry = localStorage.getItem('foodpicker_country');
+      const entered = localStorage.getItem('foodpicker_entered') === '1';
+
+      if (entered && savedCountry && COUNTRIES[savedCountry]) {
+        // Returning visit — skip the gate and restore where they left off
+        selectedCountry = savedCountry;
+        document.getElementById('countryGate').style.display = 'none';
+        loadCountry(selectedCountry).then(() => {
+          if (localStorage.getItem('foodpicker_mallopen') === '1') openMallDir();
+        });
+      } else {
+        selectedCountry = (savedCountry && COUNTRIES[savedCountry]) ? savedCountry : Object.keys(COUNTRIES)[0];
+        showGate();
+      }
     });
 
     // ── Tab switching ────────────────────────────────────────────
     function switchTab(tab) {
       activeTab = tab;
+      localStorage.setItem('foodpicker_tab', tab);
       allRows = tab === 'wish' ? wishRows : tab === 'dessert' ? dessertRows : triedRows;
 
       document.querySelectorAll('.tab-btn').forEach(b =>
@@ -1802,6 +1816,9 @@
         o.value = n; o.textContent = n;
         sel.appendChild(o);
       });
+      // Restore the last-viewed mall if still present
+      const savedMall = localStorage.getItem('foodpicker_mall');
+      if (savedMall && names.includes(savedMall)) sel.value = savedMall;
     }
 
     function renderMallList() {
@@ -1875,6 +1892,7 @@
     }
 
     function openMallDir() {
+      localStorage.setItem('foodpicker_mallopen', '1');
       MALL_HIDE_IDS.forEach(id => {
         const el = document.getElementById(id);
         if (el) { mallHidden[id] = el.style.display; el.style.display = 'none'; }
@@ -1889,6 +1907,7 @@
     }
 
     function closeMallDir() {
+      localStorage.removeItem('foodpicker_mallopen');
       document.getElementById('mallDirCard').style.display = 'none';
       MALL_HIDE_IDS.forEach(id => {
         const el = document.getElementById(id);
@@ -1898,7 +1917,10 @@
 
     document.getElementById('mallEntryToggle').addEventListener('click', openMallDir);
     document.getElementById('mallClose').addEventListener('click', closeMallDir);
-    document.getElementById('mallSelect').addEventListener('change', renderMallList);
+    document.getElementById('mallSelect').addEventListener('change', () => {
+      localStorage.setItem('foodpicker_mall', document.getElementById('mallSelect').value);
+      renderMallList();
+    });
     document.getElementById('mallSearch').addEventListener('input', renderMallList);
   </script>
 </body>
