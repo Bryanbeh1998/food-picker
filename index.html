@@ -603,6 +603,43 @@
     body.dark .mall-close { border-color: #3a5446; color: #7fc4a3; }
     body.dark .mall-close:hover { background: #243a30; }
 
+    /* Mall picker cards */
+    .mall-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 16px;
+      border: 1.5px solid #c9e9d7;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .mall-card:hover { background: #eef8f2; }
+    .mall-card-name { font-size: 1rem; font-weight: 600; color: #1a1a1a; }
+    .mall-card-meta { font-size: 0.8rem; color: #888; }
+    .mall-card-arrow { color: #5a9e7e; font-size: 1.1rem; }
+    body.dark .mall-card { border-color: #3a5446; }
+    body.dark .mall-card:hover { background: #243a30; }
+    body.dark .mall-card-name { color: #e8f0ec; }
+
+    /* Global-search result group headers */
+    .mall-group-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #5a9e7e;
+      color: white;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 8px;
+      margin: 14px 0 8px;
+      cursor: pointer;
+    }
+    .mall-group-header:first-child { margin-top: 0; }
+    .mall-group-count { background: rgba(255,255,255,0.25); border-radius: 20px; padding: 1px 10px; font-size: 0.75rem; }
+
     /* ── Dark mode toggle ── */
     .theme-toggle {
       position: fixed;
@@ -693,23 +730,33 @@
   </div>
 
   <div class="card" id="mallDirCard" style="display:none;">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-      <h2 style="font-size:1rem; color:#5a9e7e; font-weight:700;">🏬 Mall Directory</h2>
-    </div>
-    <p class="subtitle" style="margin:0 0 4px; font-size:0.85rem;">All food outlets in a Singapore mall</p>
-    <div class="mall-controls">
-      <div>
-        <label>Mall</label>
-        <select id="mallSelect"></select>
+    <!-- HOME: choose a mall, or search across all malls -->
+    <div id="mallHome">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h2 style="font-size:1rem; color:#5a9e7e; font-weight:700;">🏬 Mall Directory</h2>
       </div>
-      <div>
-        <label>Search</label>
+      <div style="margin-bottom:6px;">
+        <label>Search all malls</label>
+        <input id="mallGlobalSearch" type="text" placeholder="e.g. Sukiya, ramen, dessert" />
+      </div>
+      <p class="mall-count" id="mallHomeCount"></p>
+      <div id="mallHomeView"></div>
+      <button class="mall-close" id="mallCloseHome">✕ Back to Food Picker</button>
+    </div>
+
+    <!-- DETAIL: one mall's outlets -->
+    <div id="mallDetail" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+        <h2 id="mallDetailName" style="font-size:1rem; color:#5a9e7e; font-weight:700;"></h2>
+      </div>
+      <div style="margin-bottom:6px;">
+        <label>Search in this mall</label>
         <input id="mallSearch" type="text" placeholder="Name or cuisine" />
       </div>
+      <p class="mall-count" id="mallCount"></p>
+      <div id="mallList"></div>
+      <button class="mall-close" id="mallBack">← All malls</button>
     </div>
-    <p class="mall-count" id="mallCount"></p>
-    <div id="mallList"></div>
-    <button class="mall-close" id="mallClose">✕ Back to Food Picker</button>
   </div>
 
   <div class="card" id="manualCard" style="max-width:600px; width:100%;">
@@ -1807,88 +1854,137 @@
         .catch(() => { mallsData = null; return null; });
     }
 
-    function populateMallSelect() {
-      const sel = document.getElementById('mallSelect');
-      sel.innerHTML = '';
-      const names = Object.keys(mallsData || {}).sort((a, b) => a.localeCompare(b));
-      names.forEach(n => {
-        const o = document.createElement('option');
-        o.value = n; o.textContent = n;
-        sel.appendChild(o);
+    let currentMall = null;        // the mall being viewed in the detail screen
+
+    function mallEntry(mall) {
+      const e = mallsData ? (mallsData[mall] || {}) : {};
+      return { outlets: Array.isArray(e) ? e : (e.outlets || []), updated: (!Array.isArray(e) && e.updated) ? e.updated : '' };
+    }
+
+    function matchOutlet(o, q) {
+      if (!q) return true;
+      return (o.name || '').toLowerCase().includes(q) || (o.cuisine || '').toLowerCase().includes(q);
+    }
+
+    // Build a styled outlet row (reused by detail list and global results)
+    function outletRow(o) {
+      const row = document.createElement('div');
+      row.className = 'list-item';
+      const top = document.createElement('div');
+      top.style.cssText = 'display:flex; justify-content:space-between; align-items:center; gap:10px; width:100%;';
+      const name = document.createElement('div');
+      name.className = 'list-item-name';
+      name.textContent = o.name || '';
+      const meta = document.createElement('div');
+      meta.className = 'list-item-meta';
+      if (o.cuisine) {
+        const b = document.createElement('span');
+        b.className = 'list-badge';
+        b.textContent = o.cuisine;
+        meta.appendChild(b);
+      }
+      top.appendChild(name);
+      top.appendChild(meta);
+      row.appendChild(top);
+      if (o.note) {
+        const note = document.createElement('div');
+        note.className = 'list-item-meta';
+        note.style.cssText = 'justify-content:flex-start; margin-top:4px;';
+        const span = document.createElement('span');
+        span.style.cssText = 'font-size:0.82rem; color:#888;';
+        span.textContent = o.note;
+        note.appendChild(span);
+        row.appendChild(note);
+      }
+      return row;
+    }
+
+    // ── HOME view: mall list, or global search across all malls ──
+    function renderMallHome() {
+      const view = document.getElementById('mallHomeView');
+      const countEl = document.getElementById('mallHomeCount');
+      view.innerHTML = '';
+
+      if (!mallsData) {
+        countEl.textContent = '';
+        view.innerHTML = '<p class="no-results">⚠️ Could not load the mall directory.</p>';
+        return;
+      }
+
+      const malls = Object.keys(mallsData).sort((a, b) => a.localeCompare(b));
+      const q = document.getElementById('mallGlobalSearch').value.trim().toLowerCase();
+
+      if (!q) {
+        // No search — show the list of malls to choose from
+        countEl.textContent = `${malls.length} mall${malls.length !== 1 ? 's' : ''}`;
+        malls.forEach(mall => {
+          const { outlets } = mallEntry(mall);
+          const card = document.createElement('div');
+          card.className = 'mall-card';
+          card.innerHTML = `<div><div class="mall-card-name">${mall}</div><div class="mall-card-meta">${outlets.length} outlets</div></div><span class="mall-card-arrow">›</span>`;
+          card.addEventListener('click', () => openMallDetail(mall, ''));
+          view.appendChild(card);
+        });
+        return;
+      }
+
+      // Global search — group hits by mall
+      let totalHits = 0, mallsWithHits = 0;
+      malls.forEach(mall => {
+        const { outlets } = mallEntry(mall);
+        const hits = outlets.filter(o => matchOutlet(o, q));
+        if (!hits.length) return;
+        mallsWithHits++; totalHits += hits.length;
+
+        const header = document.createElement('div');
+        header.className = 'mall-group-header';
+        header.innerHTML = `<span>${mall} ›</span><span class="mall-group-count">${hits.length}</span>`;
+        header.addEventListener('click', () => openMallDetail(mall, q));
+        view.appendChild(header);
+
+        hits.forEach(o => view.appendChild(outletRow(o)));
       });
-      // Restore the last-viewed mall if still present
-      const savedMall = localStorage.getItem('foodpicker_mall');
-      if (savedMall && names.includes(savedMall)) sel.value = savedMall;
+
+      countEl.textContent = totalHits
+        ? `${totalHits} match${totalHits !== 1 ? 'es' : ''} in ${mallsWithHits} mall${mallsWithHits !== 1 ? 's' : ''}`
+        : 'No outlets match your search.';
+      if (!totalHits) view.innerHTML = '<p class="no-results">No outlets match your search across any mall.</p>';
+    }
+
+    // ── DETAIL view: one mall's outlets ──
+    function openMallDetail(mall, presetSearch) {
+      currentMall = mall;
+      localStorage.setItem('foodpicker_malldetail', mall);
+      document.getElementById('mallDetailName').textContent = '🏬 ' + mall;
+      document.getElementById('mallSearch').value = presetSearch || '';
+      document.getElementById('mallHome').style.display = 'none';
+      document.getElementById('mallDetail').style.display = 'block';
+      renderMallList();
+      document.getElementById('mallDirCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function showMallHome() {
+      currentMall = null;
+      localStorage.removeItem('foodpicker_malldetail');
+      document.getElementById('mallDetail').style.display = 'none';
+      document.getElementById('mallHome').style.display = 'block';
+      renderMallHome();
     }
 
     function renderMallList() {
       const list = document.getElementById('mallList');
       const countEl = document.getElementById('mallCount');
       list.innerHTML = '';
+      if (!currentMall) return;
 
-      if (!mallsData) {
-        countEl.textContent = '';
-        list.innerHTML = '<p class="no-results">⚠️ Could not load the mall directory.</p>';
-        return;
-      }
-
-      const mall = document.getElementById('mallSelect').value;
-      const entry = mallsData[mall] || {};
-      // Support both shapes: an array of outlets, or { source, updated, outlets:[...] }
-      const all = Array.isArray(entry) ? entry : (entry.outlets || []);
-      const updated = (!Array.isArray(entry) && entry.updated) ? entry.updated : '';
-
+      const { outlets: all, updated } = mallEntry(currentMall);
       const q = document.getElementById('mallSearch').value.trim().toLowerCase();
-      const outlets = all.filter(o => {
-        if (!q) return true;
-        return (o.name || '').toLowerCase().includes(q) || (o.cuisine || '').toLowerCase().includes(q);
-      });
+      const outlets = all.filter(o => matchOutlet(o, q));
 
       const n = outlets.length;
       countEl.textContent = `${n} outlet${n !== 1 ? 's' : ''}` + (updated ? ` · updated ${updated}` : '');
-
-      if (!n) {
-        list.innerHTML = '<p class="no-results">No outlets match your search.</p>';
-        return;
-      }
-
-      outlets.forEach(o => {
-        const row = document.createElement('div');
-        row.className = 'list-item';
-
-        const top = document.createElement('div');
-        top.style.cssText = 'display:flex; justify-content:space-between; align-items:center; gap:10px; width:100%;';
-
-        const name = document.createElement('div');
-        name.className = 'list-item-name';
-        name.textContent = o.name || '';
-
-        const meta = document.createElement('div');
-        meta.className = 'list-item-meta';
-        if (o.cuisine) {
-          const b = document.createElement('span');
-          b.className = 'list-badge';
-          b.textContent = o.cuisine;
-          meta.appendChild(b);
-        }
-
-        top.appendChild(name);
-        top.appendChild(meta);
-        row.appendChild(top);
-
-        if (o.note) {
-          const note = document.createElement('div');
-          note.className = 'list-item-meta';
-          note.style.cssText = 'justify-content:flex-start; margin-top:4px;';
-          const span = document.createElement('span');
-          span.style.cssText = 'font-size:0.82rem; color:#888;';
-          span.textContent = o.note;
-          note.appendChild(span);
-          row.appendChild(note);
-        }
-
-        list.appendChild(row);
-      });
+      if (!n) { list.innerHTML = '<p class="no-results">No outlets match your search.</p>'; return; }
+      outlets.forEach(o => list.appendChild(outletRow(o)));
     }
 
     function openMallDir() {
@@ -1901,8 +1997,12 @@
       document.getElementById('mallDirCard').style.display = 'block';
 
       loadMalls().then(() => {
-        populateMallSelect();
-        renderMallList();
+        const savedDetail = localStorage.getItem('foodpicker_malldetail');
+        if (savedDetail && mallsData && mallsData[savedDetail]) {
+          openMallDetail(savedDetail, '');
+        } else {
+          showMallHome();
+        }
       });
     }
 
@@ -1916,11 +2016,9 @@
     }
 
     document.getElementById('mallEntryToggle').addEventListener('click', openMallDir);
-    document.getElementById('mallClose').addEventListener('click', closeMallDir);
-    document.getElementById('mallSelect').addEventListener('change', () => {
-      localStorage.setItem('foodpicker_mall', document.getElementById('mallSelect').value);
-      renderMallList();
-    });
+    document.getElementById('mallCloseHome').addEventListener('click', closeMallDir);
+    document.getElementById('mallBack').addEventListener('click', showMallHome);
+    document.getElementById('mallGlobalSearch').addEventListener('input', renderMallHome);
     document.getElementById('mallSearch').addEventListener('input', renderMallList);
   </script>
 </body>
