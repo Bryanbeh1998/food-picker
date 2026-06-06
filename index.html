@@ -1816,14 +1816,19 @@
       }
 
       const mall = document.getElementById('mallSelect').value;
+      const entry = mallsData[mall] || {};
+      // Support both shapes: an array of outlets, or { source, updated, outlets:[...] }
+      const all = Array.isArray(entry) ? entry : (entry.outlets || []);
+      const updated = (!Array.isArray(entry) && entry.updated) ? entry.updated : '';
+
       const q = document.getElementById('mallSearch').value.trim().toLowerCase();
-      const outlets = (mallsData[mall] || []).filter(o => {
+      const outlets = all.filter(o => {
         if (!q) return true;
         return (o.name || '').toLowerCase().includes(q) || (o.cuisine || '').toLowerCase().includes(q);
       });
 
       const n = outlets.length;
-      countEl.textContent = `${n} outlet${n !== 1 ? 's' : ''}`;
+      countEl.textContent = `${n} outlet${n !== 1 ? 's' : ''}` + (updated ? ` · updated ${updated}` : '');
 
       if (!n) {
         list.innerHTML = '<p class="no-results">No outlets match your search.</p>';
