@@ -3,102 +3,1112 @@
     "source": "https://islifearecipe.net/mall-restaurant-directory/vivocity-food/",
     "updated": "2026-06-03",
     "outlets": [
-      { "name": "4Fingers Crispy Chicken", "cuisine": "Korean", "note": "Soy-garlic fried chicken" },
-      { "name": "Aburi-EN", "cuisine": "Japanese", "note": "Wagyu & unagi donburi" },
-      { "name": "Afuri", "cuisine": "Japanese", "note": "Yuzu shio ramen" },
-      { "name": "Alijiang", "cuisine": "Chinese", "note": "Xinjiang silk road cuisine" },
-      { "name": "Astons Specialities", "cuisine": "Western", "note": "Affordable steaks" },
-      { "name": "Ayam Penyet President", "cuisine": "Indonesian", "note": "Smashed fried chicken" },
-      { "name": "Barossa Steak & Grill", "cuisine": "Western", "note": "Dry-aged steakhouse" },
-      { "name": "Beauty in the Pot", "cuisine": "Chinese", "note": "Collagen hotpot" },
-      { "name": "Black Society", "cuisine": "Café", "note": "Café & bar" },
-      { "name": "Bornga", "cuisine": "Korean", "note": "Korean BBQ" },
-      { "name": "Brotzeit", "cuisine": "German", "note": "Beer bar, pork knuckle & sausages" },
-      { "name": "Burger King", "cuisine": "Fast Food", "note": "Burgers" },
-      { "name": "Burgs", "cuisine": "Western", "note": "Burgers" },
-      { "name": "Central Hong Kong Cafe", "cuisine": "Chinese", "note": "Cantonese cha chaan teng" },
-      { "name": "Crystal Jade Jiang Nan", "cuisine": "Chinese", "note": "Jiangnan cuisine" },
-      { "name": "Crystal Jade Pavilion", "cuisine": "Chinese", "note": "Cantonese dim sum" },
-      { "name": "Dancing Crab", "cuisine": "Seafood", "note": "American-style seafood boil" },
-      { "name": "DaXi", "cuisine": "Chinese", "note": "Asian mains" },
-      { "name": "Dian Xiao Er", "cuisine": "Chinese", "note": "Herbal roast duck" },
-      { "name": "Earle Swensen's", "cuisine": "Western", "note": "Premium grills & ice cream" },
-      { "name": "Encik Tan", "cuisine": "Local", "note": "Halal hawker fusion" },
-      { "name": "Fish & Co.", "cuisine": "Seafood", "note": "Pan seafood" },
-      { "name": "Genki Sushi", "cuisine": "Japanese", "note": "Conveyor-belt sushi" },
-      { "name": "Go Noodle House", "cuisine": "Malaysian", "note": "Noodle soups" },
-      { "name": "Go-Ang Pratunam Chicken Rice", "cuisine": "Thai", "note": "Thai-style chicken rice" },
-      { "name": "Gong Yuan Ma La Tang", "cuisine": "Chinese", "note": "Mala tang" },
-      { "name": "Green Common", "cuisine": "Vegetarian", "note": "Plant-based dishes" },
-      { "name": "Hai Di Lao Hotpot", "cuisine": "Chinese", "note": "Hotpot with service" },
-      { "name": "Hans im Glück", "cuisine": "Western", "note": "German burger grill" },
-      { "name": "Hokkaido-ya", "cuisine": "Japanese", "note": "Rice bowls, ramen, sashimi" },
-      { "name": "Ichiban Boshi", "cuisine": "Japanese", "note": "Sushi & Japanese standards" },
-      { "name": "Jelebu Dry Laksa", "cuisine": "Malaysian", "note": "Dry laksa" },
-      { "name": "Jia Xiang Sarawak Kuching Kolomee", "cuisine": "Malaysian", "note": "Kolo mee" },
-      { "name": "Jollibee", "cuisine": "Filipino", "note": "Fried chicken & spaghetti" },
-      { "name": "Kei Kaisendon", "cuisine": "Japanese", "note": "Seafood rice bowls" },
-      { "name": "KFC", "cuisine": "Fast Food", "note": "Fried chicken" },
-      { "name": "Kyoto Shokudo", "cuisine": "Japanese", "note": "Japanese set meals" },
-      { "name": "Le Shrimp Ramen", "cuisine": "Chinese", "note": "Prawn ramen" },
-      { "name": "LeNu", "cuisine": "Chinese", "note": "Chef Wai's beef noodle bar" },
-      { "name": "Marché Mövenpick", "cuisine": "Western", "note": "International marketplace dining" },
-      { "name": "McDonald's", "cuisine": "Fast Food", "note": "Burgers" },
-      { "name": "Menya Musashi", "cuisine": "Japanese", "note": "Tsukemen & ramen" },
-      { "name": "Milan Tei", "cuisine": "Japanese", "note": "Japanese" },
-      { "name": "Monster Curry", "cuisine": "Japanese", "note": "Japanese curry" },
-      { "name": "Morganfield's", "cuisine": "Western", "note": "Sticky bones BBQ" },
-      { "name": "MOS Burger", "cuisine": "Japanese", "note": "Japanese-style burgers" },
-      { "name": "Mrs Pho", "cuisine": "Vietnamese", "note": "Pho & Vietnamese" },
-      { "name": "Paik's Bibim", "cuisine": "Korean", "note": "Bibimbap" },
-      { "name": "Paradise Dynasty", "cuisine": "Chinese", "note": "Coloured xiao long bao" },
-      { "name": "Penang Culture", "cuisine": "Malaysian", "note": "Penang hawker fare" },
-      { "name": "Pizzakaya", "cuisine": "Western", "note": "Japanese-style pizza" },
-      { "name": "Poulet", "cuisine": "French", "note": "French roast chicken bistro" },
-      { "name": "PUTIEN", "cuisine": "Chinese", "note": "Fujian (Putian) cuisine" },
-      { "name": "Riverside Grilled Fish", "cuisine": "Chinese", "note": "Sichuan grilled fish" },
-      { "name": "Saboten", "cuisine": "Japanese", "note": "Tonkatsu" },
-      { "name": "Sanook Kitchen", "cuisine": "Thai", "note": "Thai comfort food" },
-      { "name": "Seafood Paradise", "cuisine": "Seafood", "note": "Cantonese seafood, chilli crab" },
-      { "name": "Secret Recipe", "cuisine": "Café", "note": "Cakes & Malaysian-western" },
-      { "name": "Sen-ryo", "cuisine": "Japanese", "note": "Premium sushi & grills" },
-      { "name": "SERVUS German Burger Grill", "cuisine": "German", "note": "German-style gourmet burgers" },
-      { "name": "Shake Shack", "cuisine": "American", "note": "Burgers, fries, shakes" },
-      { "name": "So Pho", "cuisine": "Vietnamese", "note": "Vietnamese comfort food" },
-      { "name": "Soup Restaurant", "cuisine": "Chinese", "note": "Samsui ginger chicken" },
-      { "name": "Sushi Tei", "cuisine": "Japanese", "note": "Sushi & Japanese standards" },
-      { "name": "Tajimaya Yakiniku / Suki-Ya", "cuisine": "Japanese", "note": "Yakiniku & shabu-shabu" },
-      { "name": "Tamago En", "cuisine": "Japanese", "note": "Egg-focused Japanese" },
-      { "name": "Tamjai Samgor Mixian", "cuisine": "Chinese", "note": "Yunnan rice noodles" },
-      { "name": "Tapas Club", "cuisine": "Spanish", "note": "Spanish tapas" },
-      { "name": "Tempura Makino", "cuisine": "Japanese", "note": "Made-to-order tempura" },
-      { "name": "Tempura-EN", "cuisine": "Japanese", "note": "Tempura & tendon" },
-      { "name": "Thai Accent", "cuisine": "Thai", "note": "Thai" },
-      { "name": "The Original Beach Road Scissors Cut Curry Rice", "cuisine": "Local", "note": "Hainanese curry rice" },
-      { "name": "The Original Boat Noodle", "cuisine": "Thai", "note": "Thai boat noodles" },
-      { "name": "The Queen & Mangosteen", "cuisine": "Western", "note": "British pub" },
-      { "name": "The Soup Spoon+", "cuisine": "Western", "note": "Soups & sandwiches" },
-      { "name": "Tokyo Shokudo", "cuisine": "Japanese", "note": "Japanese" },
-      { "name": "Tonkatsu ENbiton", "cuisine": "Japanese", "note": "Kagoshima tonkatsu & wagyu katsu" },
-      { "name": "Torikizoku", "cuisine": "Japanese", "note": "Yakitori, items ~$3.90" },
-      { "name": "Una Una", "cuisine": "Japanese", "note": "Grilled eel donburi" },
-      { "name": "VietSmith", "cuisine": "Vietnamese", "note": "Modern pho" },
-      { "name": "Western Mahua", "cuisine": "Chinese", "note": "Asian fusion" },
-      { "name": "White Restaurant", "cuisine": "Chinese", "note": "Zi char & white bee hoon" },
-      { "name": "Wine Connection", "cuisine": "Western", "note": "Wine bistro" },
-      { "name": "Wingstop", "cuisine": "American", "note": "Chicken wings" },
-      { "name": "Yakiniku Like", "cuisine": "Japanese", "note": "Solo yakiniku" },
-      { "name": "GyoGyo Japanese Grilled Fish & Sukiyaki", "cuisine": "Japanese", "note": "Grilled fish & sukiyaki" },
-      { "name": "Mamma Mia! Trattoria", "cuisine": "Italian", "note": "Affordable artisanal pasta" },
-      { "name": "Gokoku", "cuisine": "Bakery", "note": "Japanese bakery, buns & pastries" },
-      { "name": "Kazo", "cuisine": "Dessert", "note": "Japanese cheese tarts & cream puffs" },
-      { "name": "Birds of Paradise Gelato Boutique", "cuisine": "Dessert", "note": "Botanical gelato" },
-      { "name": "Dipndip", "cuisine": "Dessert", "note": "Belgian chocolate desserts" },
-      { "name": "Nasty Cookie", "cuisine": "Dessert", "note": "Thick NY-style cookies" },
-      { "name": "Ben & Jerry's", "cuisine": "Dessert", "note": "Premium ice cream" },
-      { "name": "HEYTEA", "cuisine": "Beverages", "note": "Cheese tea" },
-      { "name": "Food Republic", "cuisine": "Food Court", "note": "Large food court" },
-      { "name": "Kopitiam", "cuisine": "Food Court", "note": "Local food court" }
+      {
+        "name": "4Fingers Crispy Chicken",
+        "cuisine": "Korean",
+        "note": "Soy-garlic fried chicken"
+      },
+      {
+        "name": "Aburi-EN",
+        "cuisine": "Japanese",
+        "note": "Wagyu & unagi donburi"
+      },
+      {
+        "name": "Afuri",
+        "cuisine": "Japanese",
+        "note": "Yuzu shio ramen"
+      },
+      {
+        "name": "Alijiang",
+        "cuisine": "Chinese",
+        "note": "Xinjiang silk road cuisine"
+      },
+      {
+        "name": "Astons Specialities",
+        "cuisine": "Western",
+        "note": "Affordable steaks"
+      },
+      {
+        "name": "Ayam Penyet President",
+        "cuisine": "Indonesian",
+        "note": "Smashed fried chicken"
+      },
+      {
+        "name": "Barossa Steak & Grill",
+        "cuisine": "Western",
+        "note": "Dry-aged steakhouse"
+      },
+      {
+        "name": "Beauty in the Pot",
+        "cuisine": "Chinese",
+        "note": "Collagen hotpot"
+      },
+      {
+        "name": "Black Society",
+        "cuisine": "Café",
+        "note": "Café & bar"
+      },
+      {
+        "name": "Bornga",
+        "cuisine": "Korean",
+        "note": "Korean BBQ"
+      },
+      {
+        "name": "Brotzeit",
+        "cuisine": "German",
+        "note": "Beer bar, pork knuckle & sausages"
+      },
+      {
+        "name": "Burger King",
+        "cuisine": "Fast Food",
+        "note": "Burgers"
+      },
+      {
+        "name": "Burgs",
+        "cuisine": "Western",
+        "note": "Burgers"
+      },
+      {
+        "name": "Central Hong Kong Cafe",
+        "cuisine": "Chinese",
+        "note": "Cantonese cha chaan teng"
+      },
+      {
+        "name": "Crystal Jade Jiang Nan",
+        "cuisine": "Chinese",
+        "note": "Jiangnan cuisine"
+      },
+      {
+        "name": "Crystal Jade Pavilion",
+        "cuisine": "Chinese",
+        "note": "Cantonese dim sum"
+      },
+      {
+        "name": "Dancing Crab",
+        "cuisine": "Seafood",
+        "note": "American-style seafood boil"
+      },
+      {
+        "name": "DaXi",
+        "cuisine": "Chinese",
+        "note": "Asian mains"
+      },
+      {
+        "name": "Dian Xiao Er",
+        "cuisine": "Chinese",
+        "note": "Herbal roast duck"
+      },
+      {
+        "name": "Earle Swensen's",
+        "cuisine": "Western",
+        "note": "Premium grills & ice cream"
+      },
+      {
+        "name": "Encik Tan",
+        "cuisine": "Local",
+        "note": "Halal hawker fusion"
+      },
+      {
+        "name": "Fish & Co.",
+        "cuisine": "Seafood",
+        "note": "Pan seafood"
+      },
+      {
+        "name": "Genki Sushi",
+        "cuisine": "Japanese",
+        "note": "Conveyor-belt sushi"
+      },
+      {
+        "name": "Go Noodle House",
+        "cuisine": "Malaysian",
+        "note": "Noodle soups"
+      },
+      {
+        "name": "Go-Ang Pratunam Chicken Rice",
+        "cuisine": "Thai",
+        "note": "Thai-style chicken rice"
+      },
+      {
+        "name": "Gong Yuan Ma La Tang",
+        "cuisine": "Chinese",
+        "note": "Mala tang"
+      },
+      {
+        "name": "Green Common",
+        "cuisine": "Vegetarian",
+        "note": "Plant-based dishes"
+      },
+      {
+        "name": "Hai Di Lao Hotpot",
+        "cuisine": "Chinese",
+        "note": "Hotpot with service"
+      },
+      {
+        "name": "Hans im Glück",
+        "cuisine": "Western",
+        "note": "German burger grill"
+      },
+      {
+        "name": "Hokkaido-ya",
+        "cuisine": "Japanese",
+        "note": "Rice bowls, ramen, sashimi"
+      },
+      {
+        "name": "Ichiban Boshi",
+        "cuisine": "Japanese",
+        "note": "Sushi & Japanese standards"
+      },
+      {
+        "name": "Jelebu Dry Laksa",
+        "cuisine": "Malaysian",
+        "note": "Dry laksa"
+      },
+      {
+        "name": "Jia Xiang Sarawak Kuching Kolomee",
+        "cuisine": "Malaysian",
+        "note": "Kolo mee"
+      },
+      {
+        "name": "Jollibee",
+        "cuisine": "Filipino",
+        "note": "Fried chicken & spaghetti"
+      },
+      {
+        "name": "Kei Kaisendon",
+        "cuisine": "Japanese",
+        "note": "Seafood rice bowls"
+      },
+      {
+        "name": "KFC",
+        "cuisine": "Fast Food",
+        "note": "Fried chicken"
+      },
+      {
+        "name": "Kyoto Shokudo",
+        "cuisine": "Japanese",
+        "note": "Japanese set meals"
+      },
+      {
+        "name": "Le Shrimp Ramen",
+        "cuisine": "Chinese",
+        "note": "Prawn ramen"
+      },
+      {
+        "name": "LeNu",
+        "cuisine": "Chinese",
+        "note": "Chef Wai's beef noodle bar"
+      },
+      {
+        "name": "Marché Mövenpick",
+        "cuisine": "Western",
+        "note": "International marketplace dining"
+      },
+      {
+        "name": "McDonald's",
+        "cuisine": "Fast Food",
+        "note": "Burgers"
+      },
+      {
+        "name": "Menya Musashi",
+        "cuisine": "Japanese",
+        "note": "Tsukemen & ramen"
+      },
+      {
+        "name": "Milan Tei",
+        "cuisine": "Japanese",
+        "note": "Japanese"
+      },
+      {
+        "name": "Monster Curry",
+        "cuisine": "Japanese",
+        "note": "Japanese curry"
+      },
+      {
+        "name": "Morganfield's",
+        "cuisine": "Western",
+        "note": "Sticky bones BBQ"
+      },
+      {
+        "name": "MOS Burger",
+        "cuisine": "Japanese",
+        "note": "Japanese-style burgers"
+      },
+      {
+        "name": "Mrs Pho",
+        "cuisine": "Vietnamese",
+        "note": "Pho & Vietnamese"
+      },
+      {
+        "name": "Paik's Bibim",
+        "cuisine": "Korean",
+        "note": "Bibimbap"
+      },
+      {
+        "name": "Paradise Dynasty",
+        "cuisine": "Chinese",
+        "note": "Coloured xiao long bao"
+      },
+      {
+        "name": "Penang Culture",
+        "cuisine": "Malaysian",
+        "note": "Penang hawker fare"
+      },
+      {
+        "name": "Pizzakaya",
+        "cuisine": "Western",
+        "note": "Japanese-style pizza"
+      },
+      {
+        "name": "Poulet",
+        "cuisine": "French",
+        "note": "French roast chicken bistro"
+      },
+      {
+        "name": "PUTIEN",
+        "cuisine": "Chinese",
+        "note": "Fujian (Putian) cuisine"
+      },
+      {
+        "name": "Riverside Grilled Fish",
+        "cuisine": "Chinese",
+        "note": "Sichuan grilled fish"
+      },
+      {
+        "name": "Saboten",
+        "cuisine": "Japanese",
+        "note": "Tonkatsu"
+      },
+      {
+        "name": "Sanook Kitchen",
+        "cuisine": "Thai",
+        "note": "Thai comfort food"
+      },
+      {
+        "name": "Seafood Paradise",
+        "cuisine": "Seafood",
+        "note": "Cantonese seafood, chilli crab"
+      },
+      {
+        "name": "Secret Recipe",
+        "cuisine": "Café",
+        "note": "Cakes & Malaysian-western"
+      },
+      {
+        "name": "Sen-ryo",
+        "cuisine": "Japanese",
+        "note": "Premium sushi & grills"
+      },
+      {
+        "name": "SERVUS German Burger Grill",
+        "cuisine": "German",
+        "note": "German-style gourmet burgers"
+      },
+      {
+        "name": "Shake Shack",
+        "cuisine": "American",
+        "note": "Burgers, fries, shakes"
+      },
+      {
+        "name": "So Pho",
+        "cuisine": "Vietnamese",
+        "note": "Vietnamese comfort food"
+      },
+      {
+        "name": "Soup Restaurant",
+        "cuisine": "Chinese",
+        "note": "Samsui ginger chicken"
+      },
+      {
+        "name": "Sushi Tei",
+        "cuisine": "Japanese",
+        "note": "Sushi & Japanese standards"
+      },
+      {
+        "name": "Tajimaya Yakiniku / Suki-Ya",
+        "cuisine": "Japanese",
+        "note": "Yakiniku & shabu-shabu"
+      },
+      {
+        "name": "Tamago En",
+        "cuisine": "Japanese",
+        "note": "Egg-focused Japanese"
+      },
+      {
+        "name": "Tamjai Samgor Mixian",
+        "cuisine": "Chinese",
+        "note": "Yunnan rice noodles"
+      },
+      {
+        "name": "Tapas Club",
+        "cuisine": "Spanish",
+        "note": "Spanish tapas"
+      },
+      {
+        "name": "Tempura Makino",
+        "cuisine": "Japanese",
+        "note": "Made-to-order tempura"
+      },
+      {
+        "name": "Tempura-EN",
+        "cuisine": "Japanese",
+        "note": "Tempura & tendon"
+      },
+      {
+        "name": "Thai Accent",
+        "cuisine": "Thai",
+        "note": "Thai"
+      },
+      {
+        "name": "The Original Beach Road Scissors Cut Curry Rice",
+        "cuisine": "Local",
+        "note": "Hainanese curry rice"
+      },
+      {
+        "name": "The Original Boat Noodle",
+        "cuisine": "Thai",
+        "note": "Thai boat noodles"
+      },
+      {
+        "name": "The Queen & Mangosteen",
+        "cuisine": "Western",
+        "note": "British pub"
+      },
+      {
+        "name": "The Soup Spoon+",
+        "cuisine": "Western",
+        "note": "Soups & sandwiches"
+      },
+      {
+        "name": "Tokyo Shokudo",
+        "cuisine": "Japanese",
+        "note": "Japanese"
+      },
+      {
+        "name": "Tonkatsu ENbiton",
+        "cuisine": "Japanese",
+        "note": "Kagoshima tonkatsu & wagyu katsu"
+      },
+      {
+        "name": "Torikizoku",
+        "cuisine": "Japanese",
+        "note": "Yakitori, items ~$3.90"
+      },
+      {
+        "name": "Una Una",
+        "cuisine": "Japanese",
+        "note": "Grilled eel donburi"
+      },
+      {
+        "name": "VietSmith",
+        "cuisine": "Vietnamese",
+        "note": "Modern pho"
+      },
+      {
+        "name": "Western Mahua",
+        "cuisine": "Chinese",
+        "note": "Asian fusion"
+      },
+      {
+        "name": "White Restaurant",
+        "cuisine": "Chinese",
+        "note": "Zi char & white bee hoon"
+      },
+      {
+        "name": "Wine Connection",
+        "cuisine": "Western",
+        "note": "Wine bistro"
+      },
+      {
+        "name": "Wingstop",
+        "cuisine": "American",
+        "note": "Chicken wings"
+      },
+      {
+        "name": "Yakiniku Like",
+        "cuisine": "Japanese",
+        "note": "Solo yakiniku"
+      },
+      {
+        "name": "GyoGyo Japanese Grilled Fish & Sukiyaki",
+        "cuisine": "Japanese",
+        "note": "Grilled fish & sukiyaki"
+      },
+      {
+        "name": "Mamma Mia! Trattoria",
+        "cuisine": "Italian",
+        "note": "Affordable artisanal pasta"
+      },
+      {
+        "name": "Gokoku",
+        "cuisine": "Bakery",
+        "note": "Japanese bakery, buns & pastries"
+      },
+      {
+        "name": "Kazo",
+        "cuisine": "Dessert",
+        "note": "Japanese cheese tarts & cream puffs"
+      },
+      {
+        "name": "Birds of Paradise Gelato Boutique",
+        "cuisine": "Dessert",
+        "note": "Botanical gelato"
+      },
+      {
+        "name": "Dipndip",
+        "cuisine": "Dessert",
+        "note": "Belgian chocolate desserts"
+      },
+      {
+        "name": "Nasty Cookie",
+        "cuisine": "Dessert",
+        "note": "Thick NY-style cookies"
+      },
+      {
+        "name": "Ben & Jerry's",
+        "cuisine": "Dessert",
+        "note": "Premium ice cream"
+      },
+      {
+        "name": "HEYTEA",
+        "cuisine": "Beverages",
+        "note": "Cheese tea"
+      },
+      {
+        "name": "Food Republic",
+        "cuisine": "Food Court",
+        "note": "Large food court"
+      },
+      {
+        "name": "Kopitiam",
+        "cuisine": "Food Court",
+        "note": "Local food court"
+      }
+    ]
+  },
+  "Nex": {
+    "source": "https://islifearecipe.net/mall-restaurant-directory/nex-food-restaurant-directory/",
+    "updated": "2026-06-03",
+    "outlets": [
+      {
+        "name": "4Fingers Crispy Chicken",
+        "cuisine": "Korean",
+        "note": "Soy-garlic fried chicken"
+      },
+      {
+        "name": "A Hot Hideout",
+        "cuisine": "Chinese",
+        "note": "Personal mini hotpot"
+      },
+      {
+        "name": "Ayam Penyet Ria",
+        "cuisine": "Indonesian",
+        "note": "Smashed fried chicken"
+      },
+      {
+        "name": "Aburi-EN",
+        "cuisine": "Japanese",
+        "note": "Wagyu & unagi donburi"
+      },
+      {
+        "name": "Allgood Gourmet",
+        "cuisine": "Western",
+        "note": "Gourmet deli"
+      },
+      {
+        "name": "An Acai Affair",
+        "cuisine": "Dessert",
+        "note": "Acai bowls"
+      },
+      {
+        "name": "Auntie Anne's",
+        "cuisine": "Snacks",
+        "note": "Pretzels"
+      },
+      {
+        "name": "Barcook Bakery",
+        "cuisine": "Bakery",
+        "note": "Buns & pastries"
+      },
+      {
+        "name": "Baskin Robbins",
+        "cuisine": "Dessert",
+        "note": "Ice cream"
+      },
+      {
+        "name": "BatterCatch",
+        "cuisine": "Dessert",
+        "note": "Baked goods"
+      },
+      {
+        "name": "Beauty in the Pot",
+        "cuisine": "Chinese",
+        "note": "Collagen hotpot"
+      },
+      {
+        "name": "Bee Cheng Hiang",
+        "cuisine": "Local",
+        "note": "Bak kwa"
+      },
+      {
+        "name": "Bengawan Solo",
+        "cuisine": "Bakery",
+        "note": "Kueh & cakes"
+      },
+      {
+        "name": "Boost Juice Bars",
+        "cuisine": "Beverages",
+        "note": "Juices & smoothies"
+      },
+      {
+        "name": "BreadTalk",
+        "cuisine": "Bakery",
+        "note": "Buns & cakes"
+      },
+      {
+        "name": "Burger King",
+        "cuisine": "Fast Food",
+        "note": "Burgers"
+      },
+      {
+        "name": "Butter & Cream",
+        "cuisine": "Dessert",
+        "note": "Cakes"
+      },
+      {
+        "name": "Canton Paradise",
+        "cuisine": "Chinese",
+        "note": "Cantonese dim sum"
+      },
+      {
+        "name": "Chagee",
+        "cuisine": "Beverages",
+        "note": "Bubble tea"
+      },
+      {
+        "name": "Chateraise",
+        "cuisine": "Dessert",
+        "note": "Japanese cakes"
+      },
+      {
+        "name": "Chicha San Chen",
+        "cuisine": "Beverages",
+        "note": "Bubble tea"
+      },
+      {
+        "name": "Chin Mee Chin",
+        "cuisine": "Bakery",
+        "note": "Kaya toast & buns"
+      },
+      {
+        "name": "Chinatown Tan's Tutu Coconut Cake",
+        "cuisine": "Dessert",
+        "note": "Tutu kueh"
+      },
+      {
+        "name": "Collin's",
+        "cuisine": "Western",
+        "note": "Affordable grills"
+      },
+      {
+        "name": "Crave",
+        "cuisine": "Local",
+        "note": "Nasi lemak & satay"
+      },
+      {
+        "name": "DeliBowl Express",
+        "cuisine": "Chinese",
+        "note": "Rice bowls"
+      },
+      {
+        "name": "Dian Xiao Er",
+        "cuisine": "Chinese",
+        "note": "Herbal roast duck"
+      },
+      {
+        "name": "Din Tai Fung",
+        "cuisine": "Chinese",
+        "note": "Xiao long bao"
+      },
+      {
+        "name": "Dough Culture",
+        "cuisine": "Dessert",
+        "note": "Cream-filled pastries"
+      },
+      {
+        "name": "Eat 3 Bowls",
+        "cuisine": "Taiwanese",
+        "note": "Taiwanese rice & noodle bowls"
+      },
+      {
+        "name": "EAT.",
+        "cuisine": "Local",
+        "note": "Local fast-casual"
+      },
+      {
+        "name": "Famous Amos",
+        "cuisine": "Dessert",
+        "note": "Cookies"
+      },
+      {
+        "name": "Fong Sheng Hao",
+        "cuisine": "Taiwanese",
+        "note": "Taiwanese toast & breakfast"
+      },
+      {
+        "name": "Food Junction",
+        "cuisine": "Food Court",
+        "note": "Food court"
+      },
+      {
+        "name": "Food Republic",
+        "cuisine": "Food Court",
+        "note": "Food court"
+      },
+      {
+        "name": "Four Leaves",
+        "cuisine": "Bakery",
+        "note": "Buns & pastries"
+      },
+      {
+        "name": "Fragrance",
+        "cuisine": "Local",
+        "note": "Bak kwa"
+      },
+      {
+        "name": "Genki Sushi",
+        "cuisine": "Japanese",
+        "note": "Conveyor-belt sushi"
+      },
+      {
+        "name": "Ghost Kakigori",
+        "cuisine": "Dessert",
+        "note": "Shaved ice"
+      },
+      {
+        "name": "Go-Ang Pratunam Chicken Rice",
+        "cuisine": "Thai",
+        "note": "Thai-style chicken rice"
+      },
+      {
+        "name": "Gokoku Japanese Bakery",
+        "cuisine": "Bakery",
+        "note": "Japanese bakery"
+      },
+      {
+        "name": "Gong Yuan Mala Tang",
+        "cuisine": "Chinese",
+        "note": "Mala tang"
+      },
+      {
+        "name": "Graffiti Cafe",
+        "cuisine": "Café",
+        "note": "Café"
+      },
+      {
+        "name": "Guzman y Gomez",
+        "cuisine": "Mexican",
+        "note": "Burritos & tacos"
+      },
+      {
+        "name": "Hatsumi",
+        "cuisine": "Japanese",
+        "note": "Japanese"
+      },
+      {
+        "name": "Ho Kee Pau",
+        "cuisine": "Chinese",
+        "note": "Pau & dim sum"
+      },
+      {
+        "name": "Hot Tomato Cafe & Grill",
+        "cuisine": "Western",
+        "note": "Steaks & pasta"
+      },
+      {
+        "name": "I Love Taimei",
+        "cuisine": "Taiwanese",
+        "note": "Taiwanese"
+      },
+      {
+        "name": "Ichiban Boshi",
+        "cuisine": "Japanese",
+        "note": "Sushi & Japanese standards"
+      },
+      {
+        "name": "Idaten Udon",
+        "cuisine": "Japanese",
+        "note": "Sanuki udon"
+      },
+      {
+        "name": "Jack's Place",
+        "cuisine": "Western",
+        "note": "Steaks"
+      },
+      {
+        "name": "Jollibee",
+        "cuisine": "Filipino",
+        "note": "Fried chicken & spaghetti"
+      },
+      {
+        "name": "KFC",
+        "cuisine": "Fast Food",
+        "note": "Fried chicken"
+      },
+      {
+        "name": "KOI The",
+        "cuisine": "Beverages",
+        "note": "Bubble tea"
+      },
+      {
+        "name": "Koo Kee",
+        "cuisine": "Chinese",
+        "note": "Teochew yong tau foo"
+      },
+      {
+        "name": "Koong Woh Tong",
+        "cuisine": "Beverages",
+        "note": "Herbal tea & guilinggao"
+      },
+      {
+        "name": "Krispy Kreme",
+        "cuisine": "Dessert",
+        "note": "Donuts"
+      },
+      {
+        "name": "Kuriya Japanese Market",
+        "cuisine": "Japanese",
+        "note": "Sushi & sashimi"
+      },
+      {
+        "name": "Lao Huo Tang",
+        "cuisine": "Chinese",
+        "note": "Double-boiled soups"
+      },
+      {
+        "name": "Lee Wee & Brothers",
+        "cuisine": "Bakery",
+        "note": "Otah & kueh"
+      },
+      {
+        "name": "LiHO",
+        "cuisine": "Beverages",
+        "note": "Bubble tea"
+      },
+      {
+        "name": "McDonald's",
+        "cuisine": "Fast Food",
+        "note": "Burgers"
+      },
+      {
+        "name": "Mi Bibimbap",
+        "cuisine": "Korean",
+        "note": "Bibimbap"
+      },
+      {
+        "name": "Monster Curry",
+        "cuisine": "Japanese",
+        "note": "Japanese curry"
+      },
+      {
+        "name": "MOS Burger",
+        "cuisine": "Japanese",
+        "note": "Japanese-style burgers"
+      },
+      {
+        "name": "Mr Bean / Do Qoo",
+        "cuisine": "Beverages",
+        "note": "Soy milk & snacks"
+      },
+      {
+        "name": "Mr. Coconut",
+        "cuisine": "Beverages",
+        "note": "Coconut drinks"
+      },
+      {
+        "name": "Munchi Pancakes",
+        "cuisine": "Local",
+        "note": "Min jiang kueh"
+      },
+      {
+        "name": "Nine Fresh",
+        "cuisine": "Dessert",
+        "note": "Taiwanese desserts"
+      },
+      {
+        "name": "Old Chang Kee",
+        "cuisine": "Snacks",
+        "note": "Curry puffs"
+      },
+      {
+        "name": "Onggii",
+        "cuisine": "Korean",
+        "note": "Korean"
+      },
+      {
+        "name": "Oriental Herbal Tea",
+        "cuisine": "Beverages",
+        "note": "Herbal tea"
+      },
+      {
+        "name": "Oriental Kopi",
+        "cuisine": "Café",
+        "note": "Malaysian kopitiam"
+      },
+      {
+        "name": "Panda Chan Snack",
+        "cuisine": "Snacks",
+        "note": "Snacks"
+      },
+      {
+        "name": "Paris Baguette",
+        "cuisine": "Bakery",
+        "note": "Korean-French bakery"
+      },
+      {
+        "name": "Pepper Lunch",
+        "cuisine": "Japanese",
+        "note": "Sizzling rice & steak"
+      },
+      {
+        "name": "PlayMade",
+        "cuisine": "Beverages",
+        "note": "Bubble tea"
+      },
+      {
+        "name": "Plum Village",
+        "cuisine": "Vietnamese",
+        "note": "Vietnamese"
+      },
+      {
+        "name": "Polar Puffs & Cakes",
+        "cuisine": "Bakery",
+        "note": "Puffs & cakes"
+      },
+      {
+        "name": "Pull-Tab Coffee",
+        "cuisine": "Café",
+        "note": "Specialty coffee"
+      },
+      {
+        "name": "PUTIEN",
+        "cuisine": "Chinese",
+        "note": "Fujian (Putian) cuisine"
+      },
+      {
+        "name": "Qi Ji",
+        "cuisine": "Local",
+        "note": "Nasi lemak & mee siam"
+      },
+      {
+        "name": "Ramen Kiou",
+        "cuisine": "Japanese",
+        "note": "Ramen"
+      },
+      {
+        "name": "Ritz Apple Strudel",
+        "cuisine": "Dessert",
+        "note": "Apple strudel"
+      },
+      {
+        "name": "Rive Gauche Patisserie",
+        "cuisine": "Dessert",
+        "note": "French patisserie"
+      },
+      {
+        "name": "Royce'",
+        "cuisine": "Dessert",
+        "note": "Chocolate"
+      },
+      {
+        "name": "Saizeriya",
+        "cuisine": "Italian",
+        "note": "Budget Italian"
+      },
+      {
+        "name": "Seorae Jib",
+        "cuisine": "Korean",
+        "note": "Korean BBQ"
+      },
+      {
+        "name": "Seoul Noodle Shop",
+        "cuisine": "Korean",
+        "note": "Korean noodles"
+      },
+      {
+        "name": "SF Fruits",
+        "cuisine": "Beverages",
+        "note": "Fresh fruit & juices"
+      },
+      {
+        "name": "Shabu Sai",
+        "cuisine": "Japanese",
+        "note": "Shabu-shabu buffet"
+      },
+      {
+        "name": "Shabu-Go",
+        "cuisine": "Japanese",
+        "note": "Solo shabu-shabu"
+      },
+      {
+        "name": "Shihlin Taiwan Street Snacks",
+        "cuisine": "Taiwanese",
+        "note": "XXL crispy chicken"
+      },
+      {
+        "name": "Smooy",
+        "cuisine": "Dessert",
+        "note": "Frozen yogurt"
+      },
+      {
+        "name": "Soup Restaurant",
+        "cuisine": "Chinese",
+        "note": "Samsui ginger chicken"
+      },
+      {
+        "name": "Starbucks",
+        "cuisine": "Café",
+        "note": "Coffee"
+      },
+      {
+        "name": "Steak 99",
+        "cuisine": "Western",
+        "note": "Affordable steaks"
+      },
+      {
+        "name": "Stuff'd",
+        "cuisine": "Mexican",
+        "note": "Burritos & kebabs"
+      },
+      {
+        "name": "Subway",
+        "cuisine": "Western",
+        "note": "Sandwiches"
+      },
+      {
+        "name": "Sushi Express",
+        "cuisine": "Japanese",
+        "note": "Conveyor-belt sushi"
+      },
+      {
+        "name": "Sushi Tei",
+        "cuisine": "Japanese",
+        "note": "Sushi & Japanese standards"
+      },
+      {
+        "name": "Swensen's",
+        "cuisine": "Western",
+        "note": "Ice cream & western"
+      },
+      {
+        "name": "Tai Er",
+        "cuisine": "Chinese",
+        "note": "Sauerkraut fish"
+      },
+      {
+        "name": "Tamago-En",
+        "cuisine": "Japanese",
+        "note": "Egg-focused Japanese"
+      },
+      {
+        "name": "Texas Chicken",
+        "cuisine": "Fast Food",
+        "note": "Fried chicken"
+      },
+      {
+        "name": "The Coffee Bean and Tea Leaf",
+        "cuisine": "Café",
+        "note": "Coffee"
+      },
+      {
+        "name": "The Hainan Story Coffee House",
+        "cuisine": "Local",
+        "note": "Hainanese kopitiam"
+      },
+      {
+        "name": "Thye Moh Chan",
+        "cuisine": "Bakery",
+        "note": "Teochew pastries"
+      },
+      {
+        "name": "Tim Hortons",
+        "cuisine": "Café",
+        "note": "Coffee & donuts"
+      },
+      {
+        "name": "Toast Box",
+        "cuisine": "Café",
+        "note": "Kaya toast & kopi"
+      },
+      {
+        "name": "Tori-Q",
+        "cuisine": "Japanese",
+        "note": "Grilled chicken skewers"
+      },
+      {
+        "name": "Tuk Tuk Cha",
+        "cuisine": "Beverages",
+        "note": "Thai milk tea & desserts"
+      },
+      {
+        "name": "Umai",
+        "cuisine": "Bakery",
+        "note": "Baked goods"
+      },
+      {
+        "name": "umisushi",
+        "cuisine": "Japanese",
+        "note": "Sushi takeaway"
+      },
+      {
+        "name": "Wanpo Tea Shop",
+        "cuisine": "Beverages",
+        "note": "Bubble tea"
+      },
+      {
+        "name": "Wine Connection",
+        "cuisine": "Western",
+        "note": "Wine bistro"
+      },
+      {
+        "name": "Wok Hey",
+        "cuisine": "Chinese",
+        "note": "Wok-fried rice & noodles"
+      },
+      {
+        "name": "Xiang Xiang Hunan Cuisine",
+        "cuisine": "Chinese",
+        "note": "Hunan cuisine"
+      },
+      {
+        "name": "Ya Kun Kaya Toast",
+        "cuisine": "Café",
+        "note": "Kaya toast & kopi"
+      },
+      {
+        "name": "Yaki Yaki Bo",
+        "cuisine": "Japanese",
+        "note": "Grilled skewers"
+      },
+      {
+        "name": "Yakiniku-Go",
+        "cuisine": "Japanese",
+        "note": "Solo yakiniku"
+      },
+      {
+        "name": "Yew Kee Specialities",
+        "cuisine": "Chinese",
+        "note": "Roast meats"
+      },
+      {
+        "name": "Yole",
+        "cuisine": "Dessert",
+        "note": "Frozen yogurt"
+      },
+      {
+        "name": "Yoshinoya",
+        "cuisine": "Japanese",
+        "note": "Beef rice bowls"
+      }
     ]
   }
 }
