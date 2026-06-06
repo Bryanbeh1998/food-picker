@@ -18,7 +18,10 @@ A personal web app that helps you decide where to eat. Filter your restaurant li
 - **Mark as Tried** — on the wishlist, one tap moves a place into your main list automatically
 - **Open in Google Maps** — every pick and outlet links straight to directions
 - **Multi-location support** — chains with several branches show each outlet in an expandable sublist
-- **Add / Edit / Delete** — manage places directly from the app; changes write straight back to Google Sheets. The **Type dropdown is populated from the types already in your sheet**
+- **Add / Edit / Delete** — manage places directly from the app; changes write straight back to Google Sheets. The **Type field suggests existing types but lets you type a new one**, with a duplicate-name guard
+- **🏬 Mall Directory** — a separate reference of every food outlet in a Singapore mall. Pick a mall to see its list, or **search across all malls at once** (e.g. "sukiya" lights up every mall that has it)
+- **Installable (PWA)** — Add to Home Screen for a fullscreen, app-like experience that loads instantly and works offline
+- **Remembers your place** — a refresh keeps your country, tab, and open mall directory (the country gate only shows on first visit)
 - **Dark mode** — toggle in the top-right corner; your choice is remembered
 - **Pastel green theme** with a built-in, compact "How to Use" guide
 - **Live data** — powered by Google Sheets, no redeployment needed to update the lists
@@ -92,11 +95,34 @@ Notes:
 
 ---
 
+## Mall Directory
+
+A read-only reference of every food outlet in a Singapore mall — separate from your personal lists. Tap **🏬 Mall Directory**, then either pick a mall to browse its outlets, or use the **search-all-malls** box to find a chain/dish across every mall (results are grouped by mall and tappable).
+
+The data lives in **`malls.json`**:
+```json
+{
+  "VivoCity": {
+    "source": "https://…",        // where the list was compiled from
+    "updated": "2026-06-03",        // shown in the app as "N outlets · updated <date>"
+    "outlets": [ { "name": "Shake Shack", "cuisine": "American", "note": "Burgers" } ]
+  }
+}
+```
+
+Malls currently included: **Nex, VivoCity, Junction 8, Jewel Changi, Hougang Mall** (~378 outlets).
+
+Mall tenants change often, so there is **no auto-update** — updates happen on request. Because each mall stores its `source` URL, refreshing it is reproducible. See [`MALLS.md`](MALLS.md) for the exact add/update procedure.
+
+---
+
 ## Tech stack
 
 - Vanilla HTML / CSS / JavaScript — no frameworks, single `index.html` file
 - Google Sheets as the database — one spreadsheet, tabs grouped by country, each published as CSV for reads
 - Google Apps Script as the write API (handles add, edit, delete, and move-between-tabs)
+- `malls.json` as a static reference dataset for the Mall Directory
+- A **service worker** (`sw.js`) + `manifest.json` make it an installable PWA
 - Hosted on GitHub Pages (free, permanent)
 
 ## Architecture at a glance
@@ -128,6 +154,8 @@ git push
 ```
 
 The live site updates within ~30 seconds.
+
+> **When you change `index.html` or `malls.json`, bump `CACHE_VERSION` in `sw.js`** (e.g. `food-picker-v7` → `v8`) so installed apps refetch. On a phone, fully close and reopen the app to pick up the new version.
 
 > If you ever recreate the Apps Script deployment, you get a **new URL** — update `APPS_SCRIPT_URL` in `index.html`. To avoid this, redeploy via **Manage deployments → Edit → New version**, which keeps the same URL. The deployment must be set to **Execute as: Me** and **Who has access: Anyone**.
 
