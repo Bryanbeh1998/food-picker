@@ -1,6 +1,6 @@
 // Food Picker service worker — caches the app shell so it loads fast / offline.
 // Bump CACHE_VERSION whenever you want clients to refetch the shell.
-const CACHE_VERSION = 'food-picker-v18';
+const CACHE_VERSION = 'food-picker-v19';
 const SHELL = [
   './',
   './index.html',
