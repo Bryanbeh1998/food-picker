@@ -1752,318 +1752,308 @@
     ]
   },
   "Junction 8": {
-    "source": "https://islifearecipe.net/mall-restaurant-directory/junction-8-food-restaurant-directory/",
+    "source": "https://junction8mall.com/shops?category=food",
     "updated": "2026-06-03",
     "outlets": [
       {
-        "name": "4Fingers Crispy Chicken",
+        "name": "4 Fingers Crispy Chicken",
         "cuisine": "Korean",
-        "note": "Soy-garlic fried chicken"
+        "note": "#01-32"
       },
       {
         "name": "Ajisen Ramen",
         "cuisine": "Japanese",
-        "note": "Tonkotsu ramen"
+        "note": "#B1-19"
       },
       {
         "name": "Ambush",
         "cuisine": "Café",
-        "note": "Café"
+        "note": "#02-19 to 20"
       },
       {
         "name": "Bari Bari Steak",
         "cuisine": "Korean",
-        "note": "Korean steakhouse"
+        "note": "#01-37"
       },
       {
         "name": "BBQ Express",
         "cuisine": "Local",
-        "note": "BBQ kiosk"
+        "note": "#B1-K10 to K11"
       },
       {
         "name": "Bee Cheng Hiang",
         "cuisine": "Local",
-        "note": "Bak kwa"
+        "note": "#B1-13"
       },
       {
         "name": "Bengawan Solo",
         "cuisine": "Bakery",
-        "note": "Kueh & cakes"
+        "note": "#B1-02"
       },
       {
         "name": "BEUTEA",
         "cuisine": "Beverages",
-        "note": "Bubble tea"
+        "note": "#02-30"
       },
       {
         "name": "Boost Juice Bars",
         "cuisine": "Beverages",
-        "note": "Juices & smoothies"
+        "note": "#B1-K1"
       },
       {
         "name": "BreadTalk",
         "cuisine": "Bakery",
-        "note": "Buns & cakes"
+        "note": "#01-35 to 36"
       },
       {
         "name": "Cat & the Fiddle",
         "cuisine": "Dessert",
-        "note": "Cheesecakes"
+        "note": "#02-32A"
       },
       {
-        "name": "Chagee",
+        "name": "CHAGEE",
         "cuisine": "Beverages",
-        "note": "Bubble tea"
+        "note": "#01-10 to 11"
       },
       {
         "name": "Chateraise",
         "cuisine": "Dessert",
-        "note": "Japanese cakes"
+        "note": "#B1-19B"
       },
       {
         "name": "Chocolate Origin",
         "cuisine": "Dessert",
-        "note": "Chocolate cakes"
+        "note": "#02-33"
       },
       {
-        "name": "Crave",
+        "name": "CRAVE",
         "cuisine": "Local",
-        "note": "Nasi lemak & satay"
+        "note": "#B1-K8"
       },
       {
         "name": "Dian Xiao Er",
         "cuisine": "Chinese",
-        "note": "Herbal roast duck"
+        "note": "#B1-07"
       },
       {
         "name": "Din Tai Fung",
         "cuisine": "Chinese",
-        "note": "Xiao long bao"
+        "note": "#01-41"
       },
       {
         "name": "Eighteen Plum",
         "cuisine": "Beverages",
-        "note": "Sour plum drinks"
+        "note": "#01-18"
       },
       {
         "name": "Fei Siong",
         "cuisine": "Local",
-        "note": "Snacks"
+        "note": "#B1-K9"
       },
       {
         "name": "Food Junction",
         "cuisine": "Food Court",
-        "note": "Food court"
+        "note": "#04-01 to 02E"
       },
       {
         "name": "Four Leaves",
         "cuisine": "Bakery",
-        "note": "Buns & pastries"
+        "note": "#B1-10"
       },
       {
         "name": "Fun Toast",
         "cuisine": "Café",
-        "note": "Kaya toast & kopi"
+        "note": "#03-09"
       },
       {
         "name": "Genki Sushi",
         "cuisine": "Japanese",
-        "note": "Conveyor-belt sushi"
+        "note": "#01-22, 01-30"
       },
       {
         "name": "Greendot",
         "cuisine": "Vegetarian",
-        "note": "Plant-based bowls"
+        "note": "#B1-24 to 24A"
       },
       {
         "name": "GRUB",
         "cuisine": "Western",
-        "note": "Burgers & brunch"
+        "note": "#01-38"
       },
       {
         "name": "I Love Taimei",
         "cuisine": "Taiwanese",
-        "note": "Taiwanese"
+        "note": "#B1-22"
       },
       {
         "name": "KFC",
         "cuisine": "Fast Food",
-        "note": "Fried chicken"
+        "note": "#01-21"
       },
       {
         "name": "KOI Thé",
         "cuisine": "Beverages",
-        "note": "Bubble tea"
+        "note": "#02-26"
       },
       {
         "name": "LiHO",
         "cuisine": "Beverages",
-        "note": "Bubble tea"
+        "note": "#02-18A"
       },
       {
         "name": "Long John Silver's",
         "cuisine": "Fast Food",
-        "note": "Fried seafood"
+        "note": "#01-19A"
       },
       {
         "name": "luckin coffee",
         "cuisine": "Café",
-        "note": "Coffee"
+        "note": "#01-43"
       },
       {
         "name": "McDonald's",
         "cuisine": "Fast Food",
-        "note": "Burgers"
-      },
-      {
-        "name": "Milan Shokudo",
-        "cuisine": "Japanese",
-        "note": "Japanese"
+        "note": "#01-20"
       },
       {
         "name": "Mister Donut",
         "cuisine": "Dessert",
-        "note": "Donuts"
+        "note": "#02-27A"
       },
       {
         "name": "Mr. Coconut",
         "cuisine": "Beverages",
-        "note": "Coconut drinks"
+        "note": "#B1-K6"
       },
       {
-        "name": "Munchi Pancakes",
+        "name": "munchi PANCAKES",
         "cuisine": "Local",
-        "note": "Min jiang kueh"
+        "note": "#B1-K13"
       },
       {
         "name": "Nam Kee Pau",
         "cuisine": "Chinese",
-        "note": "Pau & dim sum"
+        "note": "#B1-K4"
       },
       {
-        "name": "Nine Fresh",
+        "name": "NINE FRESH",
         "cuisine": "Dessert",
-        "note": "Taiwanese desserts"
+        "note": "#B1-K12"
       },
       {
         "name": "Nunsaram Korean Dessert Cafe",
         "cuisine": "Dessert",
-        "note": "Korean bingsu"
+        "note": "#02-52"
       },
       {
         "name": "Old Chang Kee",
         "cuisine": "Snacks",
-        "note": "Curry puffs"
+        "note": "#B1-12"
       },
       {
-        "name": "Polar Puffs & Cakes",
+        "name": "POLAR Puffs & Cakes",
         "cuisine": "Bakery",
-        "note": "Puffs & cakes"
+        "note": "#B1-K2"
       },
       {
         "name": "Ritz Apple Strudel",
         "cuisine": "Dessert",
-        "note": "Apple strudel"
+        "note": "#B1-K3"
       },
       {
-        "name": "Saybons",
+        "name": "Saybons French Food Factory",
         "cuisine": "French",
-        "note": "Soups & crepes"
+        "note": "#02-43"
       },
       {
         "name": "Seoul Noodle",
         "cuisine": "Korean",
-        "note": "Korean noodles"
+        "note": "#01-19"
       },
       {
         "name": "Serangoon BBQ & Curry",
         "cuisine": "Indian",
-        "note": "BBQ & curry"
+        "note": "#B1-26"
       },
       {
-        "name": "SF Fruits",
+        "name": "SF FRUITS",
         "cuisine": "Beverages",
-        "note": "Fresh fruit & juices"
+        "note": "#B1-K7"
       },
       {
         "name": "Shake Shack",
         "cuisine": "American",
-        "note": "Burgers & shakes"
+        "note": "#01-51"
       },
       {
-        "name": "Stuff'd",
+        "name": "stuff'd",
         "cuisine": "Mexican",
-        "note": "Burritos & kebabs"
+        "note": "#B1-19A"
       },
       {
         "name": "Subway",
         "cuisine": "Western",
-        "note": "Sandwiches"
+        "note": "#01-31"
       },
       {
-        "name": "Sushi GoGo",
+        "name": "SUSHI GOGO",
         "cuisine": "Japanese",
-        "note": "Affordable sushi"
+        "note": "#B1-23"
       },
       {
         "name": "Swensen's",
         "cuisine": "Western",
-        "note": "Ice cream & western"
+        "note": "#01-39"
       },
       {
-        "name": "Taiwan Fullhouse",
-        "cuisine": "Taiwanese",
-        "note": "Taiwanese"
-      },
-      {
-        "name": "Talad Thai Banana",
-        "cuisine": "Thai",
-        "note": "Thai snacks"
+        "name": "TALAD THAI BANANA",
+        "cuisine": "Dessert",
+        "note": "#B1-K15"
       },
       {
         "name": "TamJai SamGor Mixian",
         "cuisine": "Chinese",
-        "note": "Yunnan rice noodles"
+        "note": "#B1-20"
       },
       {
         "name": "The Coffee Bean & Tea Leaf",
         "cuisine": "Café",
-        "note": "Coffee"
+        "note": "#01-34"
       },
       {
-        "name": "Toast Box",
+        "name": "TOAST BOX",
         "cuisine": "Café",
-        "note": "Kaya toast & kopi"
+        "note": "#01-35 to 36"
       },
       {
         "name": "Tori-Q",
         "cuisine": "Japanese",
-        "note": "Grilled chicken skewers"
+        "note": "#B1-25"
       },
       {
-        "name": "Watami",
+        "name": "WATAMI Japanese Dining",
         "cuisine": "Japanese",
-        "note": "Izakaya dining"
+        "note": "#01-33"
       },
       {
         "name": "Wok Hey",
         "cuisine": "Chinese",
-        "note": "Wok-fried rice & noodles"
+        "note": "#B1-11"
       },
       {
         "name": "Ya Kun Kaya Toast",
         "cuisine": "Café",
-        "note": "Kaya toast & kopi"
+        "note": "#B1-03 to 05"
       },
       {
         "name": "Yakiniku Like",
         "cuisine": "Japanese",
-        "note": "Solo yakiniku"
+        "note": "#01-40"
       },
       {
-        "name": "Yoshinoya",
+        "name": "YOSHINOYA",
         "cuisine": "Japanese",
-        "note": "Beef rice bowls"
+        "note": "#01-49 to 50"
       }
     ]
   },
