@@ -2105,7 +2105,7 @@
       const mapsHref = mapsUrl([o.name, currentMall, 'Singapore'].filter(Boolean).join(' '));
       result.style.display = 'block';
       result.innerHTML =
-        '<div class="result-card" style="margin:0 0 8px;">' +
+        '<div class="result-card" style="display:block; margin:0 0 8px;">' +
           '<div class="result-label">Eat at</div>' +
           '<div class="result-name">' + (o.name || '') + '</div>' +
           '<div class="result-meta">' + [o.cuisine, o.note].filter(Boolean).join(' · ') + '</div>' +
