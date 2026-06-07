@@ -1162,258 +1162,592 @@
     ]
   },
   "Jewel Changi": {
-    "source": "https://islifearecipe.net/mall-restaurant-directory/jewel-changi/",
+    "source": "https://www.jewelchangiairport.com/en/dine.html",
     "updated": "2026-06-03",
     "outlets": [
       {
+        "name": "% Arabica",
+        "cuisine": "Café",
+        "note": "#01-K208 · temp. closed"
+      },
+      {
+        "name": "A&W",
+        "cuisine": "Fast Food",
+        "note": "#B2-209"
+      },
+      {
         "name": "Aburi-EN",
         "cuisine": "Japanese",
-        "note": "Wagyu & unagi donburi"
+        "note": "#B2-233"
+      },
+      {
+        "name": "ActionCity Café",
+        "cuisine": "Café",
+        "note": "#04-223"
+      },
+      {
+        "name": "An Acai Affair",
+        "cuisine": "Dessert",
+        "note": "#B2-262"
       },
       {
         "name": "Arteastiq",
         "cuisine": "Café",
-        "note": "Floral tea & brunch"
+        "note": "#05-201"
+      },
+      {
+        "name": "Arteastiq DePatio",
+        "cuisine": "Café",
+        "note": "#05-200"
+      },
+      {
+        "name": "Auntie Anne's",
+        "cuisine": "Snacks",
+        "note": "#B2-272"
+      },
+      {
+        "name": "Baba Nyonya",
+        "cuisine": "Local",
+        "note": "#05-204"
+      },
+      {
+        "name": "Bazil Kitchen",
+        "cuisine": "Indian",
+        "note": "#03-229"
       },
       {
         "name": "Beauty in the Pot",
         "cuisine": "Chinese",
-        "note": "Collagen hotpot"
+        "note": "#B2-224/225/226"
       },
       {
-        "name": "Burger & Lobster",
-        "cuisine": "Western",
-        "note": "Burgers & lobster"
+        "name": "Beryl's Chocolate",
+        "cuisine": "Dessert",
+        "note": "#B2-212"
+      },
+      {
+        "name": "BHC Chicken",
+        "cuisine": "Korean",
+        "note": "#B1-247"
+      },
+      {
+        "name": "Birds of Paradise",
+        "cuisine": "Dessert",
+        "note": "#01-254"
+      },
+      {
+        "name": "Boost Juice Bars",
+        "cuisine": "Beverages",
+        "note": "#B2-261"
+      },
+      {
+        "name": "Butter & Cream",
+        "cuisine": "Dessert",
+        "note": "#B2-266"
+      },
+      {
+        "name": "Café Kitsuné",
+        "cuisine": "Café",
+        "note": "#01-K209"
+      },
+      {
+        "name": "CHA MULAN",
+        "cuisine": "Beverages",
+        "note": "#B2-259"
+      },
+      {
+        "name": "CHICHA San Chen",
+        "cuisine": "Beverages",
+        "note": "#B2-213"
+      },
+      {
+        "name": "Chow Zan Dessert",
+        "cuisine": "Dessert",
+        "note": "#B2-234"
+      },
+      {
+        "name": "Coucou Hotpot.Brew Tea",
+        "cuisine": "Chinese",
+        "note": "#02-208/209"
+      },
+      {
+        "name": "Creamie Sippies",
+        "cuisine": "Dessert",
+        "note": "#01-K214"
       },
       {
         "name": "Dian Xiao Er",
         "cuisine": "Chinese",
-        "note": "Herbal roast duck"
+        "note": "#B2-229"
       },
       {
         "name": "Din Tai Fung",
         "cuisine": "Chinese",
-        "note": "Xiao long bao"
+        "note": "#03-214/215"
       },
       {
-        "name": "Earle Swensen's",
+        "name": "Elfuego by COLLIN'S",
         "cuisine": "Western",
-        "note": "Premium grills & ice cream"
+        "note": "#05-203"
       },
       {
-        "name": "Elfuego by Collin's",
-        "cuisine": "Western",
-        "note": "Charcoal grill steakhouse"
+        "name": "Fish & Co",
+        "cuisine": "Seafood",
+        "note": "#B1-300"
+      },
+      {
+        "name": "Food Republic",
+        "cuisine": "Food Court",
+        "note": "#B2-238/239/240 · temp. closed"
+      },
+      {
+        "name": "Gelatissimo",
+        "cuisine": "Dessert",
+        "note": "#03-206"
       },
       {
         "name": "Gochi-So Shokudo",
         "cuisine": "Japanese",
-        "note": "Iberico pork donburi"
+        "note": "#B1-289"
+      },
+      {
+        "name": "Greendot Plus",
+        "cuisine": "Vegetarian",
+        "note": "#B1-297"
+      },
+      {
+        "name": "Guzman y Gomez",
+        "cuisine": "Mexican",
+        "note": "#B2-211"
+      },
+      {
+        "name": "Gwangjang GAON",
+        "cuisine": "Korean",
+        "note": "#02-243"
+      },
+      {
+        "name": "Hakka Yu",
+        "cuisine": "Chinese",
+        "note": "#03-220/221/222"
+      },
+      {
+        "name": "HEYTEA",
+        "cuisine": "Beverages",
+        "note": "#03-212"
+      },
+      {
+        "name": "Hitoyoshi Izakaya",
+        "cuisine": "Japanese",
+        "note": "#05-205"
+      },
+      {
+        "name": "Hoshino Coffee",
+        "cuisine": "Japanese",
+        "note": "#B1-249"
       },
       {
         "name": "Hot Tomato",
         "cuisine": "Western",
-        "note": "Steaks & pasta"
+        "note": "#04-229"
       },
       {
-        "name": "Itacho Sushi",
-        "cuisine": "Japanese",
-        "note": "Affordable sushi"
+        "name": "Imperial Treasure Super Peking Duck",
+        "cuisine": "Chinese",
+        "note": "#01-219/220"
+      },
+      {
+        "name": "Ipoh Town",
+        "cuisine": "Malaysian",
+        "note": "#B1-299"
       },
       {
         "name": "Jack's Place",
         "cuisine": "Western",
-        "note": "Steaks"
+        "note": "#05-202"
       },
       {
-        "name": "Jumbo Seafood",
+        "name": "Josh's Grill",
+        "cuisine": "Western",
+        "note": "#B2-210"
+      },
+      {
+        "name": "JUMBO Seafood",
         "cuisine": "Seafood",
-        "note": "Chilli crab"
+        "note": "#03-202/203/204"
       },
       {
         "name": "Kam's Roast",
         "cuisine": "Chinese",
-        "note": "HK roast meats"
+        "note": "#02-210"
       },
       {
-        "name": "Kko Kko Nara",
-        "cuisine": "Korean",
-        "note": "Ginseng & fried chicken"
+        "name": "KANE MOCHI",
+        "cuisine": "Dessert",
+        "note": "#B2-269"
       },
       {
-        "name": "LeNu",
+        "name": "Kantin",
+        "cuisine": "Local",
+        "note": "#05-206/207"
+      },
+      {
+        "name": "Kei Kaisendon",
+        "cuisine": "Japanese",
+        "note": "#03-213 · temp. closed"
+      },
+      {
+        "name": "Kenangan Coffee",
+        "cuisine": "Café",
+        "note": "#B2-255"
+      },
+      {
+        "name": "KFC",
+        "cuisine": "Fast Food",
+        "note": "#B2-275/276/277"
+      },
+      {
+        "name": "Kiwami Ramen & Gyoza Bar",
+        "cuisine": "Japanese",
+        "note": "#01-225"
+      },
+      {
+        "name": "KOI Express",
+        "cuisine": "Beverages",
+        "note": "#B2-263"
+      },
+      {
+        "name": "Krispy Kreme",
+        "cuisine": "Dessert",
+        "note": "#B2-270"
+      },
+      {
+        "name": "Lady M",
+        "cuisine": "Dessert",
+        "note": "#02-253"
+      },
+      {
+        "name": "LeMa Dumpling",
         "cuisine": "Chinese",
-        "note": "Chef Wai's beef noodle bar"
+        "note": "#B2-232"
       },
       {
-        "name": "Maison de PB",
+        "name": "Llaollao",
         "cuisine": "Dessert",
-        "note": "Pierre Brunet patisserie"
+        "note": "#B2-271"
       },
       {
-        "name": "Mamma Mia Trattoria e Caffè",
+        "name": "Lotteria",
+        "cuisine": "Fast Food",
+        "note": "#B1-248"
+      },
+      {
+        "name": "Luckin Coffee",
+        "cuisine": "Café",
+        "note": "#04-231/232"
+      },
+      {
+        "name": "Mamma Mia Trattoria E Caffé",
         "cuisine": "Italian",
-        "note": "Artisanal pasta"
+        "note": "#04-200"
       },
       {
-        "name": "Monster Planet",
+        "name": "McDonald's",
+        "cuisine": "Fast Food",
+        "note": "#B1-298"
+      },
+      {
+        "name": "Monarchs & Milkweed",
         "cuisine": "Dessert",
-        "note": "Sweets & taiyaki"
+        "note": "#04-218"
       },
       {
-        "name": "NY Verden Bar and Grill",
-        "cuisine": "Western",
-        "note": "Bar & grill"
+        "name": "Monster Curry",
+        "cuisine": "Japanese",
+        "note": "#03-200"
+      },
+      {
+        "name": "Mr. Coconut",
+        "cuisine": "Beverages",
+        "note": "#B2-268"
+      },
+      {
+        "name": "Mrs Pho",
+        "cuisine": "Vietnamese",
+        "note": "#03-216"
+      },
+      {
+        "name": "Munchi Pancakes",
+        "cuisine": "Local",
+        "note": "#B2-273"
+      },
+      {
+        "name": "Naixue",
+        "cuisine": "Beverages",
+        "note": "#B1-243"
+      },
+      {
+        "name": "Nasty Cookie",
+        "cuisine": "Dessert",
+        "note": "#03-207"
+      },
+      {
+        "name": "Nesuto",
+        "cuisine": "Dessert",
+        "note": "#01-236/237"
+      },
+      {
+        "name": "Nine Fresh",
+        "cuisine": "Dessert",
+        "note": "#B2-246 · temp. closed"
+      },
+      {
+        "name": "Nong Geng Ji",
+        "cuisine": "Chinese",
+        "note": "#B2-235/236"
+      },
+      {
+        "name": "NY Char Grill",
+        "cuisine": "Korean",
+        "note": "#03-227/228"
+      },
+      {
+        "name": "Old Chang Kee",
+        "cuisine": "Snacks",
+        "note": "#B2-247"
+      },
+      {
+        "name": "OMEGA Pork Noodle",
+        "cuisine": "Chinese",
+        "note": "#B2-223"
       },
       {
         "name": "Paradise Classic",
         "cuisine": "Chinese",
-        "note": "Cantonese"
+        "note": "#04-244/245"
       },
       {
-        "name": "Pazzion Café",
+        "name": "Paris Baguette",
+        "cuisine": "Bakery",
+        "note": "#02-200"
+      },
+      {
+        "name": "PAUL Bakery & Restaurant",
+        "cuisine": "Bakery",
+        "note": "#B1-225"
+      },
+      {
+        "name": "Pop Play Planet Cafe",
         "cuisine": "Café",
-        "note": "Café"
+        "note": "#04-246"
       },
       {
-        "name": "Perch",
-        "cuisine": "Café",
-        "note": "Coffee & bites"
-      },
-      {
-        "name": "Pizzamaru",
-        "cuisine": "Korean",
-        "note": "Korean-style pizza"
+        "name": "Potato Corner",
+        "cuisine": "Snacks",
+        "note": "#B2-264"
       },
       {
         "name": "Poulet Bijou",
         "cuisine": "French",
-        "note": "Roast chicken bistro"
+        "note": "#01-227"
       },
       {
-        "name": "Privé",
-        "cuisine": "Café",
-        "note": "All-day brunch"
+        "name": "PS.Cafe",
+        "cuisine": "Western",
+        "note": "#02-244/245"
       },
       {
         "name": "PUTIEN",
         "cuisine": "Chinese",
-        "note": "Fujian (Putian) cuisine"
+        "note": "#02-249"
       },
       {
-        "name": "Saap Saap Thai",
-        "cuisine": "Thai",
-        "note": "Casual Thai"
+        "name": "Queic by Olivia",
+        "cuisine": "Dessert",
+        "note": "#01-K218"
       },
       {
-        "name": "Sankranti",
-        "cuisine": "Indian",
-        "note": "South Indian"
+        "name": "Royal Host",
+        "cuisine": "Western",
+        "note": "#03-219"
+      },
+      {
+        "name": "Sampanman Kelong Changi",
+        "cuisine": "Seafood",
+        "note": "#B1-223"
       },
       {
         "name": "Sanook Kitchen",
         "cuisine": "Thai",
-        "note": "Thai comfort food"
+        "note": "#03-223/224"
+      },
+      {
+        "name": "SF Fruits & Juices",
+        "cuisine": "Beverages",
+        "note": "#B2-260"
       },
       {
         "name": "Shake Shack",
         "cuisine": "American",
-        "note": "Burgers & shakes"
-      },
-      {
-        "name": "Shang Social",
-        "cuisine": "Chinese",
-        "note": "Modern Chinese & dim sum"
-      },
-      {
-        "name": "Shiki Hototogisu Ramen",
-        "cuisine": "Japanese",
-        "note": "Clam ramen"
-      },
-      {
-        "name": "So Pho",
-        "cuisine": "Vietnamese",
-        "note": "Pho & Vietnamese"
+        "note": "#02-256"
       },
       {
         "name": "Song Fa Bak Kut Teh",
         "cuisine": "Chinese",
-        "note": "Peppery bak kut teh"
+        "note": "#B2-278/279/280"
       },
       {
         "name": "Soup Restaurant",
         "cuisine": "Chinese",
-        "note": "Samsui ginger chicken"
+        "note": "#03-201"
+      },
+      {
+        "name": "Starbucks",
+        "cuisine": "Café",
+        "note": "#02-204"
+      },
+      {
+        "name": "Subway",
+        "cuisine": "Western",
+        "note": "#B2-230"
+      },
+      {
+        "name": "SugarBelly",
+        "cuisine": "Dessert",
+        "note": "#B2-256"
+      },
+      {
+        "name": "SUKIYA. Gyudon. Curry",
+        "cuisine": "Japanese",
+        "note": "#B2-200"
       },
       {
         "name": "Sushi Tei",
         "cuisine": "Japanese",
-        "note": "Sushi"
+        "note": "#03-209"
       },
       {
-        "name": "Tai Er",
-        "cuisine": "Chinese",
-        "note": "Sauerkraut fish"
-      },
-      {
-        "name": "Tanuki Raw",
+        "name": "Sushiro",
         "cuisine": "Japanese",
-        "note": "Sushi & truffle don"
+        "note": "#B2-227/228"
       },
       {
-        "name": "Tanyu Grilled Fish",
+        "name": "Tai Er Suancai & Fish",
         "cuisine": "Chinese",
-        "note": "Grilled fish"
+        "note": "#03-208"
       },
       {
-        "name": "Tapas Club",
-        "cuisine": "Spanish",
-        "note": "Spanish tapas"
+        "name": "Talad Thai Banana",
+        "cuisine": "Dessert",
+        "note": "#B2-257"
+      },
+      {
+        "name": "Tambuah Mas Indonesian Restaurant",
+        "cuisine": "Indonesian",
+        "note": "#03-225/226"
+      },
+      {
+        "name": "Tempura-EN",
+        "cuisine": "Japanese",
+        "note": "#01-223"
+      },
+      {
+        "name": "The 1872 Clipper Tea Co.",
+        "cuisine": "Café",
+        "note": "#02-237"
+      },
+      {
+        "name": "The Coach Restaurant",
+        "cuisine": "Western",
+        "note": "#01-207"
+      },
+      {
+        "name": "The Coffee Bean & Tea Leaf",
+        "cuisine": "Café",
+        "note": "#01-200"
+      },
+      {
+        "name": "The Hainan Story",
+        "cuisine": "Chinese",
+        "note": "#B2-201/202"
       },
       {
         "name": "Tim Ho Wan",
         "cuisine": "Chinese",
-        "note": "Michelin dim sum"
+        "note": "#02-223"
       },
       {
-        "name": "Tonito",
-        "cuisine": "Latin American",
-        "note": "Tacos & churros"
+        "name": "Toast Box & Thye Moh Chan",
+        "cuisine": "Café",
+        "note": "#B2-231"
+      },
+      {
+        "name": "Tokyo Milk Cheese Factory & Cow Cow Kitchen",
+        "cuisine": "Dessert",
+        "note": "#B2-265"
       },
       {
         "name": "Tonkatsu by Ma Maison",
         "cuisine": "Japanese",
-        "note": "Kurobuta tonkatsu"
+        "note": "#02-211"
+      },
+      {
+        "name": "Treasures Yi Dian Xin",
+        "cuisine": "Chinese",
+        "note": "#01-221/222"
       },
       {
         "name": "Tsui Wah",
         "cuisine": "Chinese",
-        "note": "HK cha chaan teng"
+        "note": "#03-230"
       },
       {
-        "name": "Tsuta",
+        "name": "Tsuta Japanese Soba Noodles",
         "cuisine": "Japanese",
-        "note": "Michelin truffle soba ramen"
+        "note": "#03-218"
       },
       {
         "name": "Tun Xiang Hokkien Delights",
         "cuisine": "Chinese",
-        "note": "Hokkien noodles"
+        "note": "#B1-290"
       },
       {
-        "name": "Violet Oon",
-        "cuisine": "Local",
-        "note": "Peranakan"
+        "name": "Tutto by Da Paolo",
+        "cuisine": "Italian",
+        "note": "#02-246/247"
+      },
+      {
+        "name": "Wa-En Wagyu Yakiniku",
+        "cuisine": "Japanese",
+        "note": "#01-224"
       },
       {
         "name": "White Restaurant",
         "cuisine": "Chinese",
-        "note": "Zi char & white bee hoon"
+        "note": "#B1-245/246"
+      },
+      {
+        "name": "Wild Coco",
+        "cuisine": "Beverages",
+        "note": "#02-248"
+      },
+      {
+        "name": "Wu Fang Zhai",
+        "cuisine": "Chinese",
+        "note": "#B2-258"
+      },
+      {
+        "name": "Ya Kun Kaya Toast",
+        "cuisine": "Café",
+        "note": "#01-230"
+      },
+      {
+        "name": "YES LEMON",
+        "cuisine": "Beverages",
+        "note": "#03-211"
       },
       {
         "name": "Yun Nans",
-        "cuisine": "Chinese",
-        "note": "Yunnan cuisine"
+        "cuisine": "Chinese"
       }
     ]
   },
