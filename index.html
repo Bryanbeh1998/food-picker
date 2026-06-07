@@ -157,6 +157,60 @@
     body.dark .tab-btn { color: #9bb5a8; }
     body.dark .tab-btn.active { background: #5a9e7e; color: white; }
 
+    /* Feature hub buttons */
+    .feature-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      padding: 18px 16px;
+      margin-bottom: 12px;
+      background: #f3faf6;
+      border: 1.5px solid #c9e9d7;
+      border-radius: 14px;
+      cursor: pointer;
+      font-family: inherit;
+      text-align: left;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .feature-btn:last-child { margin-bottom: 0; }
+    .feature-btn:hover { background: #eaf6ef; }
+    .feature-btn:active { transform: scale(0.99); }
+    .feature-emoji { font-size: 1.8rem; flex-shrink: 0; }
+    .feature-text { display: flex; flex-direction: column; flex: 1; }
+    .feature-title { font-size: 1.05rem; font-weight: 700; color: #2d6a4f; }
+    .feature-sub { font-size: 0.82rem; color: #777; margin-top: 2px; }
+    .feature-arrow { font-size: 1.3rem; color: #5a9e7e; }
+    body.dark .feature-btn { background: #1d2c25; border-color: #3a5446; }
+    body.dark .feature-btn:hover { background: #243a30; }
+    body.dark .feature-title { color: #7fc4a3; }
+    body.dark .feature-sub { color: #9bb5a8; }
+
+    /* Back-to-menu bar */
+    .back-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 16px;
+    }
+    .back-btn {
+      background: white;
+      border: 1.5px solid #c9e9d7;
+      border-radius: 999px;
+      padding: 7px 16px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: inherit;
+      color: #5a9e7e;
+      cursor: pointer;
+    }
+    .back-btn:hover { background: #f3faf6; }
+    .back-title { font-size: 0.95rem; font-weight: 700; color: #5a9e7e; }
+    body.dark .back-btn { background: #1d2c25; border-color: #3a5446; color: #7fc4a3; }
+    body.dark .back-title { color: #7fc4a3; }
+
     .upload-area {
       border: 2px dashed #c9e9d7;
       border-radius: 12px;
@@ -716,17 +770,30 @@
     </div>
   </div>
 
+  <!-- Feature hub: choose Food Picker or Mall Directory -->
+  <div class="card" id="featureHub" style="display:none; max-width:600px; width:100%;">
+    <button class="feature-btn" id="goFoodPicker">
+      <span class="feature-emoji">🎲</span>
+      <span class="feature-text"><span class="feature-title">Food Picker</span><span class="feature-sub">Filter your lists & get a random suggestion</span></span>
+      <span class="feature-arrow">›</span>
+    </button>
+    <button class="feature-btn" id="goMallDir">
+      <span class="feature-emoji">🏬</span>
+      <span class="feature-text"><span class="feature-title">Mall Directory</span><span class="feature-sub">Browse every food outlet in a mall</span></span>
+      <span class="feature-arrow">›</span>
+    </button>
+  </div>
+
+  <!-- Food Picker: back-to-menu bar -->
+  <div class="back-bar" id="fpBack" style="display:none;">
+    <button class="back-btn" id="fpBackBtn">← Menu</button>
+    <span class="back-title">🎲 Food Picker</span>
+  </div>
+
   <div class="tab-bar" id="tabBar">
     <button class="tab-btn active" data-tab="tried">🍽️ Eat</button>
     <button class="tab-btn" data-tab="wish">⭐ Want to Try</button>
     <button class="tab-btn" data-tab="dessert">🍰 Dessert</button>
-  </div>
-
-  <div class="card" id="mallEntryCard" style="max-width:600px; width:100%;">
-    <div class="mall-entry" id="mallEntryToggle">
-      <h2>🏬 Mall Directory</h2>
-      <span class="chev" id="mallEntryChevron">▼</span>
-    </div>
   </div>
 
   <div class="card" id="mallDirCard" style="display:none;">
@@ -735,13 +802,26 @@
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
         <h2 style="font-size:1rem; color:#5a9e7e; font-weight:700;">🏬 Mall Directory</h2>
       </div>
+
+      <div style="margin-bottom:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" id="mallManualToggle">
+          <span style="font-size:0.85rem; font-weight:700; color:#5a9e7e;">📖 How to Use — Mall Directory</span>
+          <span id="mallManualChevron" style="font-size:0.8rem; color:#5a9e7e;">▼</span>
+        </div>
+        <div id="mallManualContent" style="display:none; margin-top:10px;">
+          <div class="manual-step"><span class="manual-num">1</span><div><strong>Pick a mall</strong><p>Tap any mall to see its full list of food outlets.</p></div></div>
+          <div class="manual-step"><span class="manual-num">2</span><div><strong>Search all malls</strong><p>Type a place or dish (e.g. <em>Sukiya</em>) to find it across every mall at once — results group by mall.</p></div></div>
+          <div class="manual-step" style="margin-bottom:0;"><span class="manual-num">3</span><div><strong>Jump in</strong><p>Tap a mall in the results to open it, or use <strong>Search in this mall</strong> to narrow further.</p></div></div>
+        </div>
+      </div>
+
       <div style="margin-bottom:6px;">
         <label>Search all malls</label>
         <input id="mallGlobalSearch" type="text" placeholder="e.g. Sukiya, ramen, dessert" />
       </div>
       <p class="mall-count" id="mallHomeCount"></p>
       <div id="mallHomeView"></div>
-      <button class="mall-close" id="mallCloseHome">✕ Back to Food Picker</button>
+      <button class="mall-close" id="mallCloseHome">← Menu</button>
     </div>
 
     <!-- DETAIL: one mall's outlets -->
@@ -761,7 +841,7 @@
 
   <div class="card" id="manualCard" style="max-width:600px; width:100%;">
     <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" id="manualToggle">
-      <h2 style="font-size:1rem; color:#5a9e7e; font-weight:700;">📖 How to Use</h2>
+      <h2 style="font-size:1rem; color:#5a9e7e; font-weight:700;">📖 How to Use — Food Picker</h2>
       <span id="manualChevron" style="font-size:0.85rem; color:#5a9e7e;">▼</span>
     </div>
     <div id="manualContent" style="display:none; margin-top:16px;">
@@ -991,6 +1071,32 @@
 
     let selectedCountry = '';
     let selectedCity = '';   // '' = all cities; reset whenever country changes
+    let pillVisible = false;  // whether the location pill should show (set by setupLocationUI)
+
+    // ── View routing: 'hub' | 'food' | 'mall' ──
+    const FOOD_VIEW_IDS = ['fpBack', 'tabBar', 'manualCard', 'filterCard', 'addCard', 'listCard'];
+    function setView(view) {
+      localStorage.setItem('foodpicker_view', view);
+      const showFood = view === 'food';
+      FOOD_VIEW_IDS.forEach(id => { const e = document.getElementById(id); if (e) e.style.display = showFood ? '' : 'none'; });
+      document.getElementById('featureHub').style.display = view === 'hub' ? 'block' : 'none';
+      document.getElementById('mallDirCard').style.display = view === 'mall' ? 'block' : 'none';
+      if (!showFood) {
+        resultCard.style.display = 'none';
+        document.getElementById('groupCard').style.display = 'none';
+      }
+      // Location pill: shown on hub/food (if relevant), hidden in the mall view
+      document.getElementById('locWrap').style.display = (view !== 'mall' && pillVisible) ? 'flex' : 'none';
+      if (view === 'hub') document.querySelector('.subtitle').textContent = 'Choose a feature to get started';
+      window.scrollTo(0, 0);
+    }
+
+    function restoreView() {
+      const v = localStorage.getItem('foodpicker_view');
+      if (v === 'mall') openMallDir();
+      else if (v === 'food') setView('food');
+      else setView('hub');
+    }
 
     let activeTab = ['tried', 'wish', 'dessert'].includes(localStorage.getItem('foodpicker_tab'))
       ? localStorage.getItem('foodpicker_tab') : 'tried';   // 'tried' | 'wish' | 'dessert'
@@ -1034,8 +1140,8 @@
       document.getElementById('locCityWrap').style.display = cities.length ? '' : 'none';
 
       // Show the pill if there's a real choice to make (>1 country or this country has cities)
-      document.getElementById('locWrap').style.display =
-        (countries.length > 1 || cities.length > 0) ? 'flex' : 'none';
+      pillVisible = (countries.length > 1 || cities.length > 0);
+      document.getElementById('locWrap').style.display = pillVisible ? 'flex' : 'none';
 
       updateLocPillLabel();
     }
@@ -1113,7 +1219,7 @@
         b.addEventListener('click', () => {
           localStorage.setItem('foodpicker_entered', '1');
           document.getElementById('countryGate').style.display = 'none';
-          loadCountry(c);
+          loadCountry(c).then(() => setView('hub'));
         });
         wrap.appendChild(b);
       });
@@ -1130,9 +1236,7 @@
         // Returning visit — skip the gate and restore where they left off
         selectedCountry = savedCountry;
         document.getElementById('countryGate').style.display = 'none';
-        loadCountry(selectedCountry).then(() => {
-          if (localStorage.getItem('foodpicker_mallopen') === '1') openMallDir();
-        });
+        loadCountry(selectedCountry).then(restoreView);
       } else {
         selectedCountry = (savedCountry && COUNTRIES[savedCountry]) ? savedCountry : Object.keys(COUNTRIES)[0];
         showGate();
@@ -1842,10 +1946,6 @@
     let mallsData = null;          // { mallName: [ {name, cuisine, note}, ... ] }
     let mallsLoaded = false;
 
-    // Cards to hide while the directory is open, restored on close
-    const MALL_HIDE_IDS = ['tabBar', 'locWrap', 'mallEntryCard', 'manualCard', 'filterCard', 'addCard', 'listCard', 'groupCard'];
-    const mallHidden = {};         // remembers each card's prior display value
-
     function loadMalls() {
       if (mallsLoaded) return Promise.resolve(mallsData);
       return fetch('malls.json')
@@ -1988,14 +2088,7 @@
     }
 
     function openMallDir() {
-      localStorage.setItem('foodpicker_mallopen', '1');
-      MALL_HIDE_IDS.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) { mallHidden[id] = el.style.display; el.style.display = 'none'; }
-      });
-      resultCard.style.display = 'none';
-      document.getElementById('mallDirCard').style.display = 'block';
-
+      setView('mall');
       loadMalls().then(() => {
         const savedDetail = localStorage.getItem('foodpicker_malldetail');
         if (savedDetail && mallsData && mallsData[savedDetail]) {
@@ -2006,20 +2099,23 @@
       });
     }
 
-    function closeMallDir() {
-      localStorage.removeItem('foodpicker_mallopen');
-      document.getElementById('mallDirCard').style.display = 'none';
-      MALL_HIDE_IDS.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = mallHidden[id] || '';
-      });
-    }
-
-    document.getElementById('mallEntryToggle').addEventListener('click', openMallDir);
-    document.getElementById('mallCloseHome').addEventListener('click', closeMallDir);
+    // ── Hub navigation ──
+    document.getElementById('goFoodPicker').addEventListener('click', () => setView('food'));
+    document.getElementById('goMallDir').addEventListener('click', openMallDir);
+    document.getElementById('fpBackBtn').addEventListener('click', () => setView('hub'));
+    document.getElementById('mallCloseHome').addEventListener('click', () => setView('hub'));
     document.getElementById('mallBack').addEventListener('click', showMallHome);
     document.getElementById('mallGlobalSearch').addEventListener('input', renderMallHome);
     document.getElementById('mallSearch').addEventListener('input', renderMallList);
+
+    // Mall Directory how-to toggle
+    document.getElementById('mallManualToggle').addEventListener('click', () => {
+      const c = document.getElementById('mallManualContent');
+      const chev = document.getElementById('mallManualChevron');
+      const open = c.style.display !== 'none';
+      c.style.display = open ? 'none' : 'block';
+      chev.textContent = open ? '▼' : '▲';
+    });
   </script>
 </body>
 </html>
