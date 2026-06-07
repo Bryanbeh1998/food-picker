@@ -834,6 +834,8 @@
         <label>Search in this mall</label>
         <input id="mallSearch" type="text" placeholder="Name or cuisine" />
       </div>
+      <button id="mallPickBtn" style="width:100%; margin-bottom:8px;">🎲 Pick a Place to Eat</button>
+      <div id="mallPickResult" style="display:none;"></div>
       <p class="mall-count" id="mallCount"></p>
       <div id="mallList"></div>
     </div>
@@ -2057,6 +2059,7 @@
       localStorage.setItem('foodpicker_malldetail', mall);
       document.getElementById('mallDetailName').textContent = '🏬 ' + mall;
       document.getElementById('mallSearch').value = presetSearch || '';
+      document.getElementById('mallPickResult').style.display = 'none';
       document.getElementById('mallHome').style.display = 'none';
       document.getElementById('mallDetail').style.display = 'block';
       renderMallList();
@@ -2087,6 +2090,30 @@
       outlets.forEach(o => list.appendChild(outletRow(o)));
     }
 
+    function pickMallOutlet() {
+      const result = document.getElementById('mallPickResult');
+      if (!currentMall) return;
+      const { outlets: all } = mallEntry(currentMall);
+      const q = document.getElementById('mallSearch').value.trim().toLowerCase();
+      const pool = all.filter(o => matchOutlet(o, q));
+      if (!pool.length) {
+        result.style.display = 'block';
+        result.innerHTML = '<p class="no-results">No outlets to pick from.</p>';
+        return;
+      }
+      const o = pool[Math.floor(Math.random() * pool.length)];
+      const mapsHref = mapsUrl([o.name, currentMall, 'Singapore'].filter(Boolean).join(' '));
+      result.style.display = 'block';
+      result.innerHTML =
+        '<div class="result-card" style="margin:0 0 8px;">' +
+          '<div class="result-label">Eat at</div>' +
+          '<div class="result-name">' + (o.name || '') + '</div>' +
+          '<div class="result-meta">' + [o.cuisine, o.note].filter(Boolean).join(' · ') + '</div>' +
+          '<a href="' + mapsHref + '" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">📍 Open in Google Maps</a>' +
+        '</div>';
+      result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
     function openMallDir() {
       setView('mall');
       loadMalls().then(() => {
@@ -2106,7 +2133,11 @@
     document.getElementById('mallCloseHome').addEventListener('click', () => setView('hub'));
     document.getElementById('mallBack').addEventListener('click', showMallHome);
     document.getElementById('mallGlobalSearch').addEventListener('input', renderMallHome);
-    document.getElementById('mallSearch').addEventListener('input', renderMallList);
+    document.getElementById('mallSearch').addEventListener('input', () => {
+      document.getElementById('mallPickResult').style.display = 'none';
+      renderMallList();
+    });
+    document.getElementById('mallPickBtn').addEventListener('click', pickMallOutlet);
 
     // Mall Directory how-to toggle
     document.getElementById('mallManualToggle').addEventListener('click', () => {
