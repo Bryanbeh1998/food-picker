@@ -2292,5 +2292,666 @@
         "note": "Wok-fried rice & noodles"
       }
     ]
+  },
+  "Northpoint City": {
+    "source": "https://www.northpointcity.com.sg",
+    "updated": "2026-06-03",
+    "outlets": [
+      {
+        "name": "A-One Signature",
+        "cuisine": "Chinese",
+        "note": "South Wing, L1"
+      },
+      {
+        "name": "Ajumma's",
+        "cuisine": "Korean",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "An Acai Affair",
+        "cuisine": "Dessert",
+        "note": "South Wing, B2"
+      },
+      {
+        "name": "Arnold's Fried Chicken",
+        "cuisine": "Fast Food",
+        "note": "Yishun 10, L1"
+      },
+      {
+        "name": "Auntie Anne's",
+        "cuisine": "Snacks",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "Ayam Penyet President",
+        "cuisine": "Indonesian",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "Bagus Food Hall by Kopitiam",
+        "cuisine": "Food Court",
+        "note": "South Wing, L2"
+      },
+      {
+        "name": "Ban Heng Teochew Porridge",
+        "cuisine": "Chinese",
+        "note": "North Wing, B2"
+      },
+      {
+        "name": "Bee Cheng Hiang",
+        "cuisine": "Local",
+        "note": "South Wing, B2"
+      },
+      {
+        "name": "Bengawan Solo",
+        "cuisine": "Bakery",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "Mr. Onigiri",
+        "cuisine": "Japanese",
+        "note": "South Wing, B2"
+      },
+      {
+        "name": "Seoul Noodle Shop",
+        "cuisine": "Korean",
+        "note": "South Wing, L2"
+      },
+      {
+        "name": "BreadTalk / Toast Box",
+        "cuisine": "Bakery",
+        "note": "North Wing, L1"
+      },
+      {
+        "name": "Bugis Xin Yuan Ji",
+        "cuisine": "Chinese",
+        "note": "North Wing, B2"
+      },
+      {
+        "name": "Burger King",
+        "cuisine": "Fast Food",
+        "note": "Yishun Town Square, L1"
+      },
+      {
+        "name": "Cat & the Fiddle",
+        "cuisine": "Dessert",
+        "note": "South Wing, L1"
+      },
+      {
+        "name": "Chateraise",
+        "cuisine": "Dessert",
+        "note": "South Wing, L1"
+      },
+      {
+        "name": "COLLIN'S",
+        "cuisine": "Western",
+        "note": "South Wing, L1"
+      },
+      {
+        "name": "Crave",
+        "cuisine": "Local",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "Dabba Street",
+        "cuisine": "Indian",
+        "note": "South Wing, B2"
+      },
+      {
+        "name": "Délifrance",
+        "cuisine": "Bakery",
+        "note": "South Wing, L1"
+      },
+      {
+        "name": "Dian Xiao Er",
+        "cuisine": "Chinese",
+        "note": "North Wing, L2"
+      },
+      {
+        "name": "Din Tai Fung",
+        "cuisine": "Chinese",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "Dough Culture",
+        "cuisine": "Dessert",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "Dunkin' Donuts",
+        "cuisine": "Dessert",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "EAT.",
+        "cuisine": "Local",
+        "note": "North Wing, B2"
+      },
+      {
+        "name": "Encik Tan",
+        "cuisine": "Local",
+        "note": "North Wing, L1"
+      },
+      {
+        "name": "Fa Ji Lao Wan Mian",
+        "cuisine": "Chinese",
+        "note": "South Wing, L1"
+      },
+      {
+        "name": "Famous Amos",
+        "cuisine": "Dessert",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "Feng Food",
+        "cuisine": "Chinese",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "Fragrance",
+        "cuisine": "Local",
+        "note": "North Wing, B2"
+      },
+      {
+        "name": "Fun Toast",
+        "cuisine": "Café",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "Geláre",
+        "cuisine": "Dessert",
+        "note": "South Wing, L2"
+      },
+      {
+        "name": "Genki Sushi",
+        "cuisine": "Japanese",
+        "note": "North Wing, L2"
+      },
+      {
+        "name": "Gochi-So Shokudo",
+        "cuisine": "Japanese",
+        "note": "North Wing, L2"
+      },
+      {
+        "name": "Gokoku Japanese Bakery",
+        "cuisine": "Bakery",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "i Mango (Cotton Ice & Milk Tea)",
+        "cuisine": "Beverages",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "Gong Yuan Ma La Tang",
+        "cuisine": "Chinese",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "Greendot",
+        "cuisine": "Vegetarian",
+        "note": "North Wing, B2"
+      },
+      {
+        "name": "Guzman Y Gomez",
+        "cuisine": "Mexican",
+        "note": "South Wing, L1"
+      },
+      {
+        "name": "HaiDiLao",
+        "cuisine": "Chinese",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "Hakka Yu",
+        "cuisine": "Chinese",
+        "note": "South Wing, L1"
+      },
+      {
+        "name": "Hatsumi Donburi & Soba",
+        "cuisine": "Japanese",
+        "note": "South Wing, L2"
+      },
+      {
+        "name": "Hong Lim Curry Puff",
+        "cuisine": "Snacks",
+        "note": "South Wing, B2"
+      },
+      {
+        "name": "Hot Tomato",
+        "cuisine": "Western",
+        "note": "South Wing, L2"
+      },
+      {
+        "name": "I Love Taimei",
+        "cuisine": "Taiwanese",
+        "note": "South Wing, B2"
+      },
+      {
+        "name": "Jianghu Hotpot",
+        "cuisine": "Chinese",
+        "note": "South Wing, L2"
+      },
+      {
+        "name": "Jinjja Chicken",
+        "cuisine": "Korean",
+        "note": "North Wing, L1"
+      },
+      {
+        "name": "Joe & Dough",
+        "cuisine": "Café",
+        "note": "South Wing, L1"
+      },
+      {
+        "name": "Kebabs Faktory",
+        "cuisine": "Middle Eastern",
+        "note": "South Wing, B2"
+      },
+      {
+        "name": "KFC",
+        "cuisine": "Fast Food",
+        "note": "South Wing, L1"
+      },
+      {
+        "name": "Komala's",
+        "cuisine": "Indian",
+        "note": "Yishun 10, L1"
+      },
+      {
+        "name": "Kopi & Tarts",
+        "cuisine": "Café",
+        "note": "South Wing, L1"
+      },
+      {
+        "name": "Kopitiam",
+        "cuisine": "Food Court",
+        "note": "North Wing, B2"
+      },
+      {
+        "name": "Krispy Kreme",
+        "cuisine": "Dessert",
+        "note": "South Wing, L1"
+      },
+      {
+        "name": "Kuriya Japanese Market",
+        "cuisine": "Japanese",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "LeNu",
+        "cuisine": "Chinese",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "Long John Silver's",
+        "cuisine": "Fast Food",
+        "note": "North Wing, L1"
+      },
+      {
+        "name": "Maki-San",
+        "cuisine": "Japanese",
+        "note": "South Wing, B2"
+      },
+      {
+        "name": "Malaysia Boleh!",
+        "cuisine": "Malaysian",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "McDonald's",
+        "cuisine": "Fast Food",
+        "note": "North Wing, L1"
+      },
+      {
+        "name": "Mei Heong Yuen Dessert",
+        "cuisine": "Dessert",
+        "note": "South Wing, L2"
+      },
+      {
+        "name": "Mincheng Bibimbap",
+        "cuisine": "Korean",
+        "note": "North Wing, L2"
+      },
+      {
+        "name": "Ministry of Rojak",
+        "cuisine": "Local",
+        "note": "South Wing, B2"
+      },
+      {
+        "name": "Monster Curry",
+        "cuisine": "Japanese",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "MOS Burger",
+        "cuisine": "Japanese",
+        "note": "North Wing, L1"
+      },
+      {
+        "name": "Mr Bean",
+        "cuisine": "Beverages",
+        "note": "North Wing, L1"
+      },
+      {
+        "name": "Mr Teh Tarik Express",
+        "cuisine": "Local",
+        "note": "North Wing, L1"
+      },
+      {
+        "name": "Munchi Pancakes",
+        "cuisine": "Local",
+        "note": "South Wing, B2"
+      },
+      {
+        "name": "Nam Kee Pau",
+        "cuisine": "Chinese",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "Namu Bulgogi",
+        "cuisine": "Korean",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "Nine Fresh",
+        "cuisine": "Dessert",
+        "note": "South Wing, B2"
+      },
+      {
+        "name": "Old Chang Kee",
+        "cuisine": "Snacks",
+        "note": "North Wing, L1"
+      },
+      {
+        "name": "OMEGA Pork Noodle",
+        "cuisine": "Chinese",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "Papa Ayam",
+        "cuisine": "Local",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "Paris Baguette",
+        "cuisine": "Bakery",
+        "note": "North Wing, L2"
+      },
+      {
+        "name": "PastaMania",
+        "cuisine": "Italian",
+        "note": "North Wing, L3"
+      },
+      {
+        "name": "Pezzo",
+        "cuisine": "Western",
+        "note": "South Wing, B2"
+      },
+      {
+        "name": "Pizza Nation",
+        "cuisine": "Western",
+        "note": "South Wing, B2"
+      },
+      {
+        "name": "Polar Puffs & Cakes",
+        "cuisine": "Bakery",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "Popeyes",
+        "cuisine": "Fast Food",
+        "note": "North Wing, L1"
+      },
+      {
+        "name": "Potato Corner",
+        "cuisine": "Snacks",
+        "note": "South Wing, B2"
+      },
+      {
+        "name": "PrimaDéli",
+        "cuisine": "Bakery",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "PUTIEN",
+        "cuisine": "Chinese",
+        "note": "North Wing, L2"
+      },
+      {
+        "name": "Qi Ji",
+        "cuisine": "Local",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "Rive Gauche Patisserie",
+        "cuisine": "Dessert",
+        "note": "South Wing, B2"
+      },
+      {
+        "name": "Riverside Canton Claypot Cuisine",
+        "cuisine": "Chinese",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "rrooll",
+        "cuisine": "Dessert",
+        "note": "South Wing, B2"
+      },
+      {
+        "name": "Sakon Thai",
+        "cuisine": "Thai",
+        "note": "South Wing, L1"
+      },
+      {
+        "name": "Sakunthala's Restaurant",
+        "cuisine": "Indian",
+        "note": "Yishun Town Square, L1"
+      },
+      {
+        "name": "Sanook Kitchen",
+        "cuisine": "Thai",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "SEORAE Korean Charcoal BBQ",
+        "cuisine": "Korean",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "Seoul Garden",
+        "cuisine": "Korean",
+        "note": "North Wing, L3"
+      },
+      {
+        "name": "Seoul Garden HotPot",
+        "cuisine": "Korean",
+        "note": "North Wing, L3"
+      },
+      {
+        "name": "Shabu Sai",
+        "cuisine": "Japanese",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "Shihlin Taiwan Street Snacks",
+        "cuisine": "Taiwanese",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "Shu Liu Xiang",
+        "cuisine": "Chinese",
+        "note": "Yishun Town Square, L1"
+      },
+      {
+        "name": "Sichuan Chef",
+        "cuisine": "Chinese",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "Song Fa Bak Kut Teh",
+        "cuisine": "Chinese",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "Steak 99",
+        "cuisine": "Western",
+        "note": "South Wing, L1"
+      },
+      {
+        "name": "Stuff'd",
+        "cuisine": "Mexican",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "Subway",
+        "cuisine": "Western",
+        "note": "North Wing, B2"
+      },
+      {
+        "name": "Sukiya",
+        "cuisine": "Japanese",
+        "note": "South Wing, L1"
+      },
+      {
+        "name": "Suparakki Ramen",
+        "cuisine": "Japanese",
+        "note": "South Wing, B2"
+      },
+      {
+        "name": "Super Sushi",
+        "cuisine": "Japanese",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "Supergreen",
+        "cuisine": "Western",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "Sushi Express",
+        "cuisine": "Japanese",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "Sushi Tei",
+        "cuisine": "Japanese",
+        "note": "North Wing, L2"
+      },
+      {
+        "name": "Swee Heng 1989 Classic",
+        "cuisine": "Bakery",
+        "note": "South Wing, B2"
+      },
+      {
+        "name": "Swensen's",
+        "cuisine": "Western",
+        "note": "North Wing, L2"
+      },
+      {
+        "name": "Tai Cheong Bakery",
+        "cuisine": "Bakery",
+        "note": "South Wing, B2"
+      },
+      {
+        "name": "Tai Chong Kok",
+        "cuisine": "Bakery",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "Tangled",
+        "cuisine": "Italian",
+        "note": "South Wing, L1"
+      },
+      {
+        "name": "Teppan-Yaki",
+        "cuisine": "Japanese",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "The Coffee Bean & Tea Leaf",
+        "cuisine": "Café",
+        "note": "South Wing, L1"
+      },
+      {
+        "name": "The Soup Spoon +",
+        "cuisine": "Western",
+        "note": "South Wing, B2"
+      },
+      {
+        "name": "Tongue Tip Lanzhou Beef Noodles",
+        "cuisine": "Chinese",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "Tonkotsu Kazan Ramen",
+        "cuisine": "Japanese",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "Tori-Q",
+        "cuisine": "Japanese",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "Tun Xiang Hokkien Delights",
+        "cuisine": "Chinese",
+        "note": "North Wing, L2"
+      },
+      {
+        "name": "Twyst",
+        "cuisine": "Western",
+        "note": "South Wing, B2"
+      },
+      {
+        "name": "WOK HEY",
+        "cuisine": "Chinese",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "Xin Wang Hong Kong Café",
+        "cuisine": "Chinese",
+        "note": "North Wing, L1"
+      },
+      {
+        "name": "XW Plus Western Grill",
+        "cuisine": "Western",
+        "note": "South Wing, L1"
+      },
+      {
+        "name": "Ya Kun Kaya Toast",
+        "cuisine": "Café",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "Yakiniku Shokudo",
+        "cuisine": "Japanese",
+        "note": "South Wing, L2"
+      },
+      {
+        "name": "Yappari Steak",
+        "cuisine": "Japanese",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "YAYOI",
+        "cuisine": "Japanese",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "YGF Malatang",
+        "cuisine": "Chinese",
+        "note": "North Wing, B1"
+      },
+      {
+        "name": "Yummi House",
+        "cuisine": "Dessert",
+        "note": "South Wing, B1"
+      },
+      {
+        "name": "ZUS Coffee",
+        "cuisine": "Café",
+        "note": "South Wing, L1"
+      }
+    ]
   }
 }
