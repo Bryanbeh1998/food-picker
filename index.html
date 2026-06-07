@@ -799,7 +799,8 @@
   <div class="card" id="mallDirCard" style="display:none;">
     <!-- HOME: choose a mall, or search across all malls -->
     <div id="mallHome">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+        <button class="back-btn" id="mallCloseHome">← Menu</button>
         <h2 style="font-size:1rem; color:#5a9e7e; font-weight:700;">🏬 Mall Directory</h2>
       </div>
 
@@ -821,12 +822,12 @@
       </div>
       <p class="mall-count" id="mallHomeCount"></p>
       <div id="mallHomeView"></div>
-      <button class="mall-close" id="mallCloseHome">← Menu</button>
     </div>
 
     <!-- DETAIL: one mall's outlets -->
     <div id="mallDetail" style="display:none;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+        <button class="back-btn" id="mallBack">← All malls</button>
         <h2 id="mallDetailName" style="font-size:1rem; color:#5a9e7e; font-weight:700;"></h2>
       </div>
       <div style="margin-bottom:6px;">
@@ -835,7 +836,6 @@
       </div>
       <p class="mall-count" id="mallCount"></p>
       <div id="mallList"></div>
-      <button class="mall-close" id="mallBack">← All malls</button>
     </div>
   </div>
 
