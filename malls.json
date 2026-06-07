@@ -3439,5 +3439,466 @@
         "note": "#B2-50"
       }
     ]
+  },
+  "Waterway Point": {
+    "source": "https://www.waterwaypoint.com.sg",
+    "updated": "2026-06-07",
+    "outlets": [
+      {
+        "name": "Ajumma's",
+        "cuisine": "Korean",
+        "note": "West Wing, L2"
+      },
+      {
+        "name": "An Acai Affair",
+        "cuisine": "Dessert",
+        "note": "West Wing, L2"
+      },
+      {
+        "name": "Au Croissant",
+        "cuisine": "Bakery",
+        "note": "West Wing, L1"
+      },
+      {
+        "name": "Auntie Anne's",
+        "cuisine": "Snacks",
+        "note": "East Wing, B1"
+      },
+      {
+        "name": "Bee Cheng Hiang",
+        "cuisine": "Snacks",
+        "note": "West Wing, B2"
+      },
+      {
+        "name": "Boost Juice Bars",
+        "cuisine": "Drinks",
+        "note": "West Wing, B1"
+      },
+      {
+        "name": "BreadTalk / Toast Box",
+        "cuisine": "Bakery",
+        "note": "East Wing, B1"
+      },
+      {
+        "name": "Buddy Hoagies Café & Grill",
+        "cuisine": "Western",
+        "note": "West Wing, L2"
+      },
+      {
+        "name": "Burger King",
+        "cuisine": "Fast Food",
+        "note": "East Wing, L1"
+      },
+      {
+        "name": "Butter & Cream",
+        "cuisine": "Dessert",
+        "note": "West Wing, B2"
+      },
+      {
+        "name": "Cakebar",
+        "cuisine": "Dessert",
+        "note": "West Wing, L1"
+      },
+      {
+        "name": "Cedele",
+        "cuisine": "Café",
+        "note": "West Wing, L1"
+      },
+      {
+        "name": "CHAGEE",
+        "cuisine": "Bubble Tea",
+        "note": "West Wing, B1"
+      },
+      {
+        "name": "Chateraise",
+        "cuisine": "Dessert",
+        "note": "West Wing, B1"
+      },
+      {
+        "name": "CHICHA San Chen",
+        "cuisine": "Bubble Tea",
+        "note": "East Wing, L1"
+      },
+      {
+        "name": "Chicken Ka Kee",
+        "cuisine": "Chinese",
+        "note": "East Wing, L1"
+      },
+      {
+        "name": "Chocolate Origin & Cacaocat",
+        "cuisine": "Dessert",
+        "note": "West Wing, L1"
+      },
+      {
+        "name": "CocoCane",
+        "cuisine": "Drinks",
+        "note": "West Wing, B2"
+      },
+      {
+        "name": "Cookhouse by Koufu",
+        "cuisine": "Food Court",
+        "note": "West Wing, L2"
+      },
+      {
+        "name": "Country Brot by Four Leaves",
+        "cuisine": "Bakery",
+        "note": "West Wing, B2"
+      },
+      {
+        "name": "Crave",
+        "cuisine": "Local",
+        "note": "East Wing, B1"
+      },
+      {
+        "name": "Daily Chicken",
+        "cuisine": "Chinese",
+        "note": "West Wing, L1"
+      },
+      {
+        "name": "Délifrance",
+        "cuisine": "Bakery",
+        "note": "West Wing, L1"
+      },
+      {
+        "name": "Dian Xiao Er",
+        "cuisine": "Chinese",
+        "note": "East Wing, L1"
+      },
+      {
+        "name": "Din Tai Fung",
+        "cuisine": "Chinese",
+        "note": "West Wing, L1"
+      },
+      {
+        "name": "Dough Culture",
+        "cuisine": "Bakery",
+        "note": "East Wing, L1"
+      },
+      {
+        "name": "Dunkin' Donuts",
+        "cuisine": "Coffee",
+        "note": "West Wing, B1"
+      },
+      {
+        "name": "Encik Tan",
+        "cuisine": "Local",
+        "note": "East Wing, B2"
+      },
+      {
+        "name": "Famous Amos",
+        "cuisine": "Snacks",
+        "note": "East Wing, B2"
+      },
+      {
+        "name": "Fish & Co.",
+        "cuisine": "Seafood",
+        "note": "East Wing, B1"
+      },
+      {
+        "name": "Genki Sushi",
+        "cuisine": "Japanese",
+        "note": "West Wing, L2"
+      },
+      {
+        "name": "Gong Yuan Ma La Tang",
+        "cuisine": "Chinese",
+        "note": "West Wing, L2"
+      },
+      {
+        "name": "Guzman y Gomez",
+        "cuisine": "Mexican",
+        "note": "West Wing, B2"
+      },
+      {
+        "name": "Han's",
+        "cuisine": "Café",
+        "note": "East Wing, B2"
+      },
+      {
+        "name": "Henri Charpentier",
+        "cuisine": "Dessert",
+        "note": "West Wing, L1"
+      },
+      {
+        "name": "Hototogisu Ramen",
+        "cuisine": "Japanese",
+        "note": "West Wing, L1"
+      },
+      {
+        "name": "I Love Taimei",
+        "cuisine": "Bubble Tea",
+        "note": "West Wing, B1"
+      },
+      {
+        "name": "Ichiban Boshi",
+        "cuisine": "Japanese",
+        "note": "East Wing, B1"
+      },
+      {
+        "name": "Jollibee",
+        "cuisine": "Fast Food",
+        "note": "West Wing, B2"
+      },
+      {
+        "name": "KOI Thé Express",
+        "cuisine": "Bubble Tea",
+        "note": "West Wing, B1"
+      },
+      {
+        "name": "Kuriya Japanese Market",
+        "cuisine": "Japanese",
+        "note": "East Wing, B1"
+      },
+      {
+        "name": "Lao Huo Tang",
+        "cuisine": "Chinese",
+        "note": "East Wing, B1"
+      },
+      {
+        "name": "LiHO Tea",
+        "cuisine": "Bubble Tea",
+        "note": "East Wing, B2"
+      },
+      {
+        "name": "Luckin Coffee",
+        "cuisine": "Coffee",
+        "note": "West Wing, L1"
+      },
+      {
+        "name": "Mamma Mia Trattoria E Caffè",
+        "cuisine": "Italian",
+        "note": "West Wing, L1"
+      },
+      {
+        "name": "McDonald's",
+        "cuisine": "Fast Food",
+        "note": "West Wing, B2"
+      },
+      {
+        "name": "Mister Donut",
+        "cuisine": "Dessert",
+        "note": "East Wing, B1"
+      },
+      {
+        "name": "Monster Curry",
+        "cuisine": "Japanese",
+        "note": "West Wing, L2"
+      },
+      {
+        "name": "MOS Burger",
+        "cuisine": "Fast Food",
+        "note": "East Wing, B1"
+      },
+      {
+        "name": "Mr Bean",
+        "cuisine": "Drinks",
+        "note": "West Wing, L1"
+      },
+      {
+        "name": "Mr. Coconut",
+        "cuisine": "Drinks",
+        "note": "East Wing, L1"
+      },
+      {
+        "name": "Nam Kee Pau",
+        "cuisine": "Chinese",
+        "note": "West Wing, L1"
+      },
+      {
+        "name": "Nine Fresh",
+        "cuisine": "Dessert",
+        "note": "East Wing, B1"
+      },
+      {
+        "name": "Old Chang Kee",
+        "cuisine": "Snacks",
+        "note": "West Wing, L1"
+      },
+      {
+        "name": "Paik's Noodle",
+        "cuisine": "Korean",
+        "note": "West Wing, L2"
+      },
+      {
+        "name": "Pasta Play",
+        "cuisine": "Italian",
+        "note": "East Wing, B1"
+      },
+      {
+        "name": "Pezzo",
+        "cuisine": "Pizza",
+        "note": "West Wing, B2"
+      },
+      {
+        "name": "Pizza Hut",
+        "cuisine": "Pizza",
+        "note": "West Wing, B1"
+      },
+      {
+        "name": "PlayMade",
+        "cuisine": "Bubble Tea",
+        "note": "East Wing, B1"
+      },
+      {
+        "name": "Polar Puffs & Cakes",
+        "cuisine": "Bakery",
+        "note": "East Wing, L1"
+      },
+      {
+        "name": "PrimaDéli",
+        "cuisine": "Bakery",
+        "note": "East Wing, B1"
+      },
+      {
+        "name": "PUTIEN",
+        "cuisine": "Chinese",
+        "note": "East Wing, B1"
+      },
+      {
+        "name": "Red Ginger Coffeehouse",
+        "cuisine": "Café",
+        "note": "East Wing, B1"
+      },
+      {
+        "name": "Sanook Kitchen",
+        "cuisine": "Thai",
+        "note": "West Wing, B1"
+      },
+      {
+        "name": "Shihlin Taiwan Street Food",
+        "cuisine": "Taiwanese",
+        "note": "West Wing, B2"
+      },
+      {
+        "name": "snacKING Retro Biscuits",
+        "cuisine": "Snacks",
+        "note": "West Wing, L2"
+      },
+      {
+        "name": "So Do Fun",
+        "cuisine": "Chinese",
+        "note": "West Wing, L1"
+      },
+      {
+        "name": "So Pho",
+        "cuisine": "Vietnamese",
+        "note": "East Wing, L1"
+      },
+      {
+        "name": "Song Fa Bak Kut Teh",
+        "cuisine": "Chinese",
+        "note": "East Wing, L1"
+      },
+      {
+        "name": "Starbucks",
+        "cuisine": "Coffee",
+        "note": "West Wing, L1"
+      },
+      {
+        "name": "Stuff'd",
+        "cuisine": "Western",
+        "note": "West Wing, B2"
+      },
+      {
+        "name": "Subway",
+        "cuisine": "Fast Food",
+        "note": "East Wing, B1"
+      },
+      {
+        "name": "SUKIYA",
+        "cuisine": "Japanese",
+        "note": "East Wing, B1"
+      },
+      {
+        "name": "Sushi Express",
+        "cuisine": "Japanese",
+        "note": "East Wing, L1"
+      },
+      {
+        "name": "Sushiro",
+        "cuisine": "Japanese",
+        "note": "East Wing, L1"
+      },
+      {
+        "name": "Swensen's",
+        "cuisine": "Western",
+        "note": "West Wing, L2"
+      },
+      {
+        "name": "Tai Chong Kok",
+        "cuisine": "Chinese",
+        "note": "East Wing, B2"
+      },
+      {
+        "name": "Talad Thai Banana",
+        "cuisine": "Thai",
+        "note": "West Wing, B1"
+      },
+      {
+        "name": "The Coffee Bean & Tea Leaf",
+        "cuisine": "Coffee",
+        "note": "East Wing, L1"
+      },
+      {
+        "name": "Tim Ho Wan",
+        "cuisine": "Chinese",
+        "note": "West Wing, L1"
+      },
+      {
+        "name": "Tokyo Shokudo",
+        "cuisine": "Japanese",
+        "note": "West Wing, B1"
+      },
+      {
+        "name": "Tori-Q",
+        "cuisine": "Japanese",
+        "note": "East Wing, B1"
+      },
+      {
+        "name": "Towkay Kia",
+        "cuisine": "Café",
+        "note": "West Wing, L2"
+      },
+      {
+        "name": "Twenty Loaf Toasties",
+        "cuisine": "Café",
+        "note": "East Wing, B2"
+      },
+      {
+        "name": "umisushi",
+        "cuisine": "Japanese",
+        "note": "East Wing, B2"
+      },
+      {
+        "name": "Wanglu Hot Pot",
+        "cuisine": "Chinese",
+        "note": "West Wing, B2"
+      },
+      {
+        "name": "Warabimochi Kamakura",
+        "cuisine": "Dessert",
+        "note": "West Wing, L1"
+      },
+      {
+        "name": "Wen Zhang Lao Mian",
+        "cuisine": "Chinese",
+        "note": "East Wing, B2"
+      },
+      {
+        "name": "White Restaurant",
+        "cuisine": "Chinese",
+        "note": "West Wing, B1"
+      },
+      {
+        "name": "Wok Hey",
+        "cuisine": "Chinese",
+        "note": "East Wing, L1"
+      },
+      {
+        "name": "Ya Kun Kaya Toast",
+        "cuisine": "Café",
+        "note": "East Wing, B2"
+      }
+    ]
   }
 }
