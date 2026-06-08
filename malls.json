@@ -4746,5 +4746,291 @@
         "note": "#03-323 · coming soon"
       }
     ]
+  },
+  "313@Somerset": {
+    "source": "https://www.313somerset.com.sg",
+    "updated": "2026-06-07",
+    "outlets": [
+      {
+        "name": "% Arabica",
+        "cuisine": "Café",
+        "note": ""
+      },
+      {
+        "name": "5:59",
+        "cuisine": "Korean",
+        "note": ""
+      },
+      {
+        "name": "An Acai Affair",
+        "cuisine": "Dessert",
+        "note": ""
+      },
+      {
+        "name": "An Nyeong",
+        "cuisine": "Korean",
+        "note": ""
+      },
+      {
+        "name": "At Tea",
+        "cuisine": "Bubble Tea",
+        "note": ""
+      },
+      {
+        "name": "Boost Juice Bars",
+        "cuisine": "Drinks",
+        "note": ""
+      },
+      {
+        "name": "BreadTalk",
+        "cuisine": "Bakery",
+        "note": ""
+      },
+      {
+        "name": "Café de Paris",
+        "cuisine": "Café",
+        "note": ""
+      },
+      {
+        "name": "Candy Empire",
+        "cuisine": "Snacks",
+        "note": ""
+      },
+      {
+        "name": "CHACHAO",
+        "cuisine": "Dessert",
+        "note": ""
+      },
+      {
+        "name": "CHICHA San Chen",
+        "cuisine": "Bubble Tea",
+        "note": ""
+      },
+      {
+        "name": "Chimi's",
+        "cuisine": "Dessert",
+        "note": ""
+      },
+      {
+        "name": "EATPIZZA",
+        "cuisine": "Pizza",
+        "note": ""
+      },
+      {
+        "name": "Food Republic",
+        "cuisine": "Food Court",
+        "note": ""
+      },
+      {
+        "name": "Garrett Popcorn Shops",
+        "cuisine": "Snacks",
+        "note": ""
+      },
+      {
+        "name": "Genki Sushi",
+        "cuisine": "Japanese",
+        "note": ""
+      },
+      {
+        "name": "Haidilao Huoguo",
+        "cuisine": "Chinese",
+        "note": ""
+      },
+      {
+        "name": "Hi Noodle",
+        "cuisine": "Chinese",
+        "note": ""
+      },
+      {
+        "name": "Ichikokudo Hokkaido Ramen",
+        "cuisine": "Japanese",
+        "note": ""
+      },
+      {
+        "name": "Josh's Grill",
+        "cuisine": "Western",
+        "note": ""
+      },
+      {
+        "name": "Kang Ji Sugar Coated Fruits",
+        "cuisine": "Snacks",
+        "note": ""
+      },
+      {
+        "name": "KOI Express",
+        "cuisine": "Bubble Tea",
+        "note": ""
+      },
+      {
+        "name": "LiHO Tea",
+        "cuisine": "Bubble Tea",
+        "note": ""
+      },
+      {
+        "name": "luckin coffee",
+        "cuisine": "Coffee",
+        "note": ""
+      },
+      {
+        "name": "Marché",
+        "cuisine": "Western",
+        "note": ""
+      },
+      {
+        "name": "Mister Donut",
+        "cuisine": "Dessert",
+        "note": ""
+      },
+      {
+        "name": "Mrs Pho",
+        "cuisine": "Vietnamese",
+        "note": ""
+      },
+      {
+        "name": "Noodle Villa",
+        "cuisine": "Chinese",
+        "note": ""
+      },
+      {
+        "name": "Old Chang Kee",
+        "cuisine": "Snacks",
+        "note": ""
+      },
+      {
+        "name": "O'ma Spoon",
+        "cuisine": "Dessert",
+        "note": ""
+      },
+      {
+        "name": "One Fermented Rice",
+        "cuisine": "Chinese",
+        "note": ""
+      },
+      {
+        "name": "Papa Ayam",
+        "cuisine": "Local",
+        "note": ""
+      },
+      {
+        "name": "PlayMade",
+        "cuisine": "Bubble Tea",
+        "note": ""
+      },
+      {
+        "name": "Potato Corner",
+        "cuisine": "Snacks",
+        "note": ""
+      },
+      {
+        "name": "Riverside Indonesian BBQ",
+        "cuisine": "Indonesian",
+        "note": ""
+      },
+      {
+        "name": "Sake +",
+        "cuisine": "Japanese",
+        "note": ""
+      },
+      {
+        "name": "Shihlin Taiwan Street Snacks",
+        "cuisine": "Taiwanese",
+        "note": ""
+      },
+      {
+        "name": "Starbucks",
+        "cuisine": "Coffee",
+        "note": ""
+      },
+      {
+        "name": "Stuff'd",
+        "cuisine": "Western",
+        "note": ""
+      },
+      {
+        "name": "Subway",
+        "cuisine": "Fast Food",
+        "note": ""
+      },
+      {
+        "name": "SUKIYA",
+        "cuisine": "Japanese",
+        "note": ""
+      },
+      {
+        "name": "SUPERGREEN",
+        "cuisine": "Healthy",
+        "note": ""
+      },
+      {
+        "name": "Sushi Plus",
+        "cuisine": "Japanese",
+        "note": ""
+      },
+      {
+        "name": "Swee Heng 1989 Signature",
+        "cuisine": "Bakery",
+        "note": ""
+      },
+      {
+        "name": "TAI ER",
+        "cuisine": "Chinese",
+        "note": ""
+      },
+      {
+        "name": "Tan Yu",
+        "cuisine": "Chinese",
+        "note": ""
+      },
+      {
+        "name": "Tim Hortons",
+        "cuisine": "Coffee",
+        "note": ""
+      },
+      {
+        "name": "Toast Box",
+        "cuisine": "Café",
+        "note": ""
+      },
+      {
+        "name": "Tonkatsu ENbiton",
+        "cuisine": "Japanese",
+        "note": ""
+      },
+      {
+        "name": "Tsuta",
+        "cuisine": "Japanese",
+        "note": ""
+      },
+      {
+        "name": "Vanda Botanical Desserts",
+        "cuisine": "Dessert",
+        "note": ""
+      },
+      {
+        "name": "Wokker by A-Roy Thai Restaurant",
+        "cuisine": "Thai",
+        "note": ""
+      },
+      {
+        "name": "Xiang Xiang Hunan Cuisine",
+        "cuisine": "Chinese",
+        "note": ""
+      },
+      {
+        "name": "Xiao Noodles",
+        "cuisine": "Chinese",
+        "note": ""
+      },
+      {
+        "name": "Ya Kun Kaya Toast",
+        "cuisine": "Café",
+        "note": ""
+      },
+      {
+        "name": "Yakiniku Like",
+        "cuisine": "Japanese",
+        "note": ""
+      }
+    ]
   }
 }
