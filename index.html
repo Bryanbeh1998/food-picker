@@ -830,7 +830,7 @@
         <button class="back-btn" id="mallBack">← All malls</button>
         <h2 id="mallDetailName" style="font-size:1rem; color:#5a9e7e; font-weight:700;"></h2>
       </div>
-      <a id="mallDirLink" href="#" target="_blank" rel="noopener" style="display:none; width:100%; box-sizing:border-box; margin-bottom:8px; padding:12px; text-align:center; background:#5a9e7e; color:#fff; border-radius:10px; font-size:0.9rem; font-weight:600; text-decoration:none;">🔗 Official Food Directory ↗</a>
+      <a id="mallDirLink" href="#" target="_blank" rel="noopener" style="display:none; margin-bottom:8px; padding:5px 10px; background:#5a9e7e; color:#fff; border-radius:8px; font-size:0.75rem; font-weight:600; text-decoration:none;">🔗 Food Directory ↗</a>
       <div style="margin-bottom:6px;">
         <label>Search in this mall</label>
         <input id="mallSearch" type="text" placeholder="Name or cuisine" />
@@ -2080,7 +2080,7 @@
       const entry = mallsData && mallsData[mall] ? mallsData[mall] : {};
       const dirUrl = entry.link || entry.source || '';
       const dirLink = document.getElementById('mallDirLink');
-      if (dirUrl) { dirLink.href = dirUrl; dirLink.style.display = 'block'; }
+      if (dirUrl) { dirLink.href = dirUrl; dirLink.style.display = 'inline-block'; }
       else { dirLink.style.display = 'none'; }
       document.getElementById('mallSearch').value = presetSearch || '';
       document.getElementById('mallPickResult').style.display = 'none';
