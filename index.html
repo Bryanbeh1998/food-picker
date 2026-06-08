@@ -1969,9 +1969,10 @@
     }
 
     // Build a styled outlet row (reused by detail list and global results)
-    function outletRow(o) {
+    function outletRow(o, mallName) {
       const row = document.createElement('div');
       row.className = 'list-item';
+      row.style.cursor = 'pointer';
       const top = document.createElement('div');
       top.style.cssText = 'display:flex; justify-content:space-between; align-items:center; gap:10px; width:100%;';
       const name = document.createElement('div');
@@ -1998,6 +1999,23 @@
         note.appendChild(span);
         row.appendChild(note);
       }
+
+      // Click to expand: reveal an Open in Google Maps link
+      const details = document.createElement('div');
+      details.style.cssText = 'display:none; margin-top:8px;';
+      const mapsHref = mapsUrl([o.name, mallName, 'Singapore'].filter(Boolean).join(' '));
+      const link = document.createElement('a');
+      link.href = mapsHref;
+      link.target = '_blank';
+      link.rel = 'noopener';
+      link.textContent = '📍 Open in Google Maps';
+      link.style.cssText = 'font-size:0.85rem;';
+      link.addEventListener('click', e => e.stopPropagation());
+      details.appendChild(link);
+      row.appendChild(details);
+      row.addEventListener('click', () => {
+        details.style.display = details.style.display === 'none' ? 'block' : 'none';
+      });
       return row;
     }
 
@@ -2044,7 +2062,7 @@
         header.addEventListener('click', () => openMallDetail(mall, q));
         view.appendChild(header);
 
-        hits.forEach(o => view.appendChild(outletRow(o)));
+        hits.forEach(o => view.appendChild(outletRow(o, mall)));
       });
 
       countEl.textContent = totalHits
@@ -2087,7 +2105,7 @@
       const n = outlets.length;
       countEl.textContent = `${n} outlet${n !== 1 ? 's' : ''}` + (updated ? ` · updated ${updated}` : '');
       if (!n) { list.innerHTML = '<p class="no-results">No outlets match your search.</p>'; return; }
-      outlets.forEach(o => list.appendChild(outletRow(o)));
+      outlets.forEach(o => list.appendChild(outletRow(o, currentMall)));
     }
 
     function pickMallOutlet() {
